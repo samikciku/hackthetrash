@@ -20,6 +20,11 @@ First we learn the system. Where does the trash go, who pays for it, who
 profits from it, who fights about it. Public sources only. If we can't
 link to it, it doesn't go in.
 
+A starting dossier lives at [dossier/how-trash-works-pristina.md](dossier/how-trash-works-pristina.md) -
+actors, mechanisms, disputes, and structural pathologies, with inline
+links to public sources. AI-generated draft; verify any claim against
+its source before using it.
+
 ## Part 2: Make a Map
 
 Turn the research into a map. Nodes are actors. Edges are influence,
