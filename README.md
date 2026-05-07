@@ -14,6 +14,11 @@ small open-source simulation of how Pristina's trash actually works.
 
 Think SimCity for the part of the city nobody thinks about.
 
+We want this to be useful AND fun to play. Plenty of civic tech projects
+hit "useful" and stop there. We're aiming for both. Precedents we're
+learning from (and some we're trying not to repeat) live in
+[civic-tech-precedents.md](civic-tech-precedents.md).
+
 ## Part 1: Research
 
 First we learn the system. Where does the trash go, who pays for it, who
