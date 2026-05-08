@@ -3,6 +3,8 @@
 A weekend hackathon at Prishtina Hackerspace, May 9-10, 2026.
 We're not going to fix Pristina's trash system. We're going to model it.
 
+Background and framing: [the presentation](https://quarterly.systems/trash/).
+
 ## The idea
 
 Pristina's waste system is a multi-layer system: city operations, recycling
