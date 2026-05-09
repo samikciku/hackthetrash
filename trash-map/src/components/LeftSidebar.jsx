@@ -25,7 +25,7 @@ const EDGE_LEGEND = [
 ]
 
 export default function LeftSidebar({ open, activeLeverId, activeLever, onToggle }) {
-  const [legendOpen, setLegendOpen] = useState(false)
+  const [legendOpen, setLegendOpen] = useState(true)
 
   return (
     /* Outer shell — width animates open/closed */
