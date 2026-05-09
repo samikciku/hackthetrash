@@ -167,7 +167,20 @@
     "errorInvalid": "Invalid credentials",
     "demoCreds": "Demo credentials (development only)",
     "demoNote": "Change ADMIN_EMAIL and ADMIN_PASSWORD in backend/.env before any deploy.",
-    "demoFill": "Fill the form"
+    "demoFill": "Fill the form",
+    "changePassword": "Change Password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "passwordHint": "At least 8 characters.",
+    "savePassword": "Update password",
+    "saving": "Saving...",
+    "passwordChanged": "Password updated",
+    "passwordChangedNote": "Your password has been changed. You can keep using your current session.",
+    "passwordTooShort": "New password must be at least 8 characters.",
+    "passwordMismatch": "New password and confirmation do not match.",
+    "passwordSame": "New password must differ from the current one.",
+    "backToPanel": "Back to admin panel"
   },
   "latestPictures": {
     "title": "Latest pictures of trash",

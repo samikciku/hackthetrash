@@ -90,5 +90,54 @@ export const Users = {
 
   verify(plain: string, hash: string): Promise<boolean> {
     return bcrypt.compare(plain, hash);
+  },
+
+  async updatePassword(id: string, newPlain: string): Promise<boolean> {
+    const hash = await bcrypt.hash(newPlain, 12);
+    if (USE_DB) {
+      const { rows } = await query(
+        `UPDATE users SET password_hash = $2 WHERE id = $1 RETURNING id`,
+        [id, hash]
+      );
+      return rows.length > 0;
+    }
+    const u = memUsers.find((x) => x.id === id);
+    if (!u) return false;
+    u.password_hash = hash;
+    return true;
+  },
+
+  async list(): Promise<User[]> {
+    if (USE_DB) {
+      const { rows } = await query<User>(
+        `SELECT id, email, password_hash, name, role, region FROM users ORDER BY role, email`
+      );
+      return rows;
+    }
+    return [...memUsers];
+  },
+
+  async setRole(id: string, role: Role): Promise<boolean> {
+    if (USE_DB) {
+      const { rows } = await query(
+        `UPDATE users SET role = $2 WHERE id = $1 RETURNING id`, [id, role]
+      );
+      return rows.length > 0;
+    }
+    const u = memUsers.find((x) => x.id === id);
+    if (!u) return false;
+    u.role = role;
+    return true;
+  },
+
+  async remove(id: string): Promise<boolean> {
+    if (USE_DB) {
+      const { rows } = await query(`DELETE FROM users WHERE id = $1 RETURNING id`, [id]);
+      return rows.length > 0;
+    }
+    const idx = memUsers.findIndex((x) => x.id === id);
+    if (idx === -1) return false;
+    memUsers.splice(idx, 1);
+    return true;
   }
 };

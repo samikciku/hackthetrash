@@ -167,7 +167,20 @@
     "errorInvalid": "Të dhëna të pasakta",
     "demoCreds": "Të dhënat demo (vetëm për zhvillim)",
     "demoNote": "Ndryshoni ADMIN_EMAIL dhe ADMIN_PASSWORD në backend/.env para çdo publikimi.",
-    "demoFill": "Plotëso formularin"
+    "demoFill": "Plotëso formularin",
+    "changePassword": "Ndrysho Fjalëkalimin",
+    "currentPassword": "Fjalëkalimi aktual",
+    "newPassword": "Fjalëkalimi i ri",
+    "confirmPassword": "Konfirmo fjalëkalimin e ri",
+    "passwordHint": "Të paktën 8 karaktere.",
+    "savePassword": "Përditëso fjalëkalimin",
+    "saving": "Po ruhet...",
+    "passwordChanged": "Fjalëkalimi u përditësua",
+    "passwordChangedNote": "Fjalëkalimi juaj është ndryshuar. Mund të vazhdoni me sesionin aktual.",
+    "passwordTooShort": "Fjalëkalimi i ri duhet të ketë të paktën 8 karaktere.",
+    "passwordMismatch": "Fjalëkalimi i ri dhe konfirmimi nuk përputhen.",
+    "passwordSame": "Fjalëkalimi i ri duhet të jetë ndryshe nga ai aktual.",
+    "backToPanel": "Kthehu te paneli"
   },
   "latestPictures": {
     "title": "Fotot e fundit të mbeturinave",

@@ -97,9 +97,17 @@ function AdminInner() {
             {" "}· {t("admin.role")}: <span className="font-semibold">{user?.role}</span>
           </p>
         </div>
-        <button onClick={logout} className="text-sm text-red-600 border border-red-200 px-3 py-1 rounded hover:bg-red-50">
-          {t("admin.logout")}
-        </button>
+        <div className="flex items-center gap-2">
+          <a
+            href="/admin/password"
+            className="text-sm text-gray-600 border border-gray-200 px-3 py-1 rounded hover:bg-gray-50"
+          >
+            🔑 {t("admin.changePassword")}
+          </a>
+          <button onClick={logout} className="text-sm text-red-600 border border-red-200 px-3 py-1 rounded hover:bg-red-50">
+            {t("admin.logout")}
+          </button>
+        </div>
       </div>
 
       {/* Filters */}
