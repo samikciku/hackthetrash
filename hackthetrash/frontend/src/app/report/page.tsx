@@ -19,6 +19,7 @@ export default function ReportPage() {
   const [anonymous, setAnonymous] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [submittedId, setSubmittedId] = useState<string | null>(null);
 
   const useMyLocation = () => {
     if (!navigator.geolocation) return alert("Geolocation not supported");
@@ -56,6 +57,9 @@ export default function ReportPage() {
         { method: "POST", body: fd }
       );
       if (!res.ok) throw new Error("Submission failed");
+      const created = await res.json();
+      // Capture the new report id so we can highlight it on the OpenStreetMap layer
+      setSubmittedId(created?.id ?? null);
       setSuccess(true);
     } catch (err) {
       alert("Error submitting report. Is the backend running?");
@@ -65,12 +69,21 @@ export default function ReportPage() {
   };
 
   if (success) {
+    // Build a deep link that pans the OpenStreetMap layer to the new report and highlights it
+    const mapHref = coords
+      ? `/map?lat=${coords.lat}&lng=${coords.lng}${submittedId ? `&id=${submittedId}` : ""}`
+      : "/map";
     return (
       <div className="max-w-md mx-auto p-8 text-center">
         <div className="text-6xl mb-4">🎉</div>
         <h2 className="text-2xl font-bold mb-2">Thank you!</h2>
-        <p className="text-gray-600">Your report has been submitted and will be reviewed soon.</p>
-        <a href="/map" className="mt-6 inline-block bg-primary text-white px-4 py-2 rounded">View Map</a>
+        <p className="text-gray-600">
+          Your report has been added to the public map. It will appear as a new pin on the
+          OpenStreetMap layer.
+        </p>
+        <a href={mapHref} className="mt-6 inline-block bg-primary text-white px-4 py-2 rounded">
+          🗺️ See it on the map
+        </a>
       </div>
     );
   }

@@ -15,14 +15,23 @@ export interface ReportRow {
   ai_label: string | null;
   created_at: string;
   updated_at: string;
+  photo_urls?: string[];
 }
 
 export const ReportRepo = {
   async list(): Promise<ReportRow[]> {
+    // Aggregate photo URLs per report so the public map can show them in popups.
     const { rows } = await query<ReportRow>(
-      `SELECT id, user_id, latitude, longitude, description, severity, tags,
-              status, anonymous, ai_score, ai_label, created_at, updated_at
-       FROM reports ORDER BY created_at DESC LIMIT 500`
+      `SELECT r.id, r.user_id, r.latitude, r.longitude, r.description, r.severity, r.tags,
+              r.status, r.anonymous, r.ai_score, r.ai_label, r.created_at, r.updated_at,
+              COALESCE(
+                (SELECT array_agg(p.url ORDER BY p.uploaded_at)
+                 FROM photos p WHERE p.report_id = r.id),
+                ARRAY[]::text[]
+              ) AS photo_urls
+       FROM reports r
+       ORDER BY r.created_at DESC
+       LIMIT 500`
     );
     return rows;
   },

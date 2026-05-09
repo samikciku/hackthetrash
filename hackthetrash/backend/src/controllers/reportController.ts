@@ -64,7 +64,8 @@ export const createReport = async (req: Request, res: Response) => {
         aiScore: ai.best.score,
         aiLabel: ai.best.label
       });
-      await ReportRepo.addPhotos(created.id, files.map((f) => `/uploads/${f.filename}`));
+      const photoUrls = files.map((f) => `/uploads/${f.filename}`);
+      await ReportRepo.addPhotos(created.id, photoUrls);
 
       // Auto-status from AI
       if (ai.recommendation === "auto_verify") {
@@ -72,7 +73,9 @@ export const createReport = async (req: Request, res: Response) => {
       } else if (ai.recommendation === "auto_reject") {
         await ReportRepo.updateStatus(created.id, "rejected", "AI auto-rejected");
       }
-      return res.status(201).json({ ...created, ai });
+      // Return the new report with photo_urls so the client can immediately
+      // place a marker on the OpenStreetMap layer with the picture in the popup.
+      return res.status(201).json({ ...created, photo_urls: photoUrls, ai });
     }
 
     // Fallback: in-memory
