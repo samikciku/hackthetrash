@@ -31,11 +31,21 @@ export default function LocationPicker({
   coords: Coords | null;
   onChange: (c: Coords) => void;
 }) {
-  const center: [number, number] = coords ? [coords.lat, coords.lng] : [42.6629, 21.1655]; // Pristina city centre
+  // The picker always opens on Prishtina city centre. As soon as the user
+  // taps a point or hits "Use my location", the map re-centres on the chosen
+  // coordinate (forced via the key prop so leaflet remounts cleanly).
+  const center: [number, number] = coords ? [coords.lat, coords.lng] : [42.6629, 21.1655];
+  const zoom = coords ? 16 : 13;
 
   return (
     <div className="h-64 rounded overflow-hidden border">
-      <MapContainer center={center} zoom={13} key={`${center[0]}-${center[1]}`}>
+      <MapContainer
+        center={center}
+        zoom={zoom}
+        minZoom={11}
+        maxZoom={19}
+        key={`${center[0]}-${center[1]}`}
+      >
         <TileLayer
           attribution='&copy; OpenStreetMap'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

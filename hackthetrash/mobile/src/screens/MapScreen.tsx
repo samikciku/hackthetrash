@@ -53,12 +53,40 @@ function buildHtml(reports: Report[], focus?: { lat: number; lng: number; id?: s
   };
   var REPORTS = ${json};
   var FOCUS = ${focusJson};
+  var PRISTINA = [42.6629, 21.1655];
+  var PRISTINA_ZOOM = 13;
+  var PRISTINA_BOUNDS = [[42.55, 21.05], [42.78, 21.30]];
 
-  var map = L.map("map").setView(FOCUS ? [FOCUS.lat, FOCUS.lng] : [42.6629, 21.1655], FOCUS ? 16 : 13);
+  var map = L.map("map", {
+    center: FOCUS ? [FOCUS.lat, FOCUS.lng] : PRISTINA,
+    zoom: FOCUS ? 16 : PRISTINA_ZOOM,
+    minZoom: 11,
+    maxZoom: 19,
+    maxBounds: PRISTINA_BOUNDS,
+    maxBoundsViscosity: 0.7
+  });
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "&copy; OpenStreetMap contributors",
     maxZoom: 19
   }).addTo(map);
+
+  // Home control: tap to recentre on Pristina
+  var HomeControl = L.Control.extend({
+    options: { position: "topright" },
+    onAdd: function () {
+      var btn = L.DomUtil.create("a", "leaflet-bar");
+      btn.href = "#";
+      btn.title = "Pristina";
+      btn.style.cssText = "display:flex;align-items:center;justify-content:center;width:auto;padding:0 10px;height:30px;background:#fff;color:#111;font:600 12px -apple-system,sans-serif;text-decoration:none";
+      btn.innerHTML = "&#127968; Pristina";
+      L.DomEvent.on(btn, "click", function (e) {
+        L.DomEvent.preventDefault(e);
+        map.flyTo(PRISTINA, PRISTINA_ZOOM, { duration: 1 });
+      });
+      return btn;
+    }
+  });
+  new HomeControl().addTo(map);
 
   function pinIcon(color) {
     return L.divIcon({

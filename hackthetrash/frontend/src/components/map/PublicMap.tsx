@@ -48,12 +48,30 @@ const getPhotos = (r: Report): string[] => r.photoUrls ?? r.photo_urls ?? [];
 // Helper: pick createdAt from either field name
 const getCreated = (r: Report): string | undefined => r.createdAt ?? r.created_at;
 
+// Pristina city centre (used as the default starting view of the map)
+const PRISTINA_CENTER: [number, number] = [42.6629, 21.1655];
+const PRISTINA_ZOOM = 13;
+
+// Loose bounds covering greater Prishtina. Keeps the user from getting lost on
+// the OpenStreetMap tile layer while still allowing some panning.
+const PRISTINA_BOUNDS: L.LatLngBoundsExpression = [
+  [42.55, 21.05],
+  [42.78, 21.30]
+];
+
 // Component to programmatically center the map (e.g. on a freshly submitted report)
 function FlyTo({ coords }: { coords: [number, number] | null }) {
   const map = useMap();
   useEffect(() => {
     if (coords) map.flyTo(coords, 16, { duration: 1.5 });
   }, [coords, map]);
+  return null;
+}
+
+// Exposes the leaflet map instance to the parent so we can offer a "home" button.
+function MapRef({ onReady }: { onReady: (m: L.Map) => void }) {
+  const map = useMap();
+  useEffect(() => { onReady(map); }, [map, onReady]);
   return null;
 }
 
@@ -93,17 +111,35 @@ export default function PublicMap() {
     return () => clearInterval(timer);
   }, []);
 
-  const center: [number, number] = flyTarget ?? [42.6629, 21.1655]; // Pristina city centre
+  // Default starting view is always Prishtina city centre. If the user arrives
+  // via /map?lat=&lng= (after submitting), we still mount on Prishtina but
+  // immediately fly to the freshly submitted point.
+  const center = PRISTINA_CENTER;
+  const initialZoom = PRISTINA_ZOOM;
+  const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+
+  const goHome = () => {
+    if (mapInstance) mapInstance.flyTo(PRISTINA_CENTER, PRISTINA_ZOOM, { duration: 1 });
+  };
 
   return (
     <div className="relative h-full w-full">
-      <MapContainer center={center} zoom={flyTarget ? 16 : 12} className="h-full w-full">
+      <MapContainer
+        center={center}
+        zoom={initialZoom}
+        minZoom={11}
+        maxZoom={19}
+        maxBounds={PRISTINA_BOUNDS}
+        maxBoundsViscosity={0.7}
+        className="h-full w-full"
+      >
         {/* OpenStreetMap raster tile layer */}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
+        <MapRef onReady={setMapInstance} />
         <FlyTo coords={flyTarget} />
 
         {reports.map((r) => {
@@ -162,14 +198,23 @@ export default function PublicMap() {
         })}
       </MapContainer>
 
-      {/* Floating refresh button */}
-      <button
-        onClick={load}
-        className="absolute top-3 right-3 z-[1000] bg-white shadow rounded-full px-3 py-2 text-sm font-medium border hover:bg-gray-50"
-        title={t("map.refresh")}
-      >
-        {loading ? t("common.loading") : `🔄 ${t("map.refresh")}`}
-      </button>
+      {/* Floating action buttons (top-right) */}
+      <div className="absolute top-3 right-3 z-[1000] flex flex-col gap-2">
+        <button
+          onClick={goHome}
+          className="bg-white shadow rounded-full px-3 py-2 text-sm font-medium border hover:bg-gray-50"
+          title="Pristina"
+        >
+          🏠 Pristina
+        </button>
+        <button
+          onClick={load}
+          className="bg-white shadow rounded-full px-3 py-2 text-sm font-medium border hover:bg-gray-50"
+          title={t("map.refresh")}
+        >
+          {loading ? t("common.loading") : `🔄 ${t("map.refresh")}`}
+        </button>
+      </div>
 
       {/* Floating legend */}
       <div className="absolute bottom-3 left-3 z-[1000] bg-white/95 backdrop-blur shadow rounded-lg p-3 text-xs space-y-1 border">
