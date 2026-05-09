@@ -1,0 +1,125 @@
+"use client";
+
+import React, { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { useRouter, usePathname } from "next/navigation";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+const TOKEN_KEY = "htt-admin-token";
+const USER_KEY = "htt-admin-user";
+
+export type Role = "citizen" | "moderator" | "authority" | "admin";
+
+export interface AuthUser {
+  id: string;
+  email: string;
+  name: string | null;
+  role: Role;
+  region: string | null;
+}
+
+interface AuthCtx {
+  user: AuthUser | null;
+  token: string | null;
+  loading: boolean;
+  login: (email: string, password: string) => Promise<{ ok: true } | { ok: false; error: string }>;
+  logout: () => void;
+  apiFetch: (path: string, init?: RequestInit) => Promise<Response>;
+}
+
+const Ctx = createContext<AuthCtx | null>(null);
+
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [token, setToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // Restore from localStorage on mount
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const t = localStorage.getItem(TOKEN_KEY);
+    const u = localStorage.getItem(USER_KEY);
+    if (t && u) {
+      try { setUser(JSON.parse(u)); setToken(t); } catch {}
+    }
+    setLoading(false);
+  }, []);
+
+  const persist = (t: string | null, u: AuthUser | null) => {
+    setToken(t);
+    setUser(u);
+    if (typeof window === "undefined") return;
+    if (t && u) {
+      localStorage.setItem(TOKEN_KEY, t);
+      localStorage.setItem(USER_KEY, JSON.stringify(u));
+    } else {
+      localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(USER_KEY);
+    }
+  };
+
+  const login: AuthCtx["login"] = async (email, password) => {
+    try {
+      const res = await fetch(`${API_URL}/api/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (!res.ok) return { ok: false, error: data.error || "Login failed" };
+      persist(data.token, data.user);
+      return { ok: true };
+    } catch (e: any) {
+      return { ok: false, error: e?.message || "Network error" };
+    }
+  };
+
+  const logout = () => persist(null, null);
+
+  const apiFetch: AuthCtx["apiFetch"] = (path, init = {}) => {
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+      ...((init.headers as Record<string, string> | undefined) || {})
+    };
+    if (token) headers.Authorization = `Bearer ${token}`;
+    return fetch(`${API_URL}${path}`, { ...init, headers }).then(async (res) => {
+      if (res.status === 401) {
+        // Token expired/invalid -> drop
+        persist(null, null);
+      }
+      return res;
+    });
+  };
+
+  return <Ctx.Provider value={{ user, token, loading, login, logout, apiFetch }}>{children}</Ctx.Provider>;
+}
+
+export function useAuth() {
+  const c = useContext(Ctx);
+  if (!c) throw new Error("useAuth must be used within <AuthProvider>");
+  return c;
+}
+
+/**
+ * Wrap admin pages with this. Redirects to /admin/login if no session.
+ */
+export function RequireAuth({ children, role }: { children: ReactNode; role?: Role[] }) {
+  const { user, loading } = useAuth();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (loading) return;
+    if (!user) {
+      router.replace(`/admin/login?next=${encodeURIComponent(pathname || "/admin")}`);
+      return;
+    }
+    if (role && !role.includes(user.role)) {
+      router.replace("/admin/login?error=forbidden");
+    }
+  }, [user, loading, router, pathname, role]);
+
+  if (loading || !user) {
+    return <div className="p-8 text-gray-500">Loading...</div>;
+  }
+  return <>{children}</>;
+}

@@ -139,5 +139,31 @@
   "lang": {
     "en": "English",
     "sq": "Shqip"
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "login": "Admin Login",
+    "loginSubtitle": "Moderator access",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign in",
+    "signingIn": "Signing in...",
+    "logout": "Logout",
+    "loggedAs": "Signed in as",
+    "role": "role",
+    "approve": "Approve",
+    "reject": "Reject",
+    "cleaning": "Mark as cleaning",
+    "cleaned": "Mark as cleaned",
+    "openOnMap": "Open on map",
+    "noPhotos": "No photos",
+    "noReports": "No reports for this filter.",
+    "all": "All",
+    "filter": "Filter",
+    "confirmAction": "Are you sure you want to {{action}} this report?",
+    "actionFailed": "Action failed",
+    "lockoutNote": "Brute-force protected. Locked after 5 failed attempts for 15 minutes.",
+    "errorForbidden": "Your account does not have admin access.",
+    "errorInvalid": "Invalid credentials"
   }
 }

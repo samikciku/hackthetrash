@@ -139,5 +139,31 @@
   "lang": {
     "en": "English",
     "sq": "Shqip"
+  },
+  "admin": {
+    "title": "Paneli i Administratorit",
+    "login": "Hyrja e Administratorit",
+    "loginSubtitle": "Qasja e moderatorit",
+    "email": "Email",
+    "password": "Fjalëkalimi",
+    "signIn": "Hyr",
+    "signingIn": "Po hyhet...",
+    "logout": "Dalja",
+    "loggedAs": "I kyçur si",
+    "role": "roli",
+    "approve": "Aprovo",
+    "reject": "Refuzo",
+    "cleaning": "Shëno si po pastrohet",
+    "cleaned": "Shëno si i pastruar",
+    "openOnMap": "Hape në hartë",
+    "noPhotos": "Pa foto",
+    "noReports": "Asnjë raport për këtë filtër.",
+    "all": "Të gjitha",
+    "filter": "Filtri",
+    "confirmAction": "A jeni i sigurt që doni të {{action}} këtë raport?",
+    "actionFailed": "Veprimi dështoi",
+    "lockoutNote": "I mbrojtur nga sulmet brute-force. Bllokohet pas 5 përpjekjeve të dështuara për 15 minuta.",
+    "errorForbidden": "Llogaria juaj nuk ka qasje administratori.",
+    "errorInvalid": "Të dhëna të pasakta"
   }
 }

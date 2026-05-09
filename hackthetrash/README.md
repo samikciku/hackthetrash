@@ -129,6 +129,7 @@ See [docs/ROADMAP.md](docs/ROADMAP.md) for full details.
 - [Database Setup](docs/DATABASE.md)
 - [AI Classification](docs/AI.md)
 - [Mobile App](docs/MOBILE.md)
+- [Admin Panel](docs/ADMIN.md)
 - [Wireframes](docs/wireframes/WIREFRAMES.md)
 - [HTML Mockups](docs/mockups/index.html)
 

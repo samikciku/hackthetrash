@@ -1,12 +1,58 @@
 import { Router } from "express";
+import { Users } from "../services/users";
+import {
+  signToken,
+  rateLimitLogin,
+  noteFailedLogin,
+  clearLoginAttempts,
+  requireAuth,
+  AuthRequest
+} from "../middleware/auth";
 
 const router = Router();
 
-router.post("/register", (_req, res) => {
-  res.json({ message: "Stub: register" });
+// POST /api/auth/login
+router.post("/login", rateLimitLogin, async (req, res) => {
+  try {
+    const { email, password } = req.body || {};
+    if (!email || !password) {
+      noteFailedLogin(req);
+      return res.status(400).json({ error: "Email and password are required" });
+    }
+    const user = await Users.findByEmail(String(email));
+    if (!user) {
+      noteFailedLogin(req);
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+    const ok = await Users.verify(String(password), user.password_hash);
+    if (!ok) {
+      noteFailedLogin(req);
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    clearLoginAttempts(req);
+    const token = signToken({ sub: user.id, role: user.role, email: user.email });
+    res.json({
+      token,
+      user: { id: user.id, email: user.email, name: user.name, role: user.role, region: user.region }
+    });
+  } catch (e: any) {
+    console.error("[auth.login]", e);
+    res.status(500).json({ error: e.message || "login failed" });
+  }
 });
-router.post("/login", (_req, res) => {
-  res.json({ message: "Stub: login", token: "fake-jwt-token" });
+
+// GET /api/auth/me
+router.get("/me", requireAuth, async (req: AuthRequest, res) => {
+  if (!req.auth) return res.status(401).json({ error: "Not authenticated" });
+  const u = await Users.findById(req.auth.sub);
+  if (!u) return res.status(404).json({ error: "Not found" });
+  res.json({ id: u.id, email: u.email, name: u.name, role: u.role, region: u.region });
+});
+
+// POST /api/auth/logout (no-op for stateless JWT, kept for symmetry)
+router.post("/logout", (_req, res) => {
+  res.json({ ok: true });
 });
 
 export default router;
