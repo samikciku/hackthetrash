@@ -1,16 +1,18 @@
 import { useState, useCallback } from 'react'
-import { Trash2, ExternalLink } from 'lucide-react'
+import { Trash2, ExternalLink, Network, Grid3x3 } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import GraphCanvas from './components/GraphCanvas'
 import ActorSidebar from './components/ActorSidebar'
 import NewsTicker from './components/NewsTicker'
 import LeftSidebar from './components/LeftSidebar'
 import LeverIcon from './components/LeverIcon'
+import MatrixView from './components/MatrixView'
 import { useActiveLever } from './hooks/useActiveLever'
 
 export default function App() {
   const [selectedNode, setSelectedNode] = useState(null)
   const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [view, setView] = useState('matrix')  // 'graph' | 'matrix'
 
   const {
     activeLever,
@@ -74,6 +76,19 @@ export default function App() {
           </div>
         </div>
 
+        {/* View toggle */}
+        <div
+          className="ml-4 flex items-center rounded-md p-0.5 gap-0.5"
+          style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
+        >
+          <ViewBtn active={view === 'graph'} onClick={() => setView('graph')} icon={<Network size={12} />}>
+            Graph
+          </ViewBtn>
+          <ViewBtn active={view === 'matrix'} onClick={() => setView('matrix')} icon={<Grid3x3 size={12} />}>
+            Matrix
+          </ViewBtn>
+        </div>
+
         {/* Active scenario pill */}
         <div className="ml-auto flex items-center gap-3">
           <AnimatePresence mode="wait">
@@ -133,44 +148,62 @@ export default function App() {
       {/* ── Body row ───────────────────────────────────────────────────────── */}
       <div className="flex flex-1 overflow-hidden">
 
-        {/* Left sidebar */}
-        <LeftSidebar
-          open={sidebarOpen}
-          activeLeverId={activeLeverId}
-          activeLever={activeLever}
-          onToggle={toggleLever}
-        />
-
-        {/* Canvas wrapper */}
-        <div className="flex-1 relative overflow-hidden">
-          {/* Floating news ticker */}
-          <AnimatePresence>
-            {activeLever && <NewsTicker lever={activeLever} />}
-          </AnimatePresence>
-
-          <GraphCanvas
-            selectedNodeId={selectedNode?.id}
-            onNodeClick={handleNodeClick}
-            affectedNodeIds={affectedNodeIds}
-            affectedEdgeIds={affectedEdgeIds}
-            revealedNodeIds={revealedNodeIds}
-            revealedEdgeIds={revealedEdgeIds}
-            activeLever={activeLever}
-          />
-        </div>
-
-        {/* Actor detail panel */}
-        <AnimatePresence mode="wait">
-          {selectedNode && (
-            <ActorSidebar
-              key={selectedNode.id}
-              node={selectedNode}
+        {view === 'graph' ? (
+          <>
+            <LeftSidebar
+              open={sidebarOpen}
+              activeLeverId={activeLeverId}
               activeLever={activeLever}
-              onClose={handleCloseSidebar}
+              onToggle={toggleLever}
             />
-          )}
-        </AnimatePresence>
+
+            <div className="flex-1 relative overflow-hidden">
+              <AnimatePresence>
+                {activeLever && <NewsTicker lever={activeLever} />}
+              </AnimatePresence>
+
+              <GraphCanvas
+                selectedNodeId={selectedNode?.id}
+                onNodeClick={handleNodeClick}
+                affectedNodeIds={affectedNodeIds}
+                affectedEdgeIds={affectedEdgeIds}
+                revealedNodeIds={revealedNodeIds}
+                revealedEdgeIds={revealedEdgeIds}
+                activeLever={activeLever}
+              />
+            </div>
+
+            <AnimatePresence mode="wait">
+              {selectedNode && (
+                <ActorSidebar
+                  key={selectedNode.id}
+                  node={selectedNode}
+                  activeLever={activeLever}
+                  onClose={handleCloseSidebar}
+                />
+              )}
+            </AnimatePresence>
+          </>
+        ) : (
+          <MatrixView />
+        )}
       </div>
     </div>
+  )
+}
+
+function ViewBtn({ active, onClick, icon, children }) {
+  return (
+    <button
+      onClick={onClick}
+      className="flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] font-medium transition-colors"
+      style={{
+        background: active ? 'rgba(59, 130, 246, 0.18)' : 'transparent',
+        color: active ? '#93C5FD' : '#94A3B8',
+      }}
+    >
+      {icon}
+      {children}
+    </button>
   )
 }
