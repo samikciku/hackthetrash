@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { ChevronDown, Film } from 'lucide-react'
 import { motion, AnimatePresence } from 'motion/react'
-import { levers } from '../data/levers'
-import { TIER_COLORS } from '../data/nodes'
-import { EDGE_COLORS } from '../data/edges'
+import { levers } from '../lib/graphData'
+import { TIER_COLORS } from '../lib/graphData'
+import { EDGE_COLORS } from '../lib/graphData'
 import LeverIcon from './LeverIcon'
 
 const scenariosListVariants = {

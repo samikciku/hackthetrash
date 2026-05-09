@@ -1,65 +1,59 @@
 {
-  "version": "1.0",
+  "version": "2.0",
   "snapshotDate": "2026-05-09",
-  "generatedAt": "2026-05-09T17:12:05.019Z",
+  "generatedAt": "2026-05-09T17:54:09.704Z",
   "lifecycle_stages": [
     {
-      "id": "generation",
-      "order": 1,
-      "name": "Waste generation",
-      "blurb": "Households, businesses, industry, and construction sites produce waste."
-    },
-    {
       "id": "separation",
-      "order": 2,
+      "order": 1,
       "name": "Source separation",
       "blurb": "Sorting at the point of origin (currently mostly absent in Pristina)."
     },
     {
       "id": "collection",
-      "order": 3,
+      "order": 2,
       "name": "Collection",
       "blurb": "Pastrimi trucks (and informal collectors) gather waste from bins."
     },
     {
-      "id": "transport",
-      "order": 4,
-      "name": "Transport",
-      "blurb": "Movement from collection points to landfill or treatment facilities."
-    },
-    {
       "id": "treatment",
-      "order": 5,
+      "order": 3,
       "name": "Sorting / MRF / treatment",
       "blurb": "Materials Recovery Facilities — none currently exist in Kosovo."
     },
     {
       "id": "recovery",
-      "order": 6,
+      "order": 4,
       "name": "Recovery & EPR / DRS",
       "blurb": "Recycling, deposit-refund, EPR producer responsibility schemes."
     },
     {
       "id": "disposal",
-      "order": 7,
+      "order": 5,
       "name": "Final disposal",
       "blurb": "Mirash landfill and 458–1,572 illegal dumpsites."
     },
     {
       "id": "billing",
-      "order": 8,
+      "order": 6,
       "name": "Billing & financing",
       "blurb": "Tariffs, tipping fees, EU funding, donor grants, landfill tax."
     },
     {
+      "id": "governance",
+      "order": 7,
+      "name": "Governance & corporate",
+      "blurb": "Shareholder, board, CEO appointments — internal company governance."
+    },
+    {
       "id": "regulation",
-      "order": 9,
+      "order": 8,
       "name": "Regulation & policy",
       "blurb": "Strategy, laws, EU acquis, ministerial decisions."
     },
     {
       "id": "enforcement",
-      "order": 10,
+      "order": 9,
       "name": "Enforcement & data",
       "blurb": "Inspection, sanctions, illegal-dumping tracking, audit."
     }
@@ -72,7 +66,6 @@
       "tier": "national",
       "subtype": null,
       "parent": null,
-      "note": null,
       "future": false,
       "rich": {
         "label": "Ministry of Env.",
@@ -110,7 +103,18 @@
         "quote": null,
         "quoteSource": null,
         "quoteUrl": "https://www.trade.gov/country-commercial-guides/kosovo-waste-management-and-recycling"
-      }
+      },
+      "graph": {
+        "show": true,
+        "legacyId": "mmphi",
+        "position": {
+          "x": 380,
+          "y": 420
+        },
+        "displayName": "Ministry of Env.",
+        "tier": "national"
+      },
+      "activityCount": 43
     },
     {
       "id": "AMMK",
@@ -119,7 +123,6 @@
       "tier": "national",
       "subtype": null,
       "parent": "MMPHI",
-      "note": null,
       "future": false,
       "rich": {
         "label": "Env. Agency (AMMK)",
@@ -152,7 +155,18 @@
         "quote": null,
         "quoteSource": null,
         "quoteUrl": "https://prishtinainsight.com/waste-management-a-systemic-crisis-in-kosovo-mag/"
-      }
+      },
+      "graph": {
+        "show": true,
+        "legacyId": "ammk",
+        "position": {
+          "x": 980,
+          "y": 420
+        },
+        "displayName": "Env. Agency (AMMK)",
+        "tier": "national"
+      },
+      "activityCount": 37
     },
     {
       "id": "MoEcon",
@@ -161,9 +175,12 @@
       "tier": "national",
       "subtype": null,
       "parent": null,
-      "note": null,
       "future": false,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 5
     },
     {
       "id": "MoFin",
@@ -172,9 +189,12 @@
       "tier": "national",
       "subtype": null,
       "parent": null,
-      "note": null,
       "future": false,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 14
     },
     {
       "id": "MINT",
@@ -183,9 +203,12 @@
       "tier": "national",
       "subtype": null,
       "parent": null,
-      "note": null,
       "future": false,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 14
     },
     {
       "id": "MoEd",
@@ -194,9 +217,12 @@
       "tier": "national",
       "subtype": null,
       "parent": null,
-      "note": null,
       "future": false,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "NIPHK",
@@ -205,9 +231,12 @@
       "tier": "national",
       "subtype": null,
       "parent": null,
-      "note": null,
       "future": false,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "INSP",
@@ -216,9 +245,12 @@
       "tier": "municipal",
       "subtype": null,
       "parent": null,
-      "note": null,
       "future": false,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 16
     },
     {
       "id": "POL",
@@ -227,9 +259,13 @@
       "tier": "national",
       "subtype": null,
       "parent": null,
-      "note": "issues waste-related fines, sporadic",
       "future": false,
-      "rich": null
+      "systemNote": "issues waste-related fines, sporadic",
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 3
     },
     {
       "id": "SUP_COURT",
@@ -238,9 +274,50 @@
       "tier": "national",
       "subtype": null,
       "parent": null,
-      "note": null,
       "future": false,
-      "rich": null
+      "rich": {
+        "label": "Supreme Court",
+        "fullName": "Supreme Court of Kosovo",
+        "role": "Issued the consequential June 2025 ruling upholding the Municipal Assembly's December 2024 regulation. Confirmed Pastrimi's exclusive billing authority. Ended the dual-billing crisis.",
+        "keyPerson": null,
+        "leverage": [
+          "Final arbiter of regulatory disputes",
+          "June 2025 ruling gave Pastrimi billing authority precedent"
+        ],
+        "dependencies": [
+          "Cases brought to it — passive role",
+          "Political environment affecting case processing speed"
+        ],
+        "fears": [],
+        "stats": [
+          {
+            "label": "Key ruling",
+            "value": "June 2025 — upheld Dec 2024 regulation"
+          },
+          {
+            "label": "Effect",
+            "value": "Municipality forced to return €2.7M in collected funds to Pastrimi"
+          },
+          {
+            "label": "Constitutional Court",
+            "value": "Separate case — status unclear as of 2025"
+          }
+        ],
+        "quote": "\"This was a verdict that provided a solution and an epilogue to every doubt that has existed so far.\"",
+        "quoteSource": "Petrit Reçica (on the ruling), KOHA March 2026",
+        "quoteUrl": "https://www.koha.net/en/lajmet-e-mbremjes-ktv/pastrimi-kerkon-nga-komuna-tia-ktheje-parate-qe-i-mori-nga-qytetaret"
+      },
+      "graph": {
+        "show": true,
+        "legacyId": "courts",
+        "position": {
+          "x": 80,
+          "y": 420
+        },
+        "displayName": "Supreme Court",
+        "tier": "national"
+      },
+      "activityCount": 5
     },
     {
       "id": "CON_COURT",
@@ -249,9 +326,12 @@
       "tier": "national",
       "subtype": null,
       "parent": null,
-      "note": null,
       "future": false,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "OMB",
@@ -260,8 +340,8 @@
       "tier": "national",
       "subtype": null,
       "parent": null,
-      "note": "Hilmi Jashari",
       "future": false,
+      "systemNote": "Hilmi Jashari",
       "rich": {
         "label": "Ombudsperson",
         "fullName": "Ombudsperson Institution of Kosovo",
@@ -296,7 +376,18 @@
         "quote": "\"Complete irresponsibility of the representatives of the municipality in relation to the interests and concerns of the citizens of Pristina.\"",
         "quoteSource": "Ombudsperson statement, May 19, 2025",
         "quoteUrl": "https://oik-rks.org/en/2025/05/19/the-ombudsperson-met-with-the-ceo-of-the-company-pastrimi-the-mayor-of-pristina-was-absent/"
-      }
+      },
+      "graph": {
+        "show": true,
+        "legacyId": "ombudsperson",
+        "position": {
+          "x": 1280,
+          "y": 420
+        },
+        "displayName": "Ombudsperson",
+        "tier": "national"
+      },
+      "activityCount": 7
     },
     {
       "id": "KOM",
@@ -305,8 +396,8 @@
       "tier": "municipal",
       "subtype": null,
       "parent": null,
-      "note": "Mayor Përparim Rama (LDK)",
       "future": false,
+      "systemNote": "Mayor Përparim Rama (LDK)",
       "rich": {
         "label": "Municipality",
         "fullName": "Municipality of Pristina",
@@ -349,7 +440,18 @@
         "quote": "\"I apologize to the citizens who are facing confusion because it is true that 'Pastrimi', citing the changes to the regulation made by the municipal assembly, has started collecting invoices for 2025.\"",
         "quoteSource": "Bekim Brestovci (Municipality Director of Public Services), KOHA January 2025",
         "quoteUrl": "https://www.koha.net/en/arberi/prishtinasit-do-te-faturohen-dyfish-per-mbeturinat"
-      }
+      },
+      "graph": {
+        "show": true,
+        "legacyId": "municipality",
+        "position": {
+          "x": 80,
+          "y": 740
+        },
+        "displayName": "Municipality",
+        "tier": "municipal"
+      },
+      "activityCount": 58
     },
     {
       "id": "ASMB",
@@ -358,8 +460,8 @@
       "tier": "municipal",
       "subtype": null,
       "parent": null,
-      "note": "PDK+VV bloc, opposition to mayor",
       "future": false,
+      "systemNote": "PDK+VV bloc, opposition to mayor",
       "rich": {
         "label": "Municipal Assembly",
         "fullName": "Pristina Municipal Assembly",
@@ -399,7 +501,18 @@
         "quote": null,
         "quoteSource": null,
         "quoteUrl": "https://www.koha.net/en/arberi/qytetaret-ne-prishtine-vazhdojne-te-jene-ne-dileme-se-ku-ti-paguajne-tarifat-e-mbeturinave"
-      }
+      },
+      "graph": {
+        "show": true,
+        "legacyId": "assembly",
+        "position": {
+          "x": 380,
+          "y": 740
+        },
+        "displayName": "Municipal Assembly",
+        "tier": "municipal"
+      },
+      "activityCount": 3
     },
     {
       "id": "PAS",
@@ -408,7 +521,6 @@
       "tier": "regional",
       "subtype": "public",
       "parent": null,
-      "note": null,
       "future": false,
       "employees": "800-900",
       "trucks_household": 14,
@@ -466,7 +578,18 @@
         "quote": "\"From January 2025 onwards, it is our sole competence.\"",
         "quoteSource": "CEO Petrit Reçica, Telegrafi April 2025",
         "quoteUrl": "https://telegrafi.com/en/mospajtimet-se-ku-duhet-te-paguhen-faturat-e-mbeturinave-ne-prishtine-flet-kryeshefi-ndermarrjes-pastrimi/"
-      }
+      },
+      "graph": {
+        "show": true,
+        "legacyId": "pastrimi",
+        "position": {
+          "x": 680,
+          "y": 1060
+        },
+        "displayName": "Pastrimi",
+        "tier": "operational"
+      },
+      "activityCount": 15
     },
     {
       "id": "PAS_UNION",
@@ -475,9 +598,57 @@
       "tier": "regional",
       "subtype": null,
       "parent": null,
-      "note": "Ardian Krasniqi president",
       "future": false,
-      "rich": null
+      "systemNote": "Ardian Krasniqi president",
+      "rich": {
+        "label": "Pastrimi Workers",
+        "fullName": "Pastrimi Workers' Union",
+        "role": "~800–900 employees. Drivers, collectors, dispatch staff. Heavily unionized. Struck May–June 2025 over Municipality withholding payments and private operators being contracted. Politically aligned with PDK.",
+        "keyPerson": "Ardian Krasniqi (Union President)",
+        "leverage": [
+          "Can stop collection entirely by striking",
+          "Political alignment with PDK gives union Assembly protection",
+          "Public sympathy when framed as \"protecting public jobs\""
+        ],
+        "dependencies": [
+          "Pastrimi management not collapsing financially",
+          "PDK maintaining Assembly influence",
+          "No private operators entering territory"
+        ],
+        "fears": [
+          "Municipality successfully introducing private operators",
+          "Pastrimi bankruptcy → job losses",
+          "Being split between Pastrimi and private operator routes"
+        ],
+        "stats": [
+          {
+            "label": "Headcount",
+            "value": "~800–900"
+          },
+          {
+            "label": "Strike duration (2025)",
+            "value": "~1 month (May–June)"
+          },
+          {
+            "label": "Political alignment",
+            "value": "PDK (same bloc that passed favorable Dec 2024 regulation)"
+          }
+        ],
+        "quote": "\"We have been doing this job for many years. Don't let them stop us. We are tired of the tricks they play among themselves.\"",
+        "quoteSource": "Adnan Sinani (Pastrimi worker), KOHA June 2025",
+        "quoteUrl": "https://www.koha.net/en/lajmet-e-mbremjes-ktv/punetoret-e-krm-pastrimi-sdalin-ne-terren-sduan-ti-ndajne-punet-me-kompani-te-tjera"
+      },
+      "graph": {
+        "show": true,
+        "legacyId": "workers",
+        "position": {
+          "x": 80,
+          "y": 1060
+        },
+        "displayName": "Pastrimi Workers",
+        "tier": "operational"
+      },
+      "activityCount": 0
     },
     {
       "id": "PRV",
@@ -486,8 +657,8 @@
       "tier": "regional",
       "subtype": "private",
       "parent": null,
-      "note": "Hired by KOM during Feb-Jun 2025 emergency",
       "future": false,
+      "systemNote": "Hired by KOM during Feb-Jun 2025 emergency",
       "rich": {
         "label": "Private Operators",
         "fullName": "Private Waste Operators (tender candidates)",
@@ -519,7 +690,18 @@
         "quote": null,
         "quoteSource": null,
         "quoteUrl": null
-      }
+      },
+      "graph": {
+        "show": true,
+        "legacyId": "private_operators",
+        "position": {
+          "x": 1280,
+          "y": 1060
+        },
+        "displayName": "Private Operators",
+        "tier": "blocked"
+      },
+      "activityCount": 3
     },
     {
       "id": "KLM",
@@ -528,7 +710,6 @@
       "tier": "national",
       "subtype": "public",
       "parent": "MoEcon",
-      "note": null,
       "future": false,
       "rich": {
         "label": "KLMC",
@@ -574,7 +755,18 @@
         "quote": "\"The problem with sewage at this landfill has been out of control for many years because the collection point has flooded.\"",
         "quoteSource": "Dardan Velija (KLMC Director), RFE/RL 2024",
         "quoteUrl": "https://www.rferl.org/a/pollution-balkans-kosovo/33210735.html"
-      }
+      },
+      "graph": {
+        "show": true,
+        "legacyId": "klmc",
+        "position": {
+          "x": 980,
+          "y": 1060
+        },
+        "displayName": "KLMC",
+        "tier": "operational"
+      },
+      "activityCount": 7
     },
     {
       "id": "KEK",
@@ -583,9 +775,13 @@
       "tier": "national",
       "subtype": "public",
       "parent": null,
-      "note": "Owns land Mirash sits on",
       "future": false,
-      "rich": null
+      "systemNote": "Owns land Mirash sits on",
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "MIRASH",
@@ -594,9 +790,69 @@
       "tier": "regional",
       "subtype": "landfill",
       "parent": null,
-      "note": "Operating beyond capacity, EU flagged for closure ~10 years ago",
       "future": false,
-      "rich": null
+      "systemNote": "Operating beyond capacity, EU flagged for closure ~10 years ago",
+      "rich": {
+        "label": "Mirash Landfill",
+        "fullName": "Mirash Regional Landfill (Obiliq municipality)",
+        "role": "Physical disposal endpoint for Pristina-region waste. Built 2004–2006 (€3.5M EU-funded). 7 hectares, ~10km west of Pristina. Receives ~160,000 tons/year from 6+ cities. Exceeds designed capacity. No leachate treatment, no environmental permit. Methane fire risk. Closure is EU priority — not closed.",
+        "keyPerson": null,
+        "leverage": [],
+        "dependencies": [
+          "KLMC operational management",
+          "Pastrimi trucks continuing to deliver",
+          "EU and Kosovo government not forcing closure before replacement is ready"
+        ],
+        "fears": [],
+        "stats": [
+          {
+            "label": "Built",
+            "value": "2004–2006, cost ~€3.5M (EU-funded)"
+          },
+          {
+            "label": "Size",
+            "value": "7 hectares (~10 football pitches)"
+          },
+          {
+            "label": "Annual intake",
+            "value": "~160,000 metric tons from 6+ cities"
+          },
+          {
+            "label": "Municipalities served",
+            "value": "Pristina, Drenas, Lipjan, Podujeva, Gracanica, Obilic, Fushe Kosove"
+          },
+          {
+            "label": "Leachate treatment",
+            "value": "None. Collection point has flooded for years."
+          },
+          {
+            "label": "Environmental permit",
+            "value": "None (despite KLMC applications)"
+          },
+          {
+            "label": "Methane risk",
+            "value": "Ombudsperson warned of potential explosion risk (2017)"
+          },
+          {
+            "label": "Closure status",
+            "value": "EU-flagged immediate priority. Not closed."
+          }
+        ],
+        "quote": "\"During the summer, the smell here is unbearable, we complain, but no one listens to us.\"",
+        "quoteSource": "Adem Shalaku (Lajthishtë village, near Mirash), Prishtina Insight 2025",
+        "quoteUrl": "https://prishtinainsight.com/waste-management-a-systemic-crisis-in-kosovo-mag/"
+      },
+      "graph": {
+        "show": true,
+        "legacyId": "mirash",
+        "position": {
+          "x": 980,
+          "y": 1380
+        },
+        "displayName": "Mirash Landfill",
+        "tier": "endpoint"
+      },
+      "activityCount": 0
     },
     {
       "id": "ILLEGAL_DUMPS",
@@ -605,9 +861,12 @@
       "tier": "national",
       "subtype": "illegal_dump",
       "parent": null,
-      "note": null,
       "future": false,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "CIT",
@@ -616,7 +875,6 @@
       "tier": "municipal",
       "subtype": null,
       "parent": null,
-      "note": null,
       "future": false,
       "rich": {
         "label": "Citizens",
@@ -661,7 +919,18 @@
         "quote": "\"The waste in every corner is causing us problems even in business. The containers are of poor quality and insufficient given the high volume.\"",
         "quoteSource": "Bajram Islami (Kalabria neighbourhood), Prishtina Insight 2025",
         "quoteUrl": "https://prishtinainsight.com/waste-management-a-systemic-crisis-in-kosovo-mag/"
-      }
+      },
+      "graph": {
+        "show": true,
+        "legacyId": "citizens",
+        "position": {
+          "x": 80,
+          "y": 1380
+        },
+        "displayName": "Citizens",
+        "tier": "citizens"
+      },
+      "activityCount": 16
     },
     {
       "id": "IND_CON",
@@ -670,9 +939,13 @@
       "tier": "national",
       "subtype": "commercial",
       "parent": null,
-      "note": "Largest single source of illegal CDW dumping",
       "future": false,
-      "rich": null
+      "systemNote": "Largest single source of illegal CDW dumping",
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 13
     },
     {
       "id": "INFORMAL",
@@ -681,9 +954,63 @@
       "tier": "national",
       "subtype": "informal",
       "parent": null,
-      "note": null,
       "future": false,
-      "rich": null
+      "rich": {
+        "label": "Informal Collectors",
+        "fullName": "Informal Waste Pickers (predominantly RAE community)",
+        "role": "Predominantly Roma, Ashkali, Egyptian community members. Work bins before Pastrimi trucks arrive (~5am). Extract metal, plastic, paper, glass. Earn ~€15/day from ~100kg recyclables. Sell to aggregators (Rec-Kos, etc.) who export to Turkey and Greece. Technically unlicensed but zero enforcement.",
+        "keyPerson": "Emrah Cermjani (Roma in Action NGO)",
+        "leverage": [
+          "Provide recycling function the state does not provide",
+          "Zero enforcement means they operate freely"
+        ],
+        "dependencies": [
+          "Bins being accessible and full",
+          "Rec-Kos and other aggregators buying materials",
+          "Not being formalized (formalization would cost benefits and expose to taxes)"
+        ],
+        "fears": [
+          "EU compliance pressure leading to formalization drives",
+          "Bins being moved indoors or locked",
+          "Aggregator prices falling"
+        ],
+        "stats": [
+          {
+            "label": "Community",
+            "value": "Predominantly Roma, Ashkali, Egyptian (RAE)"
+          },
+          {
+            "label": "Daily earnings",
+            "value": "~€15 from ~100kg recyclables"
+          },
+          {
+            "label": "Export chain",
+            "value": "Rec-Kos → steel factories in Turkey and Greece"
+          },
+          {
+            "label": "Legal status",
+            "value": "Unlicensed — enforcement is zero"
+          },
+          {
+            "label": "Kosovo recycling rate",
+            "value": "~3% — informal sector does most of it"
+          }
+        ],
+        "quote": null,
+        "quoteSource": null,
+        "quoteUrl": "https://prishtinainsight.com/waste-warriors-of-necessity-informal-waste-pickers-carving-a-livelihood-from-scraps-mag/"
+      },
+      "graph": {
+        "show": true,
+        "legacyId": "informal_collectors",
+        "position": {
+          "x": 680,
+          "y": 1380
+        },
+        "displayName": "Informal Collectors",
+        "tier": "informal"
+      },
+      "activityCount": 0
     },
     {
       "id": "EU",
@@ -692,7 +1019,6 @@
       "tier": "international",
       "subtype": null,
       "parent": null,
-      "note": null,
       "future": false,
       "rich": {
         "label": "EU Delegation",
@@ -729,7 +1055,18 @@
         "quote": "\"Only a few landfills require entrance fees, which only cover the basic cost of landfill management. For waste collection, there is no pay-as-you-throw system.\"",
         "quoteSource": "EU Office in Pristina, Balkan Insight 2025",
         "quoteUrl": "https://balkaninsight.com/2025/11/28/unbearable-the-legal-and-illegal-landfills-harming-lives-and-land-in-kosovo/"
-      }
+      },
+      "graph": {
+        "show": true,
+        "legacyId": "eu",
+        "position": {
+          "x": 380,
+          "y": 100
+        },
+        "displayName": "EU Delegation",
+        "tier": "external"
+      },
+      "activityCount": 20
     },
     {
       "id": "JICA",
@@ -738,9 +1075,54 @@
       "tier": "international",
       "subtype": null,
       "parent": null,
-      "note": null,
       "future": false,
-      "rich": null
+      "rich": {
+        "label": "Int'l Donors",
+        "fullName": "JICA / GIZ / EU IPA / World Bank",
+        "role": "International donors funding infrastructure, assessments, and truck procurement. JICA provided 10 new compactor trucks to Pastrimi and ~30 to Ekoregjioni (Prizren). GIZ conducted landfill assessments.",
+        "keyPerson": null,
+        "leverage": [
+          "Grant funding (JICA: €4.83M for ~40 trucks regionally)",
+          "Technical expertise and assessment capacity",
+          "Reporting lines that feed into EU accession reviews"
+        ],
+        "dependencies": [
+          "Kosovo government cooperation for project implementation",
+          "MMPHI and KLMC as institutional counterparts"
+        ],
+        "fears": [
+          "Grant-funded assets (trucks) not maintained after project close",
+          "Institutional reforms not sustaining after donor exit"
+        ],
+        "stats": [
+          {
+            "label": "JICA grant",
+            "value": "543M JPY / ~€4.83M"
+          },
+          {
+            "label": "Trucks to Pastrimi",
+            "value": "10 new compactors"
+          },
+          {
+            "label": "Trucks to Ekoregjioni",
+            "value": "~30 new compactors"
+          }
+        ],
+        "quote": null,
+        "quoteSource": null,
+        "quoteUrl": "https://www.jica.go.jp/kosovo/english/activities/activity05.html"
+      },
+      "graph": {
+        "show": true,
+        "legacyId": "donors",
+        "position": {
+          "x": 680,
+          "y": 100
+        },
+        "displayName": "Int'l Donors",
+        "tier": "external"
+      },
+      "activityCount": 0
     },
     {
       "id": "GIZ",
@@ -749,9 +1131,12 @@
       "tier": "international",
       "subtype": null,
       "parent": null,
-      "note": null,
       "future": false,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "WB",
@@ -760,9 +1145,12 @@
       "tier": "international",
       "subtype": null,
       "parent": null,
-      "note": null,
       "future": false,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "INDEP",
@@ -771,9 +1159,13 @@
       "tier": "national",
       "subtype": "think_tank",
       "parent": null,
-      "note": "April 2026 policy doc co-publishers",
       "future": false,
-      "rich": null
+      "systemNote": "April 2026 policy doc co-publishers",
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "ATLAS",
@@ -782,9 +1174,12 @@
       "tier": "national",
       "subtype": "think_tank",
       "parent": null,
-      "note": null,
       "future": false,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "LDIK",
@@ -793,9 +1188,12 @@
       "tier": "national",
       "subtype": "ngo",
       "parent": null,
-      "note": null,
       "future": false,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "PRESS",
@@ -804,9 +1202,12 @@
       "tier": "national",
       "subtype": "press",
       "parent": null,
-      "note": null,
       "future": false,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 10
     },
     {
       "id": "STRAT_2024_2030",
@@ -815,9 +1216,12 @@
       "tier": "national",
       "subtype": null,
       "parent": null,
-      "note": null,
       "future": false,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "LAW_2012",
@@ -826,9 +1230,12 @@
       "tier": "national",
       "subtype": null,
       "parent": null,
-      "note": null,
       "future": false,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "REG_2024",
@@ -837,9 +1244,12 @@
       "tier": "municipal",
       "subtype": null,
       "parent": null,
-      "note": null,
       "future": false,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "HYBRID_REG",
@@ -848,9 +1258,13 @@
       "tier": "national",
       "subtype": null,
       "parent": null,
-      "note": "NEW - independent regulator for tariff setting, performance monitoring, dispute resolution. Analogous to ARRU (water) / ERO (energy).",
       "future": true,
-      "rich": null
+      "systemNote": "NEW - independent regulator for tariff setting, performance monitoring, dispute resolution. Analogous to ARRU (water) / ERO (energy).",
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "CSC",
@@ -859,9 +1273,13 @@
       "tier": "national",
       "subtype": null,
       "parent": null,
-      "note": "NEW - coordinates policies + investments across central + local + private + civil society + donors. INDEP/KAS Recommendation 2 named.",
       "future": true,
-      "rich": null
+      "systemNote": "NEW - coordinates policies + investments across central + local + private + civil society + donors. INDEP/KAS Recommendation 2 named.",
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "ZONE_1",
@@ -870,9 +1288,13 @@
       "tier": "regional",
       "subtype": "zone",
       "parent": null,
-      "note": "NEW - one of five inter-municipal cooperation zones legally enshrined",
       "future": true,
-      "rich": null
+      "systemNote": "NEW - one of five inter-municipal cooperation zones legally enshrined",
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "ZONE_2",
@@ -881,9 +1303,12 @@
       "tier": "regional",
       "subtype": "zone",
       "parent": null,
-      "note": null,
       "future": true,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "ZONE_3",
@@ -892,9 +1317,12 @@
       "tier": "regional",
       "subtype": "zone",
       "parent": null,
-      "note": null,
       "future": true,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "ZONE_4",
@@ -903,9 +1331,12 @@
       "tier": "regional",
       "subtype": "zone",
       "parent": null,
-      "note": null,
       "future": true,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "ZONE_5",
@@ -914,9 +1345,12 @@
       "tier": "regional",
       "subtype": "zone",
       "parent": null,
-      "note": null,
       "future": true,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "NWIS",
@@ -925,9 +1359,13 @@
       "tier": "national",
       "subtype": "data_system",
       "parent": null,
-      "note": "NEW - mandatory reporting by municipalities, operators, PROs",
       "future": true,
-      "rich": null
+      "systemNote": "NEW - mandatory reporting by municipalities, operators, PROs",
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "PRO_PACK",
@@ -936,9 +1374,13 @@
       "tier": "national",
       "subtype": "pro",
       "parent": null,
-      "note": "Producer Responsibility Org for packaging EPR",
       "future": true,
-      "rich": null
+      "systemNote": "Producer Responsibility Org for packaging EPR",
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "PRO_WEEE",
@@ -947,9 +1389,12 @@
       "tier": "national",
       "subtype": "pro",
       "parent": null,
-      "note": null,
       "future": true,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "PRO_ELV",
@@ -958,9 +1403,12 @@
       "tier": "national",
       "subtype": "pro",
       "parent": null,
-      "note": null,
       "future": true,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "PRO_DRS",
@@ -969,9 +1417,13 @@
       "tier": "national",
       "subtype": "pro",
       "parent": null,
-      "note": "Operates Deposit Refund System",
       "future": true,
-      "rich": null
+      "systemNote": "Operates Deposit Refund System",
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "MRF_NETWORK",
@@ -980,9 +1432,13 @@
       "tier": "regional",
       "subtype": "mrf",
       "parent": null,
-      "note": "Currently zero national sorting plants",
       "future": true,
-      "rich": null
+      "systemNote": "Currently zero national sorting plants",
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "CAC_NETWORK",
@@ -991,9 +1447,13 @@
       "tier": "municipal",
       "subtype": "cac",
       "parent": null,
-      "note": "For bulky/special waste",
       "future": true,
-      "rich": null
+      "systemNote": "For bulky/special waste",
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "REPLACEMENT_LANDFILL",
@@ -1002,9 +1462,12 @@
       "tier": "regional",
       "subtype": "landfill",
       "parent": null,
-      "note": null,
       "future": true,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "CE_INNOV_FUND",
@@ -1013,9 +1476,13 @@
       "tier": "national",
       "subtype": null,
       "parent": null,
-      "note": "Donor-funded; INDEP/KAS Recommendation 14",
       "future": true,
-      "rich": null
+      "systemNote": "Donor-funded; INDEP/KAS Recommendation 14",
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "LANDFILL_TAX",
@@ -1024,9 +1491,13 @@
       "tier": "national",
       "subtype": null,
       "parent": null,
-      "note": "INDEP/KAS Recommendation 10; revenue source",
       "future": true,
-      "rich": null
+      "systemNote": "INDEP/KAS Recommendation 10; revenue source",
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "PERF_FINANCE",
@@ -1035,9 +1506,13 @@
       "tier": "national",
       "subtype": null,
       "parent": null,
-      "note": "INDEP/KAS Recommendation 5; ties transfers to recycling outcomes",
       "future": true,
-      "rich": null
+      "systemNote": "INDEP/KAS Recommendation 5; ties transfers to recycling outcomes",
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "GPP",
@@ -1046,9 +1521,13 @@
       "tier": "national",
       "subtype": null,
       "parent": null,
-      "note": "Procurement Regulatory Commission under MoFin",
       "future": true,
-      "rich": null
+      "systemNote": "Procurement Regulatory Commission under MoFin",
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "NEW_LAW_IWM",
@@ -1057,9 +1536,13 @@
       "tier": "national",
       "subtype": null,
       "parent": null,
-      "note": "Government-approved Feb-Mar 2026; Assembly approval expected Aug-Sep 2026",
       "future": true,
-      "rich": null
+      "systemNote": "Government-approved Feb-Mar 2026; Assembly approval expected Aug-Sep 2026",
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "DRS_POLICY",
@@ -1068,9 +1551,13 @@
       "tier": "national",
       "subtype": null,
       "parent": null,
-      "note": "Plastic/glass/aluminum bottles 0.15-2L",
       "future": true,
-      "rich": null
+      "systemNote": "Plastic/glass/aluminum bottles 0.15-2L",
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "EPR_PACK_POLICY",
@@ -1079,9 +1566,12 @@
       "tier": "national",
       "subtype": null,
       "parent": null,
-      "note": null,
       "future": true,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "EPR_WEEE_POLICY",
@@ -1090,9 +1580,12 @@
       "tier": "national",
       "subtype": null,
       "parent": null,
-      "note": null,
       "future": true,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "SOURCE_SEP_MANDATE",
@@ -1101,9 +1594,12 @@
       "tier": "national",
       "subtype": null,
       "parent": null,
-      "note": null,
       "future": true,
-      "rich": null
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     },
     {
       "id": "FNCC_RULE",
@@ -1112,9 +1608,13 @@
       "tier": "national",
       "subtype": null,
       "parent": null,
-      "note": "No taxpayer subsidy of waste services; legally locks PAYT + EPR cost recovery",
       "future": true,
-      "rich": null
+      "systemNote": "No taxpayer subsidy of waste services; legally locks PAYT + EPR cost recovery",
+      "rich": null,
+      "graph": {
+        "show": false
+      },
+      "activityCount": 0
     }
   ],
   "activities": [
@@ -1157,7 +1657,7 @@
           "unknown": false,
           "note": null
         },
-        "COURT": {
+        "SUP_COURT": {
           "role": "I",
           "disputed": false,
           "unknown": false,
@@ -1268,7 +1768,7 @@
           "unknown": false,
           "note": "during emergency"
         },
-        "COURT": {
+        "SUP_COURT": {
           "role": "A",
           "disputed": false,
           "unknown": false,
@@ -1461,7 +1961,7 @@
       "id": "operational-10-appoint-pastrimi-ceo",
       "layer": "operational",
       "sourceRow": 10,
-      "stage": "regulation",
+      "stage": "governance",
       "horizon": "current",
       "name": "Appoint Pastrimi CEO",
       "rawName": "Appoint Pastrimi CEO",
@@ -1480,7 +1980,7 @@
       "id": "operational-11-appoint-pastrimi-board-5-7",
       "layer": "operational",
       "sourceRow": 11,
-      "stage": "regulation",
+      "stage": "governance",
       "horizon": "current",
       "name": "Appoint Pastrimi Board (5-7)",
       "rawName": "Appoint Pastrimi Board (5-7)",
@@ -1528,7 +2028,7 @@
           "unknown": false,
           "note": "beneficiary"
         },
-        "COURT": {
+        "SUP_COURT": {
           "role": "R",
           "disputed": false,
           "unknown": false,
@@ -3630,7 +4130,7 @@
           "unknown": false,
           "note": null
         },
-        "COURT": {
+        "SUP_COURT": {
           "role": "A,R",
           "disputed": false,
           "unknown": false,
@@ -3856,7 +4356,7 @@
           "unknown": false,
           "note": null
         },
-        "COURT": {
+        "SUP_COURT": {
           "role": "I",
           "disputed": false,
           "unknown": false,
@@ -4121,26 +4621,9 @@
       },
       "note": "Emerges from the dossier's system-map data plus DYVÓ's \"bin tourism\" finding (cross-neighborhood + cross-municipal waste movement that GPS evidence could expose). MMPHI is A as policy owner; AMMK is R for the data side; KOM is C (each municipality owns part of the picture). WMZ-level cooperation is needed but not yet operational — the new law's Five Waste Management Zones will eventually be the structural answer here, but until 2027 there is no operational R for cross-jurisdiction flow investigation.",
       "source": "dossier/raci/enforcement.md#row-18"
-    },
-    {
-      "id": "enforcement-19-green-police-enforcement-unit",
-      "layer": "enforcement",
-      "sourceRow": 19,
-      "stage": "enforcement",
-      "horizon": "speculative",
-      "name": "\"Green Police\" enforcement unit",
-      "rawName": "\"Green Police\" enforcement unit",
-      "raci": {
-        "MMPHI": {
-          "role": "A",
-          "disputed": false,
-          "unknown": true,
-          "note": "—citizen-proposednotyetlegislatednotincurrentornew-lawarchitecture"
-        }
-      },
-      "note": "",
-      "source": "dossier/raci/enforcement.md#row-19"
-    },
+    }
+  ],
+  "proposals": [
     {
       "id": "recommendations-1-national-data-system-for-material-flows",
       "layer": "recommendations",
@@ -5519,752 +6002,2255 @@
       "source": "dossier/raci/recommendations.md#row-21"
     }
   ],
+  "signals": [
+    {
+      "id": "enforcement-19-green-police-enforcement-unit",
+      "layer": "enforcement",
+      "sourceRow": 19,
+      "stage": "enforcement",
+      "horizon": "speculative",
+      "name": "\"Green Police\" enforcement unit",
+      "rawName": "\"Green Police\" enforcement unit",
+      "raci": {
+        "MMPHI": {
+          "role": "A",
+          "disputed": false,
+          "unknown": true,
+          "note": "—citizen-proposednotyetlegislatednotincurrentornew-lawarchitecture"
+        }
+      },
+      "note": "",
+      "source": "dossier/raci/enforcement.md#row-19"
+    }
+  ],
   "edges": [
     {
+      "id": "KOM-shareholder-PAS",
       "from": "KOM",
       "to": "PAS",
       "type": "shareholder",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "Main shareholder; adversarial post-Dec 2024",
-      "horizon": "current"
+      "systemNote": "Main shareholder; adversarial post-Dec 2024",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "MoEcon-appoints-PAS",
       "from": "MoEcon",
       "to": "PAS",
       "type": "appoints",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "Appoints 5-7 person Board which appoints CEO; KOM as shareholder lacks operational control",
-      "horizon": "current"
+      "systemNote": "Appoints 5-7 person Board which appoints CEO; KOM as shareholder lacks operational control",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "MoEcon-regulates-KLM",
       "from": "MoEcon",
       "to": "KLM",
       "type": "regulates",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "KLM operates under MoEcon",
-      "horizon": "current"
+      "systemNote": "KLM operates under MoEcon",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "MMPHI-licenses-PAS",
       "from": "MMPHI",
       "to": "PAS",
       "type": "licenses",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "Has authority but does not use it as performance-enforcement",
-      "horizon": "current"
+      "systemNote": "Has authority but does not use it as performance-enforcement",
+      "future": false,
+      "graph": {
+        "show": true,
+        "legacyId": "mmphi-pastrimi-license",
+        "label": "Operating license (unenforced)",
+        "relationshipType": "authority",
+        "statusLabel": "active",
+        "narrativeNote": "MMPHI holds licensing authority over all waste operators including Pastrimi. Has not used this authority to sanction Pastrimi for service failures despite this being legally available."
+      }
     },
     {
+      "id": "MMPHI-advises-REG_2024",
       "from": "MMPHI",
       "to": "REG_2024",
       "type": "advises",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "Approved as 'in line with Law on Waste'",
-      "horizon": "current"
+      "systemNote": "Approved as 'in line with Law on Waste'",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "MMPHI-advises-STRAT_2024_2030",
       "from": "MMPHI",
       "to": "STRAT_2024_2030",
       "type": "advises",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "MMPHI is A,R for strategy",
-      "horizon": "current"
+      "systemNote": "MMPHI is A,R for strategy",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "AMMK-inspects-MIRASH",
       "from": "AMMK",
       "to": "MIRASH",
       "type": "inspects",
+      "type_detail": null,
+      "category": "oversight",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE_WEAK",
-      "note": "Reports compliance gaps but does not enforce; no integrated environmental permit",
-      "horizon": "current"
+      "systemNote": "Reports compliance gaps but does not enforce; no integrated environmental permit",
+      "future": false,
+      "graph": {
+        "show": true,
+        "legacyId": "ammk-mirash-monitoring",
+        "label": "Monitors, does not enforce",
+        "relationshipType": "oversight",
+        "statusLabel": "active",
+        "narrativeNote": "AMMK confirmed: no Kosovo sanitary landfill has an integrated environmental permit despite KLMC applications. AMMK produces reports and data. No enforcement mechanism — enforcement would require MMPHI action, which has not occurred."
+      }
     },
     {
+      "id": "AMMK-inspects-ILLEGAL_DUMPS",
       "from": "AMMK",
       "to": "ILLEGAL_DUMPS",
       "type": "inspects",
+      "type_detail": null,
+      "category": "oversight",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "Maintains official register: 458 (2024)",
-      "horizon": "current"
+      "systemNote": "Maintains official register: 458 (2024)",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "ASMB-advises-REG_2024",
       "from": "ASMB",
       "to": "REG_2024",
       "type": "advises",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "Passed Dec 5 2024 by PDK+VV bloc over LDK Mayor objection",
-      "horizon": "current"
+      "systemNote": "Passed Dec 5 2024 by PDK+VV bloc over LDK Mayor objection",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "KOM-disputes-REG_2024",
       "from": "KOM",
       "to": "REG_2024",
       "type": "disputes",
+      "type_detail": null,
+      "category": "political",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "Sent to Constitutional Court for review",
-      "horizon": "current"
+      "systemNote": "Sent to Constitutional Court for review",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "PAS-collects-from-CIT",
       "from": "PAS",
       "to": "CIT",
       "type": "collects_from",
+      "type_detail": null,
+      "category": "operational",
+      "value_eur": null,
       "value_eur_per_month": 6.2,
       "status": "ACTIVE_POST_2025",
-      "note": "Flat fee, no PAYT; Supreme Court Jun 2025 confirmed exclusive billing authority",
-      "horizon": "current"
+      "systemNote": "Flat fee, no PAYT; Supreme Court Jun 2025 confirmed exclusive billing authority",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "CIT-pays-PAS",
       "from": "CIT",
       "to": "PAS",
       "type": "pays",
+      "type_detail": null,
+      "category": "money",
+      "value_eur": null,
       "value_eur_per_month": 6.2,
       "status": "ACTIVE_POST_2025",
-      "note": "Flat €6.20/mo with VAT",
-      "horizon": "current"
+      "systemNote": "Flat €6.20/mo with VAT",
+      "future": false,
+      "graph": {
+        "show": true,
+        "legacyId": "citizens-pastrimi-payment",
+        "label": "€6.20/mo × ~95K clients",
+        "relationshipType": "money",
+        "statusLabel": "active",
+        "narrativeNote": "Flat fee billing — no pay-as-you-throw. Pastrimi bills directly per Dec 2024 regulation. During Jan–Jun 2025, the Municipality also billed citizens, creating dual-billing chaos. ~21,000 citizens paid the Municipality instead."
+      }
     },
     {
+      "id": "KOM-collects-from-CIT",
       "from": "KOM",
       "to": "CIT",
       "type": "collects_from",
+      "type_detail": null,
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TERMINATED_JUN_2025",
-      "note": "Pre-Jun 2025 ~21k citizens paid Komuna; forced to return funds via mediation Jun 25 2025",
-      "horizon": "current"
+      "systemNote": "Pre-Jun 2025 ~21k citizens paid Komuna; forced to return funds via mediation Jun 25 2025",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "PAS-contracts-MIRASH",
       "from": "PAS",
       "to": "MIRASH",
       "type": "contracts",
+      "type_detail": null,
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "Pastrimi tips waste at Mirash via 14 household + 3 business trucks",
-      "horizon": "current"
+      "systemNote": "Pastrimi tips waste at Mirash via 14 household + 3 business trucks",
+      "future": false,
+      "graph": {
+        "show": true,
+        "legacyId": "pastrimi-mirash-delivery",
+        "label": "~160K tons/year",
+        "relationshipType": "operational",
+        "statusLabel": "active",
+        "narrativeNote": "Pastrimi trucks deliver collected waste to Mirash. The only practical disposal site for Pristina-region waste. If KLMC refuses Pastrimi trucks (over the €1.9M debt), collection in Pristina effectively stops."
+      }
     },
     {
+      "id": "PAS-owes-KLM",
       "from": "PAS",
       "to": "KLM",
       "type": "owes",
+      "type_detail": null,
+      "category": "money",
       "value_eur": 1900000,
+      "value_eur_per_month": null,
       "status": "DISPUTED",
-      "note": "€1.9M tipping fee debt; mutual hostage situation",
-      "horizon": "current"
+      "systemNote": "€1.9M tipping fee debt; mutual hostage situation",
+      "future": false,
+      "graph": {
+        "show": true,
+        "legacyId": "pastrimi-klmc-debt",
+        "label": "~€1.9M owed (unpaid landfill fees)",
+        "relationshipType": "money",
+        "statusLabel": "disputed",
+        "narrativeNote": "Pastrimi owes KLMC ~€1.9M in landfill disposal fees. KLMC cannot easily refuse Pastrimi trucks without stopping city-wide collection — but also depends on these payments for operating revenue. A structural mutual hostage situation."
+      }
     },
     {
+      "id": "PAS-pays-KLM",
       "from": "PAS",
       "to": "KLM",
       "type": "pays",
       "type_detail": "tipping_fee",
+      "category": "money",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE_PARTIAL",
-      "note": "Tipping fees nominally paid; structural arrears",
-      "horizon": "current"
+      "systemNote": "Tipping fees nominally paid; structural arrears",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "KLM-contracts-MIRASH",
       "from": "KLM",
       "to": "MIRASH",
       "type": "contracts",
+      "type_detail": null,
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "KLM operates Mirash + 6 other public landfills",
-      "horizon": "current"
+      "systemNote": "KLM operates Mirash + 6 other public landfills",
+      "future": false,
+      "graph": {
+        "show": true,
+        "legacyId": "klmc-mirash-operation",
+        "label": "Operates landfill",
+        "relationshipType": "operational",
+        "statusLabel": "active",
+        "narrativeNote": "KLMC manages Mirash under the Ministry of Economy. No leachate treatment, no environmental permit, exceeds designed capacity. Ombudsperson warned of potential methane explosion risk in 2017."
+      }
     },
     {
+      "id": "KEK-shareholder-MIRASH",
       "from": "KEK",
       "to": "MIRASH",
       "type": "shareholder",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "KEK subsidiary owns the land Mirash sits on",
-      "horizon": "current"
+      "systemNote": "KEK subsidiary owns the land Mirash sits on",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "PRV-collects-from-CIT",
       "from": "PRV",
       "to": "CIT",
       "type": "collects_from",
+      "type_detail": null,
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "EMERGENCY_FEB_JUN_2025",
-      "note": "KOM hired private operators during emergency; failed to do job properly per KOHA",
-      "horizon": "current"
+      "systemNote": "KOM hired private operators during emergency; failed to do job properly per KOHA",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "KOM-contracts-PRV",
       "from": "KOM",
       "to": "PRV",
       "type": "contracts",
-      "status": "EMERGENCY_FEB_JUN_2025",
+      "type_detail": null,
+      "category": "operational",
       "value_eur": 16000000,
-      "note": "Cancelled-but-never-rescinded tender for 5 private operators (~€16M)",
-      "horizon": "current"
+      "value_eur_per_month": null,
+      "status": "EMERGENCY_FEB_JUN_2025",
+      "systemNote": "Cancelled-but-never-rescinded tender for 5 private operators (~€16M)",
+      "future": false,
+      "graph": {
+        "show": true,
+        "legacyId": "municipality-private-operators",
+        "label": "€16M tender (currently blocked)",
+        "relationshipType": "operational",
+        "statusLabel": "disputed",
+        "narrativeNote": "Municipality issued a tender for 5 private waste operators in 2024. Blocked by the Dec 2024 regulation. Municipality contracted some operators during May 2025 strike — KOHA reported \"they also failed to do the job properly.\""
+      }
     },
     {
+      "id": "INSP-fines-CIT",
       "from": "INSP",
       "to": "CIT",
       "type": "fines",
+      "type_detail": null,
+      "category": "oversight",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE_WEAK",
-      "note": "Sporadic; rarely targets households",
-      "horizon": "current"
+      "systemNote": "Sporadic; rarely targets households",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "INSP-fines-IND_CON",
       "from": "INSP",
       "to": "IND_CON",
       "type": "fines",
+      "type_detail": null,
+      "category": "oversight",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE_WEAK",
-      "note": "Near-zero enforcement; Pastrimi has reported names+addresses, no action",
-      "horizon": "current"
+      "systemNote": "Near-zero enforcement; Pastrimi has reported names+addresses, no action",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "INSP-inspects-PAS",
       "from": "INSP",
       "to": "PAS",
       "type": "inspects",
+      "type_detail": null,
+      "category": "oversight",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "INACTIVE",
-      "note": "Politically constrained from fining the public enterprise their KOM owns",
-      "horizon": "current"
+      "systemNote": "Politically constrained from fining the public enterprise their KOM owns",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "POL-fines-CIT",
       "from": "POL",
       "to": "CIT",
       "type": "fines",
+      "type_detail": null,
+      "category": "oversight",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE_WEAK",
-      "note": "Sporadic",
-      "horizon": "current"
+      "systemNote": "Sporadic",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "OMB-inspects-PAS",
       "from": "OMB",
       "to": "PAS",
       "type": "inspects",
+      "type_detail": null,
+      "category": "oversight",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "May 19 2025 mediation meeting",
-      "horizon": "current"
+      "systemNote": "May 19 2025 mediation meeting",
+      "future": false,
+      "graph": {
+        "show": true,
+        "legacyId": "ombudsperson-pastrimi-investigation",
+        "label": "Investigated crisis (Pastrimi \"on verge of bankruptcy\")",
+        "relationshipType": "oversight",
+        "statusLabel": "active",
+        "narrativeNote": "Ombudsperson stated Pastrimi was \"on the verge of bankruptcy\" in May 2025. Investigated the crisis as a public health and rights issue — the ongoing dispute endangered both 800+ workers and the residents depending on collection."
+      }
     },
     {
+      "id": "OMB-inspects-KOM",
       "from": "OMB",
       "to": "KOM",
       "type": "inspects",
+      "type_detail": null,
+      "category": "oversight",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "Publicly criticized KOM absence at May 19 2025 meeting",
-      "horizon": "current"
+      "systemNote": "Publicly criticized KOM absence at May 19 2025 meeting",
+      "future": false,
+      "graph": {
+        "show": true,
+        "legacyId": "ombudsperson-municipality-criticism",
+        "label": "Criticized absence at May 2025 meeting",
+        "relationshipType": "oversight",
+        "statusLabel": "active",
+        "narrativeNote": "Ombudsperson Hilmi Jashari convened a mediation meeting on May 19, 2025. Pastrimi CEO Reçica attended. Mayor Rama did not. Jashari publicly called this \"complete irresponsibility\" and \"disrespect for this institution.\""
+      }
     },
     {
+      "id": "SUP_COURT-disputes-REG_2024",
       "from": "SUP_COURT",
       "to": "REG_2024",
       "type": "disputes",
       "type_detail": "ruling",
+      "category": "political",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "RULED_JUN_2025",
-      "note": "Upheld regulation; ordered KOM to return funds",
-      "horizon": "current"
+      "systemNote": "Upheld regulation; ordered KOM to return funds",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "CON_COURT-disputes-REG_2024",
       "from": "CON_COURT",
       "to": "REG_2024",
       "type": "disputes",
       "type_detail": "review_pending",
+      "category": "political",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "PENDING",
-      "note": "KOM referral; ruling status unclear",
-      "horizon": "current"
+      "systemNote": "KOM referral; ruling status unclear",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "PAS_UNION-advises-PAS",
       "from": "PAS_UNION",
       "to": "PAS",
       "type": "advises",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "PDK-aligned; struck May-Jun 2025; opposes private operators",
-      "horizon": "current"
+      "systemNote": "PDK-aligned; struck May-Jun 2025; opposes private operators",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "IND_CON-collects-from-ILLEGAL_DUMPS",
       "from": "IND_CON",
       "to": "ILLEGAL_DUMPS",
       "type": "collects_from",
       "type_detail": "illegal_disposal",
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "CDW = largest single illegal-dumping driver",
-      "horizon": "current"
+      "systemNote": "CDW = largest single illegal-dumping driver",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "INFORMAL-separates-for-ILLEGAL_DUMPS",
       "from": "INFORMAL",
       "to": "ILLEGAL_DUMPS",
       "type": "separates_for",
       "type_detail": "scrap_recovery",
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "RAE community; politically invisible",
-      "horizon": "current"
+      "systemNote": "RAE community; politically invisible",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "INFORMAL-separates-for-MIRASH",
       "from": "INFORMAL",
       "to": "MIRASH",
       "type": "separates_for",
+      "type_detail": null,
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "Sometimes operates on/near landfill",
-      "horizon": "current"
+      "systemNote": "Sometimes operates on/near landfill",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "EU-funds-MIRASH",
       "from": "EU",
       "to": "MIRASH",
       "type": "funds",
+      "type_detail": null,
+      "category": "money",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "HISTORICAL",
-      "note": "Funded original construction 2001-2008 of all 7 public landfills",
-      "horizon": "current"
+      "systemNote": "Funded original construction 2001-2008 of all 7 public landfills",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "EU-regulates-MMPHI",
       "from": "EU",
       "to": "MMPHI",
       "type": "regulates",
       "type_detail": "acquis_alignment",
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "Annual progress reports flag waste; no binding conditional pressure",
-      "horizon": "current"
+      "systemNote": "Annual progress reports flag waste; no binding conditional pressure",
+      "future": false,
+      "graph": {
+        "show": true,
+        "legacyId": "eu-mmphi-accession",
+        "label": "Accession conditionality (advisory)",
+        "relationshipType": "authority",
+        "statusLabel": "active",
+        "narrativeNote": "EU flags waste management failures in annual Kosovo progress reports. Accession conditionality theoretically ties EU integration progress to waste reforms. In practice has not been applied in a specific or binding way on individual waste issues."
+      }
     },
     {
+      "id": "JICA-donates-PAS",
       "from": "JICA",
       "to": "PAS",
       "type": "donates",
-      "value_eur": 4830000,
       "type_detail": "trucks",
+      "category": "money",
+      "value_eur": 4830000,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "10 compactor trucks; ~30 to Ekoregjioni Prizren",
-      "horizon": "current"
+      "systemNote": "10 compactor trucks; ~30 to Ekoregjioni Prizren",
+      "future": false,
+      "graph": {
+        "show": true,
+        "legacyId": "donors-pastrimi-trucks",
+        "label": "JICA grant: 10 trucks",
+        "relationshipType": "money",
+        "statusLabel": "active",
+        "narrativeNote": "Japan International Cooperation Agency (JICA) provided 10 new compactor trucks to Pastrimi as part of a €4.83M regional grant (also covering ~30 trucks to Ekoregjioni/Prizren). Non-conditional on performance metrics."
+      }
     },
     {
+      "id": "GIZ-funds-MMPHI",
       "from": "GIZ",
       "to": "MMPHI",
       "type": "funds",
       "type_detail": "technical_assistance",
+      "category": "money",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "Landfill assessments, MPG-CE deck, DRS pilot work",
-      "horizon": "current"
+      "systemNote": "Landfill assessments, MPG-CE deck, DRS pilot work",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "WB-funds-MMPHI",
       "from": "WB",
       "to": "MMPHI",
       "type": "funds",
       "type_detail": "studies",
+      "category": "money",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "Methane emissions study",
-      "horizon": "current"
+      "systemNote": "Methane emissions study",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "MoFin-funds-STRAT_2024_2030",
       "from": "MoFin",
       "to": "STRAT_2024_2030",
       "type": "funds",
+      "type_detail": null,
+      "category": "money",
       "value_eur": 41000000,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "€41M Action Plan 2024-2026; €77M total CE program 2024-2030",
-      "horizon": "current"
+      "systemNote": "€41M Action Plan 2024-2026; €77M total CE program 2024-2030",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "INDEP-advises-MMPHI",
       "from": "INDEP",
       "to": "MMPHI",
       "type": "advises",
       "type_detail": "policy_recs",
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "April 2026 doc with 15 recommendations",
-      "horizon": "current"
+      "systemNote": "April 2026 doc with 15 recommendations",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "ATLAS-advises-PAS",
       "from": "ATLAS",
       "to": "PAS",
       "type": "advises",
       "type_detail": "watchdog",
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "Agron Demi on enforcement gaps",
-      "horizon": "current"
+      "systemNote": "Agron Demi on enforcement gaps",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "LDIK-inspects-ILLEGAL_DUMPS",
       "from": "LDIK",
       "to": "ILLEGAL_DUMPS",
       "type": "inspects",
       "type_detail": "independent_count",
+      "category": "oversight",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "Counts >500 vs AMMK 458",
-      "horizon": "current"
+      "systemNote": "Counts >500 vs AMMK 458",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "PRESS-inspects-PAS",
       "from": "PRESS",
       "to": "PAS",
       "type": "inspects",
       "type_detail": "accountability_journalism",
+      "category": "oversight",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "horizon": "current"
+      "systemNote": null,
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "PRESS-inspects-KOM",
       "from": "PRESS",
       "to": "KOM",
       "type": "inspects",
       "type_detail": "accountability_journalism",
+      "category": "oversight",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "horizon": "current"
+      "systemNote": null,
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "CIT-reports-to-PAS",
       "from": "CIT",
       "to": "PAS",
       "type": "reports_to",
       "type_detail": "complaints",
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE_WEAK",
-      "note": "No structured channel",
-      "horizon": "current"
+      "systemNote": "No structured channel",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "CIT-reports-to-KOM",
       "from": "CIT",
       "to": "KOM",
       "type": "reports_to",
       "type_detail": "complaints",
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE_WEAK",
-      "horizon": "current"
+      "systemNote": null,
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "NIPHK-inspects-MIRASH",
       "from": "NIPHK",
       "to": "MIRASH",
       "type": "inspects",
       "type_detail": "health_risk",
+      "category": "oversight",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "INACTIVE",
-      "note": "Has authority; rarely activates",
-      "horizon": "current"
+      "systemNote": "Has authority; rarely activates",
+      "future": false,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "MMPHI-advises-NEW_LAW_IWM",
       "from": "MMPHI",
       "to": "NEW_LAW_IWM",
       "type": "advises",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "MMPHI drafted; replaces Law 04/L-060",
-      "horizon": "post_new_law"
+      "systemNote": "MMPHI drafted; replaces Law 04/L-060",
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "MMPHI-appoints-HYBRID_REG",
       "from": "MMPHI",
       "to": "HYBRID_REG",
       "type": "appoints",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "INFERRED",
-      "note": "Establishment authority unstated but MMPHI is policy A; verify in secondary legislation",
-      "horizon": "post_new_law"
+      "systemNote": "Establishment authority unstated but MMPHI is policy A; verify in secondary legislation",
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "HYBRID_REG-regulates-PAS",
       "from": "HYBRID_REG",
       "to": "PAS",
       "type": "regulates",
       "type_detail": "tariff_setting",
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "note": "Sets tariffs - removes ASMB/PAS ⚠ on tariff row",
-      "horizon": "post_new_law"
+      "systemNote": "Sets tariffs - removes ASMB/PAS ⚠ on tariff row",
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "HYBRID_REG-regulates-PAS",
       "from": "HYBRID_REG",
       "to": "PAS",
       "type": "regulates",
       "type_detail": "performance_monitoring",
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "horizon": "post_new_law"
+      "systemNote": null,
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "HYBRID_REG-regulates-KLM",
       "from": "HYBRID_REG",
       "to": "KLM",
       "type": "regulates",
       "type_detail": "tariff_setting",
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "note": "Resolves PAS-KLM tipping-fee dispute structurally",
-      "horizon": "post_new_law"
+      "systemNote": "Resolves PAS-KLM tipping-fee dispute structurally",
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "HYBRID_REG-disputes-REG_2024",
       "from": "HYBRID_REG",
       "to": "REG_2024",
       "type": "disputes",
       "type_detail": "dispute_resolution",
+      "category": "political",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "note": "Pulls disputes out of Supreme/Constitutional Court track",
-      "horizon": "post_new_law"
+      "systemNote": "Pulls disputes out of Supreme/Constitutional Court track",
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "CG-appoints-CSC",
       "from": "CG",
       "to": "CSC",
       "type": "appoints",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "note": "Office of Prime Minister establishes per Recommendation 2",
-      "horizon": "post_new_law"
+      "systemNote": "Office of Prime Minister establishes per Recommendation 2",
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "CSC-advises-MMPHI",
       "from": "CSC",
       "to": "MMPHI",
       "type": "advises",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "horizon": "post_new_law"
+      "systemNote": null,
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "CSC-advises-MINT",
       "from": "CSC",
       "to": "MINT",
       "type": "advises",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "horizon": "post_new_law"
+      "systemNote": null,
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "CSC-advises-MoFin",
       "from": "CSC",
       "to": "MoFin",
       "type": "advises",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "horizon": "post_new_law"
+      "systemNote": null,
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "ZONE_1-regulates-KOM",
       "from": "ZONE_1",
       "to": "KOM",
       "type": "regulates",
       "type_detail": "inter_municipal",
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "note": "Zone Pristina would belong to; specific zone assignments TBD",
-      "horizon": "post_new_law"
+      "systemNote": "Zone Pristina would belong to; specific zone assignments TBD",
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "AMMK-contracts-NWIS",
       "from": "AMMK",
       "to": "NWIS",
       "type": "contracts",
       "type_detail": "operates",
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "note": "AMMK is operational R for material flow data per Rec 1",
-      "horizon": "post_new_law"
+      "systemNote": "AMMK is operational R for material flow data per Rec 1",
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "PAS-reports-to-NWIS",
       "from": "PAS",
       "to": "NWIS",
       "type": "reports_to",
       "type_detail": "mandatory_reporting",
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "horizon": "post_new_law"
+      "systemNote": null,
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "KOM-reports-to-NWIS",
       "from": "KOM",
       "to": "NWIS",
       "type": "reports_to",
       "type_detail": "mandatory_reporting",
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "horizon": "post_new_law"
+      "systemNote": null,
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "KLM-reports-to-NWIS",
       "from": "KLM",
       "to": "NWIS",
       "type": "reports_to",
       "type_detail": "mandatory_reporting",
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "horizon": "post_new_law"
+      "systemNote": null,
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "PRO_PACK-reports-to-NWIS",
       "from": "PRO_PACK",
       "to": "NWIS",
       "type": "reports_to",
       "type_detail": "mandatory_reporting",
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "horizon": "post_new_law"
+      "systemNote": null,
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "MMPHI-licenses-PRO_PACK",
       "from": "MMPHI",
       "to": "PRO_PACK",
       "type": "licenses",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "note": "PRO licensing is NEW MMPHI authority",
-      "horizon": "post_new_law"
+      "systemNote": "PRO licensing is NEW MMPHI authority",
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "MMPHI-licenses-PRO_WEEE",
       "from": "MMPHI",
       "to": "PRO_WEEE",
       "type": "licenses",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "horizon": "post_new_law"
+      "systemNote": null,
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "MMPHI-licenses-PRO_ELV",
       "from": "MMPHI",
       "to": "PRO_ELV",
       "type": "licenses",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "horizon": "post_new_law"
+      "systemNote": null,
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "MMPHI-licenses-PRO_DRS",
       "from": "MMPHI",
       "to": "PRO_DRS",
       "type": "licenses",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "horizon": "post_new_law"
+      "systemNote": null,
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "IND_CON-pays-PRO_PACK",
       "from": "IND_CON",
       "to": "PRO_PACK",
       "type": "pays",
       "type_detail": "epr_fee",
+      "category": "money",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "note": "Producer-side EPR fees fund PRO collection/sorting/recycling",
-      "horizon": "post_new_law"
+      "systemNote": "Producer-side EPR fees fund PRO collection/sorting/recycling",
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "IND_CON-pays-PRO_WEEE",
       "from": "IND_CON",
       "to": "PRO_WEEE",
       "type": "pays",
       "type_detail": "epr_fee",
+      "category": "money",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "horizon": "post_new_law"
+      "systemNote": null,
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "IND_CON-pays-PRO_ELV",
       "from": "IND_CON",
       "to": "PRO_ELV",
       "type": "pays",
       "type_detail": "epr_fee",
+      "category": "money",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "horizon": "post_new_law"
+      "systemNote": null,
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "PRO_PACK-contracts-MRF_NETWORK",
       "from": "PRO_PACK",
       "to": "MRF_NETWORK",
       "type": "contracts",
+      "type_detail": null,
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "horizon": "post_new_law"
+      "systemNote": null,
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "CIT-pays-PRO_DRS",
       "from": "CIT",
       "to": "PRO_DRS",
       "type": "pays",
       "type_detail": "deposit",
+      "category": "money",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "note": "DRS deposit on bottles 0.15-2L",
-      "horizon": "post_new_law"
+      "systemNote": "DRS deposit on bottles 0.15-2L",
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "PRO_DRS-pays-CIT",
       "from": "PRO_DRS",
       "to": "CIT",
       "type": "pays",
       "type_detail": "deposit_refund",
+      "category": "money",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "note": "Refund on return",
-      "horizon": "post_new_law"
+      "systemNote": "Refund on return",
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "PAS-contracts-MRF_NETWORK",
       "from": "PAS",
       "to": "MRF_NETWORK",
       "type": "contracts",
       "type_detail": "delivers_separated",
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "note": "Separated streams routed to MRFs not landfill",
-      "horizon": "post_new_law"
+      "systemNote": "Separated streams routed to MRFs not landfill",
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "KLM-contracts-MRF_NETWORK",
       "from": "KLM",
       "to": "MRF_NETWORK",
       "type": "contracts",
+      "type_detail": null,
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "note": "KLM scope expanded to regional sorting + treatment centers",
-      "horizon": "post_new_law"
+      "systemNote": "KLM scope expanded to regional sorting + treatment centers",
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "KOM-contracts-CAC_NETWORK",
       "from": "KOM",
       "to": "CAC_NETWORK",
       "type": "contracts",
       "type_detail": "operates",
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "horizon": "post_new_law"
+      "systemNote": null,
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "CIT-reports-to-CAC_NETWORK",
       "from": "CIT",
       "to": "CAC_NETWORK",
       "type": "reports_to",
       "type_detail": "drops_off",
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "horizon": "post_new_law"
+      "systemNote": null,
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "CIT-separates-for-PAS",
       "from": "CIT",
       "to": "PAS",
       "type": "separates_for",
       "type_detail": "source_separation",
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "note": "3-bin apt / 2-bin house under SOURCE_SEP_MANDATE",
-      "horizon": "post_new_law"
+      "systemNote": "3-bin apt / 2-bin house under SOURCE_SEP_MANDATE",
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "MoFin-advises-LANDFILL_TAX",
       "from": "MoFin",
       "to": "LANDFILL_TAX",
       "type": "advises",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "PROPOSED",
-      "note": "Legislative amendment + revenue collection",
-      "horizon": "post_new_law"
+      "systemNote": "Legislative amendment + revenue collection",
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "LANDFILL_TAX-taxes-KLM",
       "from": "LANDFILL_TAX",
       "to": "KLM",
       "type": "taxes",
       "type_detail": "per_ton",
+      "category": "money",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "PROPOSED",
-      "note": "Incentivizes diversion; UK ~£126/ton, Ireland ~€80/ton",
-      "horizon": "post_new_law"
+      "systemNote": "Incentivizes diversion; UK ~£126/ton, Ireland ~€80/ton",
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "MoFin-funds-KOM",
       "from": "MoFin",
       "to": "KOM",
       "type": "funds",
       "type_detail": "performance_based",
+      "category": "money",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "PROPOSED",
-      "note": "Per Rec 5; ties transfers to recycling + diversion outcomes; depends on NWIS",
-      "horizon": "post_new_law"
+      "systemNote": "Per Rec 5; ties transfers to recycling + diversion outcomes; depends on NWIS",
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "MoFin-advises-GPP",
       "from": "MoFin",
       "to": "GPP",
       "type": "advises",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "PROPOSED",
-      "note": "Procurement Regulatory Commission",
-      "horizon": "post_new_law"
+      "systemNote": "Procurement Regulatory Commission",
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "EU-funds-CE_INNOV_FUND",
       "from": "EU",
       "to": "CE_INNOV_FUND",
       "type": "funds",
-      "value_eur": 6000000000,
       "type_detail": "RGF_2024_2027",
+      "category": "money",
+      "value_eur": 6000000000,
+      "value_eur_per_month": null,
       "status": "ACTIVE",
-      "note": "Reform & Growth Facility €6B for Western Balkans 2024-2027",
-      "horizon": "post_new_law"
+      "systemNote": "Reform & Growth Facility €6B for Western Balkans 2024-2027",
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "MoFin-advises-CE_INNOV_FUND",
       "from": "MoFin",
       "to": "CE_INNOV_FUND",
       "type": "advises",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "PROPOSED",
-      "horizon": "post_new_law"
+      "systemNote": null,
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "CE_INNOV_FUND-funds-MRF_NETWORK",
       "from": "CE_INNOV_FUND",
       "to": "MRF_NETWORK",
       "type": "funds",
       "type_detail": "PPP",
+      "category": "money",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "horizon": "post_new_law"
+      "systemNote": null,
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "CE_INNOV_FUND-funds-REPLACEMENT_LANDFILL",
       "from": "CE_INNOV_FUND",
       "to": "REPLACEMENT_LANDFILL",
       "type": "funds",
+      "type_detail": null,
+      "category": "money",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "horizon": "post_new_law"
+      "systemNote": null,
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "MoEd-advises-CIT",
       "from": "MoEd",
       "to": "CIT",
       "type": "advises",
       "type_detail": "education_curriculum",
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "PROPOSED",
-      "note": "Per Rec 15",
-      "horizon": "post_new_law"
+      "systemNote": "Per Rec 15",
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "INSP-inspects-PRO_PACK",
       "from": "INSP",
       "to": "PRO_PACK",
       "type": "inspects",
+      "type_detail": null,
+      "category": "oversight",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "note": "Strengthened inspection powers per new law",
-      "horizon": "post_new_law"
+      "systemNote": "Strengthened inspection powers per new law",
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "INSP-fines-ILLEGAL_DUMPS",
       "from": "INSP",
       "to": "ILLEGAL_DUMPS",
       "type": "fines",
+      "type_detail": null,
+      "category": "oversight",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "note": "Strengthened powers; supported by citizen reports via Reporter app",
-      "horizon": "post_new_law"
+      "systemNote": "Strengthened powers; supported by citizen reports via Reporter app",
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "MMPHI-advises-FNCC_RULE",
       "from": "MMPHI",
       "to": "FNCC_RULE",
       "type": "advises",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "note": "Legally requires waste services to recover full costs from users",
-      "horizon": "post_new_law"
+      "systemNote": "Legally requires waste services to recover full costs from users",
+      "future": true,
+      "graph": {
+        "show": false
+      }
     },
     {
+      "id": "FNCC_RULE-regulates-PAS",
       "from": "FNCC_RULE",
       "to": "PAS",
       "type": "regulates",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
       "status": "TO_OPERATIONALIZE_2027",
-      "note": "Triggers PAYT - removes flat-fee no-margin pathology",
-      "horizon": "post_new_law"
+      "systemNote": "Triggers PAYT - removes flat-fee no-margin pathology",
+      "future": true,
+      "graph": {
+        "show": false
+      }
+    },
+    {
+      "id": "graph-municipality-pastrimi-debt",
+      "from": "KOM",
+      "to": "PAS",
+      "type": "pays",
+      "type_detail": null,
+      "category": "money",
+      "value_eur": null,
+      "value_eur_per_month": null,
+      "status": "resolved",
+      "systemNote": null,
+      "future": false,
+      "synthetic": true,
+      "graph": {
+        "show": true,
+        "legacyId": "municipality-pastrimi-debt",
+        "label": "€2.7M returned (Jun 2025)",
+        "relationshipType": "money",
+        "statusLabel": "resolved",
+        "narrativeNote": "Municipality owed Pastrimi ~€2.7M in fees collected during the dual-billing period (Jan–Jun 2025). Returned via mediation on June 25, 2025, following Supreme Court ruling."
+      }
+    },
+    {
+      "id": "graph-assembly-pastrimi-regulation",
+      "from": "ASMB",
+      "to": "PAS",
+      "type": "regulates",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
+      "status": "active",
+      "systemNote": null,
+      "future": false,
+      "synthetic": true,
+      "graph": {
+        "show": true,
+        "legacyId": "assembly-pastrimi-regulation",
+        "label": "Dec 2024: exclusive billing authority",
+        "relationshipType": "authority",
+        "statusLabel": "active",
+        "narrativeNote": "PDK+VV majority passed regulation No. 01-030/01-161704/24 (Dec 6, 2024) granting Pastrimi exclusive billing authority. Approved by MMPHI as legally consistent. Upheld by Supreme Court June 2025."
+      }
+    },
+    {
+      "id": "graph-mmphi-assembly-approval",
+      "from": "MMPHI",
+      "to": "ASMB",
+      "type": "regulates",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
+      "status": "active",
+      "systemNote": null,
+      "future": false,
+      "synthetic": true,
+      "graph": {
+        "show": true,
+        "legacyId": "mmphi-assembly-approval",
+        "label": "Approved regulation as legal",
+        "relationshipType": "authority",
+        "statusLabel": "active",
+        "narrativeNote": "MMPHI formally approved the Municipal Assembly's Dec 2024 regulation as \"in line with the Law on Waste,\" undermining the Municipality's legal challenge and giving the regulation national-level backing."
+      }
+    },
+    {
+      "id": "graph-courts-assembly-ruling",
+      "from": "SUP_COURT",
+      "to": "ASMB",
+      "type": "regulates",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
+      "status": "resolved",
+      "systemNote": null,
+      "future": false,
+      "synthetic": true,
+      "graph": {
+        "show": true,
+        "legacyId": "courts-assembly-ruling",
+        "label": "Upheld Dec 2024 regulation (Jun 2025)",
+        "relationshipType": "authority",
+        "statusLabel": "resolved",
+        "narrativeNote": "Supreme Court of Kosovo ruled in June 2025 that the Dec 2024 regulation is valid. Rejected the Municipality's claim to repeal it. Forced mediated return of €2.7M collected by the Municipality."
+      }
+    },
+    {
+      "id": "graph-eu-klmc-landfill-funding",
+      "from": "EU",
+      "to": "KLM",
+      "type": "regulates",
+      "type_detail": null,
+      "category": "authority",
+      "value_eur": null,
+      "value_eur_per_month": null,
+      "status": "active",
+      "systemNote": null,
+      "future": false,
+      "synthetic": true,
+      "graph": {
+        "show": true,
+        "legacyId": "eu-klmc-landfill-funding",
+        "label": "Funded original landfills + closure pressure",
+        "relationshipType": "authority",
+        "statusLabel": "active",
+        "narrativeNote": "EU funded all 7 Kosovo public landfills (2001–2008), including Mirash (€3.5M). Now flags their current state as a reversal of that investment. Mirash closure is an EU-flagged immediate priority. Closure has not happened."
+      }
+    },
+    {
+      "id": "graph-workers-pastrimi-labor",
+      "from": "PAS_UNION",
+      "to": "PAS",
+      "type": "contracts",
+      "type_detail": null,
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
+      "status": "active",
+      "systemNote": null,
+      "future": false,
+      "synthetic": true,
+      "graph": {
+        "show": true,
+        "legacyId": "workers-pastrimi-labor",
+        "label": "~900 employees — can strike",
+        "relationshipType": "operational",
+        "statusLabel": "active",
+        "narrativeNote": "Workers provide the physical collection. Unionized under Ardian Krasniqi. Struck May–June 2025 — collection stopped for ~1 month. Politically aligned with PDK, the same bloc that passed the favorable Dec 2024 regulation protecting Pastrimi."
+      }
+    },
+    {
+      "id": "graph-municipality-pastrimi-shareholder",
+      "from": "KOM",
+      "to": "PAS",
+      "type": "contracts",
+      "type_detail": null,
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
+      "status": "disputed",
+      "systemNote": null,
+      "future": false,
+      "synthetic": true,
+      "graph": {
+        "show": true,
+        "legacyId": "municipality-pastrimi-shareholder",
+        "label": "Main shareholder (adversarial)",
+        "relationshipType": "operational",
+        "statusLabel": "disputed",
+        "narrativeNote": "Municipality owns Pastrimi but has minimal operational control. The shareholder relationship is adversarial rather than supervisory due to political misalignment between LDK (mayor) and PDK+VV (assembly protecting Pastrimi)."
+      }
+    },
+    {
+      "id": "graph-municipality-registry-control",
+      "from": "KOM",
+      "to": "PAS",
+      "type": "contracts",
+      "type_detail": null,
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
+      "status": "disputed",
+      "systemNote": null,
+      "future": false,
+      "synthetic": true,
+      "graph": {
+        "show": true,
+        "legacyId": "municipality-registry-control",
+        "label": "Client registry (23K clients withheld)",
+        "relationshipType": "operational",
+        "statusLabel": "disputed",
+        "narrativeNote": "The Municipality controls client registration. Pastrimi submitted ~25,000 new clients in June 2023; Municipality did not register them. Pastrimi estimates this costs ~€3.5M/year in foregone revenue. The 23,000-client gap is a structural financing weapon."
+      }
+    },
+    {
+      "id": "graph-informal-citizens-scavenging",
+      "from": "INFORMAL",
+      "to": "CIT",
+      "type": "contracts",
+      "type_detail": null,
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
+      "status": "active",
+      "systemNote": null,
+      "future": false,
+      "synthetic": true,
+      "graph": {
+        "show": true,
+        "legacyId": "informal-citizens-scavenging",
+        "label": "Pre-pickup extraction at bins",
+        "relationshipType": "operational",
+        "statusLabel": "active",
+        "narrativeNote": "Informal collectors work bins at ~5am, before Pastrimi trucks arrive. They extract metal, plastic, paper, glass. ~€15/day earnings per collector from ~100kg of recyclables. They are blamed for litter scatter around bins, but this is downstream of bins being too small and too few."
+      }
+    },
+    {
+      "id": "graph-municipality-assembly-conflict",
+      "from": "KOM",
+      "to": "ASMB",
+      "type": "disputes",
+      "type_detail": null,
+      "category": "political",
+      "value_eur": null,
+      "value_eur_per_month": null,
+      "status": "disputed",
+      "systemNote": null,
+      "future": false,
+      "synthetic": true,
+      "graph": {
+        "show": true,
+        "legacyId": "municipality-assembly-conflict",
+        "label": "LDK mayor vs PDK+VV majority",
+        "relationshipType": "political",
+        "statusLabel": "disputed",
+        "narrativeNote": "Mayor Rama (LDK) cannot control the Assembly, which has a PDK+VV majority. Basic municipal governance is adversarial. The Dec 2024 regulation was passed directly against the mayor's stated position."
+      }
+    },
+    {
+      "id": "graph-citizens-mirash-proximity",
+      "from": "CIT",
+      "to": "MIRASH",
+      "type": "contracts",
+      "type_detail": null,
+      "category": "operational",
+      "value_eur": null,
+      "value_eur_per_month": null,
+      "status": "active",
+      "systemNote": null,
+      "future": false,
+      "synthetic": true,
+      "graph": {
+        "show": true,
+        "legacyId": "citizens-mirash-proximity",
+        "label": "Nearby residents (odor, health risk)",
+        "relationshipType": "operational",
+        "statusLabel": "active",
+        "narrativeNote": "Residents near Mirash (Lajthishtë, Obiliq area) report unbearable summer odors and suspected health impacts. The area also hosts Kosovo A and B coal power plants, making it one of the most polluted areas in the country."
+      }
+    }
+  ],
+  "levers": [
+    {
+      "id": "klmc-fee-increase",
+      "iconName": "Banknote",
+      "title": "KLMC raises landfill fees 30%",
+      "description": "Kosovo Landfill Management Company increases the per-ton disposal fee at Mirash.",
+      "context": "Mirash has no proper cost recovery for remediation or closure. A fee increase is the only financial lever KLMC can pull — but Pastrimi already owes €1.9M.",
+      "headlines": [
+        "KLMC raises landfill fees 30% · Pastrimi already owes €1.9M and has no leverage",
+        "Three scenarios: absorb the cost, pass it to citizens, or deepen the debt — all roads lead to the same place",
+        "No pay-as-you-throw mechanism means every household pays equally, regardless of waste produced",
+        "Construction sites expected to increase illegal dumping to avoid higher landfill fees"
+      ],
+      "historical": false,
+      "historicalDate": null,
+      "affectedActorIds": [
+        "KLM",
+        "PAS",
+        "PAS_UNION",
+        "CIT",
+        "MIRASH"
+      ],
+      "affectedEdgeIds": [
+        "PAS-owes-KLM",
+        "CIT-pays-PAS"
+      ],
+      "affectedActivityIds": [
+        "operational-1-pass-municipal-waste-regulation",
+        "operational-2-set-tariff-6-20-mo-flat-no-payt",
+        "operational-3-maintain-client-registry",
+        "operational-4-bill-citizens-for-waste-services",
+        "operational-5-operate-household-collection-trucks",
+        "operational-6-operate-business-collection",
+        "operational-7-pay-landfill-tipping-fees",
+        "operational-8-operate-mirash-regional-landfills",
+        "operational-9-build-replacement-landfill",
+        "operational-12-resolve-regulation-disputes",
+        "operational-13-investigate-service-failures",
+        "operational-14-receive-citizen-complaints",
+        "operational-15-operate-civic-amenity-centers-cacs",
+        "operational-16-operate-materials-recovery-facilities-mrfs-none-currently-ex",
+        "operational-17-coordinate-within-five-waste-management-zones",
+        "operational-18-handle-cross-neighborhood-bin-tourism",
+        "operational-19-respond-to-climate-waste-events-e-g-mitrovica-lushta-river-f",
+        "enforcement-7-maintain-illegal-dumpsite-register",
+        "enforcement-10-adjudicate-waste-related-disputes",
+        "enforcement-12-receive-citizen-reports-of-illegal-dumping-current-channels",
+        "enforcement-13-public-watchdog-independent-counts-critique",
+        "enforcement-14-press-accountability-journalism",
+        "enforcement-15-operate-the-national-waste-information-system-nwis",
+        "enforcement-16-receive-structured-citizen-reports-digital",
+        "enforcement-18-investigate-cross-municipal-waste-flows-bin-tourism"
+      ],
+      "revealOrder": [
+        [
+          "KLM"
+        ],
+        [
+          "PAS"
+        ],
+        [
+          "PAS_UNION",
+          "CIT"
+        ],
+        [
+          "MIRASH"
+        ]
+      ],
+      "actorEffects": {
+        "KLM": {
+          "stressLevel": "none",
+          "narrative": "Revenue increases in theory. But Pastrimi's existing €1.9M debt makes collection of the new fee doubtful without an escalation KLMC can't afford — refusing Pastrimi trucks would stop city-wide collection."
+        },
+        "PAS": {
+          "stressLevel": "high",
+          "narrative": "Operating costs rise. Three historical responses: absorb (cuts margins → pressure on workers), pass to citizens (raise the flat fee), or delay KLMC payment (deepens the debt). All three have been used."
+        },
+        "PAS_UNION": {
+          "stressLevel": "medium",
+          "narrative": "If margins compress, the first pressure point is worker headcount or wages. Union will push back. The same PDK political alignment that protected the Dec 2024 regulation also protects workers from layoffs."
+        },
+        "CIT": {
+          "stressLevel": "medium",
+          "narrative": "If Pastrimi passes costs on, the flat fee rises. No pay-as-you-throw mechanism means all households pay the same increase regardless of how much waste they produce."
+        },
+        "MIRASH": {
+          "stressLevel": "low",
+          "narrative": "Higher disposal fees may push construction sites toward illegal dumping — CDW is already the primary driver of Kosovo's 458–1,572 illegal dump sites."
+        }
+      }
+    },
+    {
+      "id": "municipality-wins-billing",
+      "iconName": "Scale",
+      "title": "Municipality regains billing authority",
+      "description": "A court or regulatory reversal gives the Municipality control over waste fee collection again.",
+      "context": "This is the hypothetical reversal of the June 2025 Supreme Court ruling — the scenario Pastrimi fears most. It roughly mirrors what existed before December 2024.",
+      "headlines": [
+        "COURT REVERSAL — Municipality regains billing authority · Pastrimi loses revenue stream overnight",
+        "Workers' Union: \"This is the prelude to privatization — we will not accept it\"",
+        "Citizens face confusion again: which bill do I pay? Who sends the other one?",
+        "€16M private operator tender revived · Mayor Rama calls it \"EU-required modernisation\""
+      ],
+      "historical": false,
+      "historicalDate": null,
+      "affectedActorIds": [
+        "KOM",
+        "ASMB",
+        "PAS",
+        "PAS_UNION",
+        "PRV",
+        "CIT"
+      ],
+      "affectedEdgeIds": [
+        "CIT-pays-PAS",
+        "graph-municipality-pastrimi-debt",
+        "graph-assembly-pastrimi-regulation",
+        "KOM-contracts-PRV"
+      ],
+      "affectedActivityIds": [
+        "operational-1-pass-municipal-waste-regulation",
+        "operational-2-set-tariff-6-20-mo-flat-no-payt",
+        "operational-3-maintain-client-registry",
+        "operational-4-bill-citizens-for-waste-services",
+        "operational-5-operate-household-collection-trucks",
+        "operational-6-operate-business-collection",
+        "operational-7-pay-landfill-tipping-fees",
+        "operational-8-operate-mirash-regional-landfills",
+        "operational-9-build-replacement-landfill",
+        "operational-10-appoint-pastrimi-ceo",
+        "operational-11-appoint-pastrimi-board-5-7",
+        "operational-12-resolve-regulation-disputes",
+        "operational-13-investigate-service-failures",
+        "operational-14-receive-citizen-complaints",
+        "operational-15-operate-civic-amenity-centers-cacs",
+        "operational-16-operate-materials-recovery-facilities-mrfs-none-currently-ex",
+        "operational-17-coordinate-within-five-waste-management-zones",
+        "operational-18-handle-cross-neighborhood-bin-tourism",
+        "operational-19-respond-to-climate-waste-events-e-g-mitrovica-lushta-river-f",
+        "policy-1-set-national-waste-strategy-2024-2030",
+        "policy-2-allocate-action-plan-budget-41m-77m",
+        "policy-3-design-drs-for-beverage-packaging",
+        "policy-4-operate-drs-post-launch",
+        "policy-5-establish-epr-for-packaging",
+        "policy-6-establish-epr-for-weee-batteries",
+        "policy-7-mandate-source-separation-households-bio",
+        "policy-8-set-cdw-recovery-targets-80-policy",
+        "policy-9-implement-landfill-tax",
+        "policy-10-run-green-public-procurement",
+        "policy-11-eu-acquis-alignment-progress-reporting",
+        "policy-12-industrial-symbiosis-platform",
+        "policy-13-bioeconomy-composting-policy",
+        "policy-14-inter-ministerial-ce-coordination-unit",
+        "policy-15-national-data-system-for-material-flows",
+        "policy-16-develop-new-law-on-integrated-waste-management",
+        "policy-17-approve-new-law-on-integrated-waste-management",
+        "policy-18-set-tariffs-under-full-net-cost-coverage-fncc",
+        "policy-19-operate-national-waste-information-system-nwis",
+        "policy-20-establish-five-waste-management-zones",
+        "policy-21-resolve-waste-service-disputes-post-2027",
+        "enforcement-1-issue-operating-licenses-to-waste-operators",
+        "enforcement-2-inspect-pastrimi-operators-for-service-compliance",
+        "enforcement-3-inspect-landfills-for-environmental-compliance",
+        "enforcement-4-fine-illegal-dumpers-households",
+        "enforcement-5-fine-illegal-dumpers-construction-sites",
+        "enforcement-6-sanction-operators-for-service-failures",
+        "enforcement-7-maintain-illegal-dumpsite-register",
+        "enforcement-8-maintain-national-waste-flow-data",
+        "enforcement-9-audit-epr-drs-compliance-when-operational",
+        "enforcement-10-adjudicate-waste-related-disputes",
+        "enforcement-11-investigate-environmental-health-risks",
+        "enforcement-12-receive-citizen-reports-of-illegal-dumping-current-channels",
+        "enforcement-13-public-watchdog-independent-counts-critique",
+        "enforcement-14-press-accountability-journalism",
+        "enforcement-15-operate-the-national-waste-information-system-nwis",
+        "enforcement-16-receive-structured-citizen-reports-digital",
+        "enforcement-17-audit-epr-drs-compliance-post-new-law-operational-regime",
+        "enforcement-18-investigate-cross-municipal-waste-flows-bin-tourism"
+      ],
+      "revealOrder": [
+        [
+          "KOM"
+        ],
+        [
+          "ASMB",
+          "PAS"
+        ],
+        [
+          "PAS_UNION",
+          "PRV"
+        ],
+        [
+          "CIT"
+        ]
+      ],
+      "actorEffects": {
+        "KOM": {
+          "stressLevel": "none",
+          "narrative": "Regains revenue control. Can now steer funds and set priorities. Likely to revive the €16M private operator tender — which is its stated preference."
+        },
+        "ASMB": {
+          "stressLevel": "medium",
+          "narrative": "PDK+VV political bloc loses the regulation they fought for. PDK has strong incentive to use the Assembly to legislate again. Political cycle resumes."
+        },
+        "PAS": {
+          "stressLevel": "high",
+          "narrative": "Loses direct revenue stream. Becomes fully dependent on Municipality transferring funds — which the Municipality has already proven it can withhold. Historical pattern: withholding → cash starvation → workers strike."
+        },
+        "PAS_UNION": {
+          "stressLevel": "high",
+          "narrative": "Union will interpret this as the prelude to privatization. The last time Pastrimi lost billing leverage (Jan–Jun 2025), workers struck for a month. Expect the same response."
+        },
+        "PRV": {
+          "stressLevel": "none",
+          "narrative": "Path clears. The Municipality's €16M tender for 5 private operators becomes viable again. The EU, which prefers market-based approaches, would likely approve."
+        },
+        "CIT": {
+          "stressLevel": "medium",
+          "narrative": "Confusion returns — where do they pay? Dual-billing risk re-emerges. If workers strike again, collection stops. Citizens are the system's shock absorbers: they absorb every political failure as a service failure."
+        }
+      }
+    },
+    {
+      "id": "eu-formal-warning",
+      "iconName": "Globe",
+      "title": "EU issues formal accession warning on waste",
+      "description": "The EU formally conditions Kosovo's next accession milestone on measurable waste management progress.",
+      "context": "Kosovo's EU accession path means EU leverage is real but has never been deployed specifically on waste. A formal warning would be one escalation step above the current \"noted in annual report\" status.",
+      "headlines": [
+        "EU formally links Kosovo accession milestone to waste management progress",
+        "Mirash landfill named on accession scorecard — 20 years, no environmental permit, no leachate treatment",
+        "MMPHI must respond with measurable targets — previous strategy promised 100% collection by 2020",
+        "Informal recycling sector faces formalization pressure — Kosovo's entire 3% recycling rate at risk"
+      ],
+      "historical": false,
+      "historicalDate": null,
+      "affectedActorIds": [
+        "EU",
+        "MMPHI",
+        "KLM",
+        "KOM",
+        "PAS",
+        "INFORMAL",
+        "MIRASH"
+      ],
+      "affectedEdgeIds": [
+        "EU-regulates-MMPHI",
+        "graph-eu-klmc-landfill-funding",
+        "graph-mmphi-assembly-approval",
+        "MMPHI-licenses-PAS"
+      ],
+      "affectedActivityIds": [
+        "operational-1-pass-municipal-waste-regulation",
+        "operational-2-set-tariff-6-20-mo-flat-no-payt",
+        "operational-3-maintain-client-registry",
+        "operational-4-bill-citizens-for-waste-services",
+        "operational-5-operate-household-collection-trucks",
+        "operational-6-operate-business-collection",
+        "operational-7-pay-landfill-tipping-fees",
+        "operational-8-operate-mirash-regional-landfills",
+        "operational-9-build-replacement-landfill",
+        "operational-10-appoint-pastrimi-ceo",
+        "operational-11-appoint-pastrimi-board-5-7",
+        "operational-12-resolve-regulation-disputes",
+        "operational-13-investigate-service-failures",
+        "operational-14-receive-citizen-complaints",
+        "operational-15-operate-civic-amenity-centers-cacs",
+        "operational-16-operate-materials-recovery-facilities-mrfs-none-currently-ex",
+        "operational-17-coordinate-within-five-waste-management-zones",
+        "operational-18-handle-cross-neighborhood-bin-tourism",
+        "operational-19-respond-to-climate-waste-events-e-g-mitrovica-lushta-river-f",
+        "policy-1-set-national-waste-strategy-2024-2030",
+        "policy-2-allocate-action-plan-budget-41m-77m",
+        "policy-3-design-drs-for-beverage-packaging",
+        "policy-4-operate-drs-post-launch",
+        "policy-5-establish-epr-for-packaging",
+        "policy-6-establish-epr-for-weee-batteries",
+        "policy-7-mandate-source-separation-households-bio",
+        "policy-8-set-cdw-recovery-targets-80-policy",
+        "policy-9-implement-landfill-tax",
+        "policy-10-run-green-public-procurement",
+        "policy-11-eu-acquis-alignment-progress-reporting",
+        "policy-12-industrial-symbiosis-platform",
+        "policy-13-bioeconomy-composting-policy",
+        "policy-14-inter-ministerial-ce-coordination-unit",
+        "policy-15-national-data-system-for-material-flows",
+        "policy-16-develop-new-law-on-integrated-waste-management",
+        "policy-17-approve-new-law-on-integrated-waste-management",
+        "policy-18-set-tariffs-under-full-net-cost-coverage-fncc",
+        "policy-19-operate-national-waste-information-system-nwis",
+        "policy-20-establish-five-waste-management-zones",
+        "policy-21-resolve-waste-service-disputes-post-2027",
+        "enforcement-1-issue-operating-licenses-to-waste-operators",
+        "enforcement-2-inspect-pastrimi-operators-for-service-compliance",
+        "enforcement-3-inspect-landfills-for-environmental-compliance",
+        "enforcement-4-fine-illegal-dumpers-households",
+        "enforcement-5-fine-illegal-dumpers-construction-sites",
+        "enforcement-6-sanction-operators-for-service-failures",
+        "enforcement-7-maintain-illegal-dumpsite-register",
+        "enforcement-8-maintain-national-waste-flow-data",
+        "enforcement-9-audit-epr-drs-compliance-when-operational",
+        "enforcement-10-adjudicate-waste-related-disputes",
+        "enforcement-11-investigate-environmental-health-risks",
+        "enforcement-12-receive-citizen-reports-of-illegal-dumping-current-channels",
+        "enforcement-13-public-watchdog-independent-counts-critique",
+        "enforcement-14-press-accountability-journalism",
+        "enforcement-15-operate-the-national-waste-information-system-nwis",
+        "enforcement-16-receive-structured-citizen-reports-digital",
+        "enforcement-17-audit-epr-drs-compliance-post-new-law-operational-regime",
+        "enforcement-18-investigate-cross-municipal-waste-flows-bin-tourism"
+      ],
+      "revealOrder": [
+        [
+          "EU"
+        ],
+        [
+          "MMPHI",
+          "KLM"
+        ],
+        [
+          "KOM",
+          "PAS"
+        ],
+        [
+          "INFORMAL",
+          "MIRASH"
+        ]
+      ],
+      "actorEffects": {
+        "EU": {
+          "stressLevel": "none",
+          "narrative": "EU deploys its most significant systemic lever. This gives the EU Delegation's Pristina office political cover to push harder on specific actors."
+        },
+        "MMPHI": {
+          "stressLevel": "high",
+          "narrative": "Must formally respond. Likely: new National Waste Strategy targets, increased pressure on KLMC to get environmental permits, and pressure on Pristina to demonstrate EU-aligned reforms (pay-as-you-throw, collection coverage metrics)."
+        },
+        "KLM": {
+          "stressLevel": "high",
+          "narrative": "Mirash becomes a specific liability on Kosovo's accession scorecard. EU closure/replacement funding timeline becomes binding, not advisory. KLMC must apply for environmental permits or risk the accession case."
+        },
+        "KOM": {
+          "stressLevel": "medium",
+          "narrative": "Political pressure to demonstrate reform. Private operator introduction — which the EU prefers — gets political oxygen. Mayor Rama can frame the tender as \"EU-required modernization.\""
+        },
+        "PAS": {
+          "stressLevel": "medium",
+          "narrative": "EU compliance typically means performance requirements: pay-as-you-throw, collection coverage metrics, route reporting. Pastrimi currently has none of these. Compliance would require operational restructuring."
+        },
+        "INFORMAL": {
+          "stressLevel": "high",
+          "narrative": "EU compliance often triggers formalization drives. The informal recycling sector — mostly Roma, Ashkali, Egyptian community — is the most economically vulnerable to formalization pressure. Formalization would mean losing unemployment benefits and exposing collectors to taxes."
+        },
+        "MIRASH": {
+          "stressLevel": "high",
+          "narrative": "Specific EU conditions would likely include a hard timeline for Mirash closure. Funding for a replacement site exists in study form. Political will to actually close and relocate is what's missing."
+        }
+      }
+    },
+    {
+      "id": "pastrimi-strikes",
+      "iconName": "Truck",
+      "title": "Pastrimi workers strike",
+      "description": "Workers stop collection in protest. This is a historical replay of what actually happened in May–June 2025.",
+      "context": "This lever shows what already happened. Run it to understand the system's stress response. The full crisis ran ~1 month, resolved only after the Supreme Court ruled.",
+      "headlines": [
+        "WORKERS WALK OUT — Collection stops city-wide · Trash piles up in summer heat",
+        "Mayor Rama declares state of emergency — contracts private operators who also fail to do the job",
+        "Ombudsperson convenes emergency meeting May 19 · Pastrimi CEO attends · Mayor Rama does not show up",
+        "Residents: \"The smell here is unbearable\" · Supreme Court eventually rules, crisis ends after ~1 month"
+      ],
+      "historical": true,
+      "historicalDate": "May – June 2025",
+      "affectedActorIds": [
+        "PAS_UNION",
+        "PAS",
+        "KOM",
+        "PRV",
+        "CIT",
+        "OMB"
+      ],
+      "affectedEdgeIds": [
+        "graph-workers-pastrimi-labor",
+        "KOM-contracts-PRV",
+        "OMB-inspects-KOM",
+        "CIT-pays-PAS"
+      ],
+      "affectedActivityIds": [
+        "operational-1-pass-municipal-waste-regulation",
+        "operational-2-set-tariff-6-20-mo-flat-no-payt",
+        "operational-3-maintain-client-registry",
+        "operational-4-bill-citizens-for-waste-services",
+        "operational-5-operate-household-collection-trucks",
+        "operational-6-operate-business-collection",
+        "operational-7-pay-landfill-tipping-fees",
+        "operational-8-operate-mirash-regional-landfills",
+        "operational-9-build-replacement-landfill",
+        "operational-10-appoint-pastrimi-ceo",
+        "operational-11-appoint-pastrimi-board-5-7",
+        "operational-12-resolve-regulation-disputes",
+        "operational-13-investigate-service-failures",
+        "operational-14-receive-citizen-complaints",
+        "operational-15-operate-civic-amenity-centers-cacs",
+        "operational-16-operate-materials-recovery-facilities-mrfs-none-currently-ex",
+        "operational-17-coordinate-within-five-waste-management-zones",
+        "operational-18-handle-cross-neighborhood-bin-tourism",
+        "operational-19-respond-to-climate-waste-events-e-g-mitrovica-lushta-river-f",
+        "policy-1-set-national-waste-strategy-2024-2030",
+        "policy-2-allocate-action-plan-budget-41m-77m",
+        "policy-3-design-drs-for-beverage-packaging",
+        "policy-4-operate-drs-post-launch",
+        "policy-5-establish-epr-for-packaging",
+        "policy-6-establish-epr-for-weee-batteries",
+        "policy-7-mandate-source-separation-households-bio",
+        "policy-8-set-cdw-recovery-targets-80-policy",
+        "policy-9-implement-landfill-tax",
+        "policy-10-run-green-public-procurement",
+        "policy-11-eu-acquis-alignment-progress-reporting",
+        "policy-12-industrial-symbiosis-platform",
+        "policy-13-bioeconomy-composting-policy",
+        "policy-14-inter-ministerial-ce-coordination-unit",
+        "policy-15-national-data-system-for-material-flows",
+        "policy-16-develop-new-law-on-integrated-waste-management",
+        "policy-17-approve-new-law-on-integrated-waste-management",
+        "policy-18-set-tariffs-under-full-net-cost-coverage-fncc",
+        "policy-19-operate-national-waste-information-system-nwis",
+        "policy-20-establish-five-waste-management-zones",
+        "policy-21-resolve-waste-service-disputes-post-2027",
+        "enforcement-1-issue-operating-licenses-to-waste-operators",
+        "enforcement-2-inspect-pastrimi-operators-for-service-compliance",
+        "enforcement-3-inspect-landfills-for-environmental-compliance",
+        "enforcement-4-fine-illegal-dumpers-households",
+        "enforcement-5-fine-illegal-dumpers-construction-sites",
+        "enforcement-6-sanction-operators-for-service-failures",
+        "enforcement-7-maintain-illegal-dumpsite-register",
+        "enforcement-8-maintain-national-waste-flow-data",
+        "enforcement-9-audit-epr-drs-compliance-when-operational",
+        "enforcement-10-adjudicate-waste-related-disputes",
+        "enforcement-11-investigate-environmental-health-risks",
+        "enforcement-12-receive-citizen-reports-of-illegal-dumping-current-channels",
+        "enforcement-13-public-watchdog-independent-counts-critique",
+        "enforcement-14-press-accountability-journalism",
+        "enforcement-15-operate-the-national-waste-information-system-nwis",
+        "enforcement-16-receive-structured-citizen-reports-digital",
+        "enforcement-17-audit-epr-drs-compliance-post-new-law-operational-regime",
+        "enforcement-18-investigate-cross-municipal-waste-flows-bin-tourism"
+      ],
+      "revealOrder": [
+        [
+          "PAS_UNION"
+        ],
+        [
+          "PAS",
+          "KOM"
+        ],
+        [
+          "PRV",
+          "OMB"
+        ],
+        [
+          "CIT"
+        ]
+      ],
+      "actorEffects": {
+        "PAS_UNION": {
+          "stressLevel": "none",
+          "narrative": "Workers' chosen action. Union cohesion is high during the strike. Ardian Krasniqi (union president) frames it as defending public employment against \"tricks they play among themselves.\""
+        },
+        "PAS": {
+          "stressLevel": "medium",
+          "narrative": "Management supports the strike as leverage against Municipality, but the company stops generating revenue. Adds to financial pressure. Strike ends only after Supreme Court ruling gives Pastrimi a clear win."
+        },
+        "KOM": {
+          "stressLevel": "high",
+          "narrative": "Forced to act. Declares state of emergency in waste collection. Contracts private operators. Emergency declaration is politically costly — it admits service failure on the mayor's watch. Mayor Rama cites \"significant risk of public health crisis.\""
+        },
+        "PRV": {
+          "stressLevel": "none",
+          "narrative": "Gets temporary emergency contracts. Historical note: \"they also failed to do the job properly\" (KOHA retrospective on 2025). Emergency contracts are not the same as winning the long-term tender."
+        },
+        "CIT": {
+          "stressLevel": "high",
+          "narrative": "Trash accumulates. Summer heat amplifies smell. Complaints spike. Citizens were described reporting stench, full containers, and no response. The dual-billing confusion continues on top of non-collection."
+        },
+        "OMB": {
+          "stressLevel": "medium",
+          "narrative": "Convenes emergency mediation on May 19, 2025. Reçica attends. Mayor Rama does not. Jashari publicly criticizes the Municipality for \"complete irresponsibility.\" Jashari cannot sanction anyone — can only name and shame."
+        }
+      }
     }
   ],
   "policies": [

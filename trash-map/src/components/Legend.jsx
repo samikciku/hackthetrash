@@ -1,5 +1,5 @@
-import { TIER_COLORS } from '../data/nodes'
-import { EDGE_COLORS } from '../data/edges'
+import { TIER_COLORS } from '../lib/graphData'
+import { EDGE_COLORS } from '../lib/graphData'
 
 const TIERS = [
   { key: 'operational', label: 'Operational' },

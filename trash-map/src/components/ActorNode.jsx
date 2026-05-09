@@ -1,6 +1,6 @@
 import { Handle, Position } from '@xyflow/react'
 import { motion, AnimatePresence } from 'motion/react'
-import { TIER_COLORS } from '../data/nodes'
+import { TIER_COLORS } from '../lib/graphData'
 
 const STRESS_GLOW = {
   none:   'none',

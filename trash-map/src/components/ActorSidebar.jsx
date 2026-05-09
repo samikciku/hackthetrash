@@ -1,6 +1,6 @@
 import { X, ExternalLink } from 'lucide-react'
 import { motion } from 'motion/react'
-import { TIER_COLORS } from '../data/nodes'
+import { TIER_COLORS } from '../lib/graphData'
 import LeverIcon from './LeverIcon'
 
 /* Stagger settings shared between sections */

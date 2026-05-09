@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
-import { levers } from '../data/levers'
+import { levers } from '../lib/graphData'
 
 // Wave delay between each group of nodes (ms)
 const WAVE_DELAY = 300
@@ -12,10 +12,17 @@ export function useActiveLever() {
   const [revealedEdgeIds, setRevealedEdgeIds] = useState(new Set())
   const timeoutsRef = useRef([])
 
-  const activeLever = useMemo(
-    () => levers.find((l) => l.id === activeLeverId) ?? null,
-    [activeLeverId]
-  )
+  const activeLever = useMemo(() => {
+    const l = levers.find((x) => x.id === activeLeverId)
+    if (!l) return null
+    // Backwards-compat shim for ActorNode/NewsTicker which still read
+    // .affectedNodeIds / .nodeEffects keyed by node ids.
+    return {
+      ...l,
+      affectedNodeIds: l.affectedActorIds,
+      nodeEffects: l.actorEffects,
+    }
+  }, [activeLeverId])
 
   // Full set — used for dimming (stable from lever activation)
   const affectedNodeIds = useMemo(
@@ -43,7 +50,7 @@ export function useActiveLever() {
     const lever = levers.find((l) => l.id === activeLeverId)
     if (!lever) return
 
-    const waves = lever.revealOrder ?? [lever.affectedNodeIds]
+    const waves = lever.revealOrder ?? [lever.affectedActorIds]
     const accumulated = new Set()
     let delay = 0
 

@@ -15,9 +15,10 @@ export default function MatrixView() {
   // Filter state
   const [selectedStages, setSelectedStages] = useState([])
   const [selectedHorizons, setSelectedHorizons] = useState(['current', 'post_new_law'])
-  const [selectedLayers, setSelectedLayers] = useState(['operational', 'policy', 'enforcement', 'recommendations'])
+  const [selectedLayers, setSelectedLayers] = useState(['operational', 'policy', 'enforcement'])
   const [query, setQuery] = useState('')
   const [phantomOnly, setPhantomOnly] = useState(false)
+  const [hideMinorActors, setHideMinorActors] = useState(true)
 
   // Collapsed stage rows
   const [collapsedStages, setCollapsedStages] = useState(() => new Set())
@@ -50,8 +51,8 @@ export default function MatrixView() {
     [grouped]
   )
   const columnActors = useMemo(
-    () => orderedActors(involvedActorIds(filtered)),
-    [filtered]
+    () => orderedActors(involvedActorIds(filtered), { hideMinorActors }),
+    [filtered, hideMinorActors]
   )
 
   // ── Toggle helpers ──
@@ -76,6 +77,8 @@ export default function MatrixView() {
           onQueryChange={setQuery}
           phantomOnly={phantomOnly}
           onTogglePhantom={() => setPhantomOnly(v => !v)}
+          hideMinorActors={hideMinorActors}
+          onToggleHideMinorActors={() => setHideMinorActors(v => !v)}
         />
 
         {/* Stat strip */}

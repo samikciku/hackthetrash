@@ -6,6 +6,7 @@ export default function LensBar({
   selectedLayers, onToggleLayer,
   query, onQueryChange,
   phantomOnly, onTogglePhantom,
+  hideMinorActors, onToggleHideMinorActors,
 }) {
   return (
     <div
@@ -58,6 +59,11 @@ export default function LensBar({
       {/* Phantom-A toggle */}
       <Chip active={phantomOnly} onClick={onTogglePhantom} accent="amber">
         ⚠ Phantom-A only
+      </Chip>
+
+      {/* Minor actors toggle */}
+      <Chip active={hideMinorActors} onClick={onToggleHideMinorActors}>
+        Hide minor actors
       </Chip>
 
       <div className="ml-auto flex items-center gap-2 flex-wrap justify-end">

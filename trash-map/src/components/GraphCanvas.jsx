@@ -11,8 +11,7 @@ import {
   useEdgesState,
 } from '@xyflow/react'
 import ActorNode from './ActorNode'
-import { initialNodes, TIER_COLORS } from '../data/nodes'
-import { initialEdges, EDGE_COLORS } from '../data/edges'
+import { initialNodes, initialEdges, TIER_COLORS, EDGE_COLORS } from '../lib/graphData'
 
 const nodeTypes = { actorNode: ActorNode }
 

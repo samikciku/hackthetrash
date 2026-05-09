@@ -1,5 +1,5 @@
 import { Film } from 'lucide-react'
-import { levers } from '../data/levers'
+import { levers } from '../lib/graphData'
 import LeverIcon from './LeverIcon'
 
 export default function LeverPanel({ activeLeverId, onToggle }) {
