@@ -164,7 +164,10 @@
     "actionFailed": "Action failed",
     "lockoutNote": "Brute-force protected. Locked after 5 failed attempts for 15 minutes.",
     "errorForbidden": "Your account does not have admin access.",
-    "errorInvalid": "Invalid credentials"
+    "errorInvalid": "Invalid credentials",
+    "demoCreds": "Demo credentials (development only)",
+    "demoNote": "Change ADMIN_EMAIL and ADMIN_PASSWORD in backend/.env before any deploy.",
+    "demoFill": "Fill the form"
   },
   "latestPictures": {
     "title": "Latest pictures of trash",

@@ -87,6 +87,30 @@ function LoginInner() {
         <p className="text-xs text-gray-400 text-center">
           {t("admin.lockoutNote")}
         </p>
+
+        {process.env.NODE_ENV === "development" && (
+          <div className="mt-4 border-2 border-dashed border-yellow-300 bg-yellow-50 p-3 rounded-lg text-xs">
+            <div className="font-semibold text-yellow-900 mb-1">
+              🧪 {t("admin.demoCreds")}
+            </div>
+            <div className="font-mono text-yellow-900 select-all">
+              admin@hackthetrash.org
+              <br />
+              ChangeMe!2026
+            </div>
+            <div className="mt-2 text-yellow-800/80">{t("admin.demoNote")}</div>
+            <button
+              type="button"
+              onClick={() => {
+                setEmail("admin@hackthetrash.org");
+                setPassword("ChangeMe!2026");
+              }}
+              className="mt-2 text-yellow-900 font-semibold hover:underline"
+            >
+              {t("admin.demoFill")} →
+            </button>
+          </div>
+        )}
       </form>
     </div>
   );

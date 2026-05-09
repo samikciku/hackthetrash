@@ -164,7 +164,10 @@
     "actionFailed": "Veprimi dështoi",
     "lockoutNote": "I mbrojtur nga sulmet brute-force. Bllokohet pas 5 përpjekjeve të dështuara për 15 minuta.",
     "errorForbidden": "Llogaria juaj nuk ka qasje administratori.",
-    "errorInvalid": "Të dhëna të pasakta"
+    "errorInvalid": "Të dhëna të pasakta",
+    "demoCreds": "Të dhënat demo (vetëm për zhvillim)",
+    "demoNote": "Ndryshoni ADMIN_EMAIL dhe ADMIN_PASSWORD në backend/.env para çdo publikimi.",
+    "demoFill": "Plotëso formularin"
   },
   "latestPictures": {
     "title": "Fotot e fundit të mbeturinave",
