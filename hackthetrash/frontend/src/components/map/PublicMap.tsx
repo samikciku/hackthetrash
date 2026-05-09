@@ -77,10 +77,10 @@ export default function PublicMap() {
       .catch(() => {
         // Fallback demo data if backend unavailable
         setReports([
-          { id: "demo1", latitude: 45.4642, longitude: 9.19, status: "reported",
-            description: "Demo: pile of plastic", severity: "medium", tags: ["Plastic"] },
-          { id: "demo2", latitude: 45.47, longitude: 9.2, status: "cleaned",
-            description: "Demo: cleaned construction debris", severity: "large", tags: ["Construction"] }
+          { id: "demo1", latitude: 42.6629, longitude: 21.1655, status: "reported",
+            description: "Demo: plastic bottles near Skanderbeg Square", severity: "medium", tags: ["Plastic"] },
+          { id: "demo2", latitude: 42.6699, longitude: 21.1782, status: "cleaned",
+            description: "Demo: cleaned construction debris in Sunny Hill", severity: "large", tags: ["Construction"] }
         ]);
       })
       .finally(() => setLoading(false));
@@ -93,7 +93,7 @@ export default function PublicMap() {
     return () => clearInterval(timer);
   }, []);
 
-  const center: [number, number] = flyTarget ?? [45.4642, 9.19];
+  const center: [number, number] = flyTarget ?? [42.6629, 21.1655]; // Pristina city centre
 
   return (
     <div className="relative h-full w-full">

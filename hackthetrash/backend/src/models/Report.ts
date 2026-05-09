@@ -19,10 +19,10 @@ export interface Report {
 export const reportsDB: Report[] = [
   {
     id: "demo-1",
-    latitude: 45.4642,
-    longitude: 9.19,
+    latitude: 42.6629,
+    longitude: 21.1655,
     severity: "medium",
-    description: "Pile of plastic bottles near the park",
+    description: "Plastic bottles near Skanderbeg Square",
     tags: ["Plastic"],
     status: "reported",
     anonymous: true,
@@ -31,10 +31,10 @@ export const reportsDB: Report[] = [
   },
   {
     id: "demo-2",
-    latitude: 45.47,
-    longitude: 9.2,
+    latitude: 42.6699,
+    longitude: 21.1782,
     severity: "large",
-    description: "Construction debris dumped",
+    description: "Construction debris in Sunny Hill",
     tags: ["Construction"],
     status: "cleaned",
     anonymous: true,

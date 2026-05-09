@@ -3,14 +3,13 @@ import * as Localization from "expo-localization";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import en from "../../../locales/en.json";
 import sq from "../../../locales/sq.json";
-import it from "../../../locales/it.json";
 
-export const SUPPORTED = ["en", "sq", "it"] as const;
+export const SUPPORTED = ["en", "sq"] as const;
 export type Locale = typeof SUPPORTED[number];
 
 const LOCALE_KEY = "@htt/locale";
 
-export const i18n = new I18n({ en, sq, it });
+export const i18n = new I18n({ en, sq });
 i18n.enableFallback = true;
 i18n.defaultLocale = "en";
 

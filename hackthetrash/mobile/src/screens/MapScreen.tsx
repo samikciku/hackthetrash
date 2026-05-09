@@ -54,7 +54,7 @@ function buildHtml(reports: Report[], focus?: { lat: number; lng: number; id?: s
   var REPORTS = ${json};
   var FOCUS = ${focusJson};
 
-  var map = L.map("map").setView(FOCUS ? [FOCUS.lat, FOCUS.lng] : [45.4642, 9.19], FOCUS ? 16 : 12);
+  var map = L.map("map").setView(FOCUS ? [FOCUS.lat, FOCUS.lng] : [42.6629, 21.1655], FOCUS ? 16 : 13);
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "&copy; OpenStreetMap contributors",
     maxZoom: 19
@@ -107,8 +107,8 @@ export default function MapScreen({ route }: Props) {
       setError(e.message || "Failed to load reports");
       // Fallback demo
       setReports([
-        { id: "demo1", latitude: 45.4642, longitude: 9.19, status: "reported", description: "Demo: pile of plastic" },
-        { id: "demo2", latitude: 45.47, longitude: 9.2, status: "cleaned", description: "Demo: cleaned debris" }
+        { id: "demo1", latitude: 42.6629, longitude: 21.1655, status: "reported", description: "Demo: plastic bottles near Skanderbeg Square" },
+        { id: "demo2", latitude: 42.6699, longitude: 21.1782, status: "cleaned", description: "Demo: cleaned debris in Sunny Hill" }
       ]);
     } finally {
       setLoading(false);

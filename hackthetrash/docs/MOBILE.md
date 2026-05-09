@@ -6,7 +6,7 @@
 - OpenStreetMap layer via Leaflet in WebView
 - **Push notifications** (Expo Push) when a report status changes
 - **Offline submission queue** (AsyncStorage + expo-file-system)
-- **i18n**: English / Albanian / Italian, shared with the web app
+- **i18n**: English & Albanian (Pristina pilot), shared with the web app
 - Settings screen: language picker, queue inspector, push token
 
 ## Architecture

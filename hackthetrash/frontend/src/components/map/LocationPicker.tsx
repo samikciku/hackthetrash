@@ -31,7 +31,7 @@ export default function LocationPicker({
   coords: Coords | null;
   onChange: (c: Coords) => void;
 }) {
-  const center: [number, number] = coords ? [coords.lat, coords.lng] : [45.4642, 9.19]; // Milan default
+  const center: [number, number] = coords ? [coords.lat, coords.lng] : [42.6629, 21.1655]; // Pristina city centre
 
   return (
     <div className="h-64 rounded overflow-hidden border">

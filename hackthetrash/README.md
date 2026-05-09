@@ -118,7 +118,7 @@ NEXT_PUBLIC_MAPBOX_TOKEN=...
 - [x] HTML mockups
 - [x] Mobile app (Expo)
 - [x] Push notifications + offline queue
-- [x] i18n (en / sq / it) shared by web + mobile
+- [x] i18n English + Albanian (Pristina-focused)
 
 See [docs/ROADMAP.md](docs/ROADMAP.md) for full details.
 

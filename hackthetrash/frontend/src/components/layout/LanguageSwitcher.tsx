@@ -2,7 +2,7 @@
 
 import { useI18n, SUPPORTED, Locale } from "@/lib/i18n";
 
-const FLAG: Record<Locale, string> = { en: "🇬🇧", sq: "🇦🇱", it: "🇮🇹" };
+const FLAG: Record<Locale, string> = { en: "🇬🇧", sq: "🇦🇱" };
 
 export default function LanguageSwitcher() {
   const { locale, setLocale, t } = useI18n();

@@ -5,7 +5,7 @@ import { i18n, setLocale, SUPPORTED, Locale, t } from "../lib/i18n";
 import { listQueue, flushQueue, removeFromQueue, PendingReport } from "../lib/queue";
 import { getStoredToken } from "../lib/notifications";
 
-const LANG_NAMES: Record<Locale, string> = { en: "English", sq: "Shqip", it: "Italiano" };
+const LANG_NAMES: Record<Locale, string> = { en: "English", sq: "Shqip" };
 
 export default function SettingsScreen() {
   const [, setTick] = useState(0);

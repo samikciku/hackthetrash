@@ -1,7 +1,7 @@
 {
   "app": {
     "name": "HackTheTrash",
-    "tagline": "Së bashku të pastrojmë qytetet tona."
+    "tagline": "Së bashku të pastrojmë Prishtinën."
   },
   "nav": {
     "home": "Kreu",
@@ -17,7 +17,7 @@
   "home": {
     "ctaReport": "Raporto Mbeturina",
     "ctaMap": "Shih Hartën",
-    "subtitle": "Ke parë mbeturina ilegale? Bëj një foto, vendos pikën, ndrysho komunitetin tënd.",
+    "subtitle": "Ke parë mbeturina ilegale në Prishtinë? Bëj një foto, vendos pikën, ndrysho qytetin tënd.",
     "howItWorks": "Si funksionon",
     "step1": "Foto",
     "step1d": "Fotografo mbeturinat e hedhura",
@@ -28,9 +28,9 @@
     "stats": {
       "reports": "{{count}} raporte",
       "cleaned": "{{count}} të pastruara",
-      "cities": "{{count}} qytete"
+      "cities": "{{count}} lagje"
     },
-    "pristina": "Projekt pilot në Prishtinë - na ndihmoni të hartografojmë mbeturinat ilegale në lagjen tuaj."
+    "pristina": "Projekt pilot për qytetin e Prishtinës - na ndihmoni të hartografojmë mbeturinat ilegale në lagjen tuaj."
   },
   "report": {
     "title": "Raporto Mbeturina të Paligjshme",
@@ -138,7 +138,6 @@
   },
   "lang": {
     "en": "English",
-    "sq": "Shqip",
-    "it": "Italiano"
+    "sq": "Shqip"
   }
 }

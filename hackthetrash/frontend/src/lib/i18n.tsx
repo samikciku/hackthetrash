@@ -3,12 +3,11 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import en from "../../../locales/en.json";
 import sq from "../../../locales/sq.json";
-import it from "../../../locales/it.json";
 
-export const SUPPORTED = ["en", "sq", "it"] as const;
+export const SUPPORTED = ["en", "sq"] as const;
 export type Locale = typeof SUPPORTED[number];
 
-const RESOURCES: Record<Locale, any> = { en, sq, it };
+const RESOURCES: Record<Locale, any> = { en, sq };
 const STORAGE_KEY = "htt-locale";
 
 type Ctx = {
