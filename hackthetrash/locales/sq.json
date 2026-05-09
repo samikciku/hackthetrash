@@ -200,7 +200,12 @@
       "moderator": "Moderator",
       "authority": "Autoritet",
       "admin": "Administrator"
-    }
+    },
+    "backendChecking": "Po kontrollohet backend-i...",
+    "backendOk": "Backend-i është i arritshëm",
+    "backendDown": "Backend-i nuk është i arritshëm",
+    "backendDownHint": "Sigurohu që serveri API është aktiv:",
+    "backendUrl": "Po provoj"
   },
   "latestPictures": {
     "title": "Fotot e fundit të mbeturinave",

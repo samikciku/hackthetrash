@@ -2,8 +2,10 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useAuth } from "@/lib/auth";
+import { useAuth, API_URL } from "@/lib/auth";
 import { useI18n } from "@/lib/i18n";
+
+type BackendStatus = "checking" | "ok" | "down";
 
 function LoginInner() {
   const router = useRouter();
@@ -20,6 +22,29 @@ function LoginInner() {
     errorParam === "forbidden" ? t("admin.errorForbidden") : null
   );
   const [submitting, setSubmitting] = useState(false);
+  const [backend, setBackend] = useState<BackendStatus>("checking");
+
+  // Ping the backend so the user knows up-front whether it is reachable.
+  // We retry every 5s while it is down so the banner clears as soon as
+  // someone fires up `npm run dev` in /backend.
+  useEffect(() => {
+    let alive = true;
+    const ping = async () => {
+      try {
+        const ctl = new AbortController();
+        const timer = setTimeout(() => ctl.abort(), 4000);
+        const res = await fetch(`${API_URL}/health`, { signal: ctl.signal });
+        clearTimeout(timer);
+        if (alive) setBackend(res.ok ? "ok" : "down");
+      } catch {
+        if (alive) setBackend("down");
+      }
+    };
+    ping();
+    const id = setInterval(() => { if (backend !== "ok") ping(); }, 5000);
+    return () => { alive = false; clearInterval(id); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // If already logged in, bounce to next
   useEffect(() => {
@@ -44,6 +69,38 @@ function LoginInner() {
           <h1 className="text-2xl font-bold">{t("admin.login")}</h1>
           <p className="text-sm text-gray-500">{t("app.name")} - {t("admin.loginSubtitle")}</p>
         </div>
+
+        {/* Backend reachability banner */}
+        {backend === "checking" && (
+          <div className="bg-gray-50 border border-gray-200 text-gray-600 text-xs p-2 rounded flex items-center gap-2">
+            <span className="inline-block w-2 h-2 rounded-full bg-gray-400 animate-pulse" />
+            {t("admin.backendChecking")}
+          </div>
+        )}
+        {backend === "down" && (
+          <div className="bg-red-50 border border-red-200 text-red-700 text-xs p-3 rounded">
+            <div className="font-semibold mb-1 flex items-center gap-2">
+              <span className="inline-block w-2 h-2 rounded-full bg-red-500" />
+              {t("admin.backendDown")}
+            </div>
+            <div className="text-red-700/80 mb-2">
+              {t("admin.backendDownHint")}
+            </div>
+            <pre className="bg-red-100 text-red-900 p-2 rounded font-mono text-[11px] overflow-x-auto">
+{`cd hackthetrash/backend
+npm run dev`}
+            </pre>
+            <div className="mt-2 text-red-700/70 text-[11px]">
+              {t("admin.backendUrl")}: <span className="font-mono">{API_URL}</span>
+            </div>
+          </div>
+        )}
+        {backend === "ok" && (
+          <div className="bg-green-50 border border-green-200 text-green-700 text-[11px] p-2 rounded flex items-center gap-2">
+            <span className="inline-block w-2 h-2 rounded-full bg-green-500" />
+            {t("admin.backendOk")}
+          </div>
+        )}
 
         {error && (
           <div className="bg-red-50 border border-red-200 text-red-700 text-sm p-3 rounded">
@@ -78,7 +135,7 @@ function LoginInner() {
 
         <button
           type="submit"
-          disabled={submitting}
+          disabled={submitting || backend === "down"}
           className="w-full bg-primary text-white py-2.5 rounded-lg font-semibold disabled:opacity-50 hover:opacity-90"
         >
           {submitting ? t("admin.signingIn") : t("admin.signIn")}

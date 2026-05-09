@@ -200,7 +200,12 @@
       "moderator": "Moderator",
       "authority": "Authority",
       "admin": "Administrator"
-    }
+    },
+    "backendChecking": "Checking backend...",
+    "backendOk": "Backend is reachable",
+    "backendDown": "Backend is unreachable",
+    "backendDownHint": "Make sure the API server is running:",
+    "backendUrl": "Trying"
   },
   "latestPictures": {
     "title": "Latest pictures of trash",

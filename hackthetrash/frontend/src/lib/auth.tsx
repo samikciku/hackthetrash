@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { useRouter, usePathname } from "next/navigation";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 const TOKEN_KEY = "htt-admin-token";
 const USER_KEY = "htt-admin-user";
 
@@ -64,12 +64,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password })
       });
-      const data = await res.json();
-      if (!res.ok) return { ok: false, error: data.error || "Login failed" };
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) return { ok: false, error: data.error || `Login failed (${res.status})` };
       persist(data.token, data.user);
       return { ok: true };
     } catch (e: any) {
-      return { ok: false, error: e?.message || "Network error" };
+      // Network-level failure (server unreachable, CORS blocked,
+      // mixed content, offline, etc). Be explicit so the user can act.
+      const msg = e?.message || String(e);
+      const friendly =
+        msg.toLowerCase().includes("failed to fetch") ||
+        msg.toLowerCase().includes("networkerror") ||
+        msg.toLowerCase().includes("load failed")
+          ? `Cannot reach the backend at ${API_URL}. Is it running? (npm run dev in /backend)`
+          : msg;
+      return { ok: false, error: friendly };
     }
   };
 
