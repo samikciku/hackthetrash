@@ -1,6 +1,22 @@
 @import "tailwindcss";
 @import "@xyflow/react/dist/style.css";
 
+/* ─── Fonts ──────────────────────────────────────────────────────────────── */
+/* DM Sans Variable — UI text, labels, headings                              */
+/* Optical-size axis (opsz) improves legibility at the small sizes this      */
+/* interface uses heavily (9 px – 13 px node/legend/lever text).             */
+@import "@fontsource-variable/dm-sans/opsz.css";
+
+/* DM Mono — stats values, data badges, any tabular/technical text           */
+@import "@fontsource/dm-mono/400.css";
+@import "@fontsource/dm-mono/500.css";
+
+/* ─── Design tokens ─────────────────────────────────────────────────────── */
+@theme {
+  --font-sans: 'DM Sans Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'DM Mono', ui-monospace, 'Courier New', monospace;
+}
+
 :root {
   --color-operational: #F59E0B;
   --color-municipal: #3B82F6;
@@ -14,7 +30,8 @@
 
 body {
   margin: 0;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans);
+  font-optical-sizing: auto; /* activates the opsz variable axis */
   background: #0f172a;
   color: #f1f5f9;
 }
