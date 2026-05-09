@@ -125,20 +125,16 @@ export default function LeftSidebar({ open, activeLeverId, activeLever, onToggle
                 const cardStyle = isActive
                   ? isHistory
                     ? {
-                        background:   'rgba(245,158,11,0.07)',
-                        borderColor:  'rgba(245,158,11,0.35)',
-                        borderLeftColor: '#F59E0B',
-                        borderLeftWidth: 2,
+                        background:  'rgba(245,158,11,0.07)',
+                        borderColor: 'rgba(245,158,11,0.28)',
                       }
                     : {
-                        background:   'rgba(255,255,255,0.06)',
-                        borderColor:  'rgba(255,255,255,0.18)',
-                        borderLeftColor: '#94A3B8',
-                        borderLeftWidth: 2,
+                        background:  'rgba(255,255,255,0.05)',
+                        borderColor: 'rgba(255,255,255,0.14)',
                       }
                   : {
-                      background:   'rgba(255,255,255,0.02)',
-                      borderColor:  'rgba(255,255,255,0.05)',
+                      background:  'rgba(255,255,255,0.02)',
+                      borderColor: 'rgba(255,255,255,0.05)',
                     }
 
                 return (
