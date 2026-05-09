@@ -13,62 +13,66 @@ const TIER_LABELS = {
 
 export default function ActorSidebar({ node, activeLever, onClose }) {
   if (!node) return null
+
   const d     = node.data
   const color = TIER_COLORS[d.tier] ?? '#94A3B8'
-
-  // If a lever is active, pull the narrative for this node
   const leverEffect = activeLever?.nodeEffects?.[node.id] ?? null
 
   return (
     <aside
-      className="fixed top-0 right-0 h-full w-80 bg-slate-900 border-l border-slate-700 overflow-y-auto z-50 flex flex-col"
-      style={{ boxShadow: '-4px 0 24px rgba(0,0,0,0.5)' }}
+      className="flex-shrink-0 flex flex-col overflow-hidden"
+      style={{
+        width: 340,
+        background: '#0A0D16',
+        borderLeft: '1px solid rgba(255,255,255,0.05)',
+        boxShadow: '-16px 0 48px rgba(0,0,0,0.4)',
+        animation: 'sidebarSlideIn 0.18s ease-out both',
+      }}
     >
-      {/* Header */}
+      {/* ── Header ────────────────────────────────────────────────────────── */}
       <div
-        className="px-4 py-3 flex items-start justify-between gap-2 sticky top-0 z-10"
-        style={{ background: `${color}18`, borderBottom: `2px solid ${color}` }}
+        className="shrink-0 px-5 py-4 sticky top-0 z-10"
+        style={{
+          background: `linear-gradient(135deg, ${color}10 0%, transparent 60%), #0A0D16`,
+          borderBottom: `1px solid ${color}22`,
+        }}
       >
-        <div>
-          <div className="flex items-center gap-2 mb-0.5">
-            <span className="w-2.5 h-2.5 rounded-full shrink-0 mt-0.5" style={{ background: color }} />
-            <h2 className="text-white font-bold text-base leading-tight">{d.label}</h2>
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            {/* Tier label */}
+            <div
+              className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-widest mb-2"
+              style={{ background: `${color}18`, color }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: color }} />
+              {TIER_LABELS[d.tier] ?? d.tier}
+            </div>
+
+            <h2 className="text-white font-bold text-base leading-tight mb-0.5">{d.label}</h2>
+
+            {d.fullName !== d.label && (
+              <p className="text-slate-500 text-xs leading-tight">{d.fullName}</p>
+            )}
+            {d.keyPerson && (
+              <p className="text-slate-600 text-xs mt-0.5 italic">{d.keyPerson}</p>
+            )}
           </div>
-          <p className="text-slate-400 text-xs pl-4">{d.fullName}</p>
-          {d.keyPerson && (
-            <p className="text-slate-400 text-xs pl-4 mt-0.5 italic">{d.keyPerson}</p>
-          )}
-          <span
-            className="inline-block mt-1.5 ml-4 text-[10px] font-semibold uppercase tracking-widest px-1.5 py-0.5 rounded"
-            style={{ background: `${color}25`, color }}
+
+          <button
+            onClick={onClose}
+            className="shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-slate-600 hover:text-slate-300 hover:bg-white/5 transition-colors mt-0.5"
           >
-            {TIER_LABELS[d.tier] ?? d.tier}
-          </span>
+            ✕
+          </button>
         </div>
-        <button
-          onClick={onClose}
-          className="text-slate-500 hover:text-white text-lg leading-none mt-0.5 shrink-0"
-        >
-          ✕
-        </button>
       </div>
 
-      <div className="px-4 py-4 flex flex-col gap-5">
-        {/* Active lever narrative for this node */}
+      {/* ── Scrollable body ───────────────────────────────────────────────── */}
+      <div className="flex-1 overflow-y-auto sidebar-scroll px-5 py-5 space-y-6">
+
+        {/* Lever effect banner */}
         {leverEffect && (
-          <div
-            className={`rounded-lg px-3 py-2.5 border
-              ${leverEffect.stressLevel === 'high'   ? 'bg-red-950/60 border-red-700 text-red-200'       : ''}
-              ${leverEffect.stressLevel === 'medium' ? 'bg-orange-950/60 border-orange-700 text-orange-200' : ''}
-              ${leverEffect.stressLevel === 'low'    ? 'bg-yellow-950/60 border-yellow-700 text-yellow-200' : ''}
-              ${leverEffect.stressLevel === 'none'   ? 'bg-slate-800 border-slate-600 text-slate-300'       : ''}
-            `}
-          >
-            <p className="text-[10px] font-bold uppercase tracking-widest mb-1 opacity-70">
-              {activeLever.emoji} Lever effect
-            </p>
-            <p className="text-sm leading-relaxed">{leverEffect.narrative}</p>
-          </div>
+          <LeverBanner effect={leverEffect} lever={activeLever} />
         )}
 
         {/* Role */}
@@ -76,56 +80,41 @@ export default function ActorSidebar({ node, activeLever, onClose }) {
           <p className="text-slate-300 text-sm leading-relaxed">{d.role}</p>
         </Section>
 
-        {/* Leverage */}
+        {/* What they control */}
         {d.leverage?.length > 0 && (
           <Section title="What they control">
-            <ul className="space-y-1">
-              {d.leverage.map((item, i) => (
-                <li key={i} className="flex gap-2 text-sm text-slate-300">
-                  <span className="text-emerald-400 shrink-0">▸</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
+            <BulletList items={d.leverage} accentColor="#34D399" />
           </Section>
         )}
 
-        {/* Dependencies */}
+        {/* What they need */}
         {d.dependencies?.length > 0 && (
           <Section title="What they need">
-            <ul className="space-y-1">
-              {d.dependencies.map((item, i) => (
-                <li key={i} className="flex gap-2 text-sm text-slate-300">
-                  <span className="text-amber-400 shrink-0">▸</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
+            <BulletList items={d.dependencies} accentColor="#FBBF24" />
           </Section>
         )}
 
-        {/* Fears */}
+        {/* What they fear */}
         {d.fears?.length > 0 && (
           <Section title="What they fear">
-            <ul className="space-y-1">
-              {d.fears.map((item, i) => (
-                <li key={i} className="flex gap-2 text-sm text-slate-300">
-                  <span className="text-red-400 shrink-0">▸</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
+            <BulletList items={d.fears} accentColor="#F87171" />
           </Section>
         )}
 
-        {/* Stats */}
+        {/* Stats table */}
         {d.stats?.length > 0 && (
           <Section title="Key numbers">
-            <div className="space-y-1.5">
+            <div className="rounded-lg overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.06)' }}>
               {d.stats.map((s, i) => (
-                <div key={i} className="flex justify-between gap-2 text-sm border-b border-slate-800 pb-1.5">
-                  <span className="text-slate-500 shrink-0">{s.label}</span>
-                  <span className="text-slate-200 text-right">{s.value}</span>
+                <div
+                  key={i}
+                  className="flex justify-between items-start gap-3 px-3 py-2.5 text-sm"
+                  style={{
+                    borderBottom: i < d.stats.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none',
+                  }}
+                >
+                  <span className="text-slate-500 text-[11px] shrink-0 pt-px">{s.label}</span>
+                  <span className="text-slate-200 text-[12px] font-medium text-right font-mono">{s.value}</span>
                 </div>
               ))}
             </div>
@@ -134,10 +123,16 @@ export default function ActorSidebar({ node, activeLever, onClose }) {
 
         {/* Quote */}
         {d.quote && (
-          <div className="border-l-2 border-slate-600 pl-3">
-            <p className="text-slate-300 text-sm leading-relaxed italic">{d.quote}</p>
+          <div
+            className="rounded-lg px-4 py-3"
+            style={{
+              background:   'rgba(255,255,255,0.03)',
+              borderLeft:   '2px solid rgba(255,255,255,0.12)',
+            }}
+          >
+            <p className="text-slate-300 text-sm leading-relaxed italic">"{d.quote}"</p>
             {d.quoteSource && (
-              <p className="text-slate-500 text-xs mt-1.5">
+              <p className="text-slate-600 text-xs mt-2">
                 — {d.quoteSource}
                 {d.quoteUrl && (
                   <>
@@ -146,7 +141,7 @@ export default function ActorSidebar({ node, activeLever, onClose }) {
                       href={d.quoteUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-sky-400 hover:text-sky-300 underline"
+                      className="text-sky-500 hover:text-sky-400 underline underline-offset-2 transition-colors"
                     >
                       ↗
                     </a>
@@ -161,13 +156,56 @@ export default function ActorSidebar({ node, activeLever, onClose }) {
   )
 }
 
+/* ── Sub-components ─────────────────────────────────────────────────────── */
+
 function Section({ title, children }) {
   return (
     <div>
-      <h3 className="text-slate-500 text-[10px] font-semibold uppercase tracking-widest mb-2">
+      <h3 className="text-[9px] font-bold uppercase tracking-[0.12em] text-slate-600 mb-2.5">
         {title}
       </h3>
       {children}
+    </div>
+  )
+}
+
+function BulletList({ items, accentColor }) {
+  return (
+    <ul className="space-y-1.5">
+      {items.map((item, i) => (
+        <li key={i} className="flex gap-2.5 text-sm text-slate-300 leading-relaxed">
+          <span className="shrink-0 mt-[3px] w-1.5 h-1.5 rounded-full" style={{ background: accentColor }} />
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+function LeverBanner({ effect, lever }) {
+  const levels = {
+    high:   { bg: 'rgba(239,68,68,0.08)',   border: 'rgba(239,68,68,0.25)',   text: '#FCA5A5', label: 'High stress'   },
+    medium: { bg: 'rgba(249,115,22,0.08)',  border: 'rgba(249,115,22,0.25)',  text: '#FDBA74', label: 'Medium stress' },
+    low:    { bg: 'rgba(234,179,8,0.08)',   border: 'rgba(234,179,8,0.25)',   text: '#FDE047', label: 'Low stress'    },
+    none:   { bg: 'rgba(255,255,255,0.03)', border: 'rgba(255,255,255,0.08)', text: '#94A3B8', label: 'No stress'     },
+  }
+
+  const style = levels[effect.stressLevel] ?? levels.none
+
+  return (
+    <div
+      className="rounded-xl px-3.5 py-3"
+      style={{ background: style.bg, border: `1px solid ${style.border}` }}
+    >
+      <div className="flex items-center gap-2 mb-2">
+        <span className="text-sm">{lever.emoji}</span>
+        <span className="text-[9px] font-bold uppercase tracking-widest" style={{ color: style.text }}>
+          {style.label}
+        </span>
+      </div>
+      <p className="text-sm leading-relaxed" style={{ color: style.text + 'CC' }}>
+        {effect.narrative}
+      </p>
     </div>
   )
 }

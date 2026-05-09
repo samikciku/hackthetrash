@@ -1,13 +1,14 @@
 import { useState, useCallback } from 'react'
 import GraphCanvas from './components/GraphCanvas'
 import ActorSidebar from './components/ActorSidebar'
-import LeverPanel from './components/LeverPanel'
 import NewsTicker from './components/NewsTicker'
-import Legend from './components/Legend'
+import LeftSidebar from './components/LeftSidebar'
 import { useActiveLever } from './hooks/useActiveLever'
 
 export default function App() {
   const [selectedNode, setSelectedNode] = useState(null)
+  const [sidebarOpen, setSidebarOpen] = useState(true)
+
   const {
     activeLever,
     activeLeverId,
@@ -22,70 +23,131 @@ export default function App() {
     setSelectedNode((prev) => (prev?.id === node.id ? null : node))
   }, [])
 
-  const handleClosesidebar = useCallback(() => setSelectedNode(null), [])
+  const handleCloseSidebar = useCallback(() => setSelectedNode(null), [])
 
   return (
-    <div className="w-screen h-screen flex flex-col overflow-hidden">
-      {/* Header */}
-      <header className="shrink-0 bg-slate-900 border-b border-slate-700 px-4 py-2 flex items-center gap-3 z-50">
-        <div>
-          <h1 className="text-white font-bold text-sm leading-tight">
-            Pristina Trash System
-          </h1>
-          <p className="text-slate-500 text-[11px]">
-            Actor map — Trash, Please hackathon · May 2026
-          </p>
+    <div className="w-screen h-screen flex flex-col overflow-hidden" style={{ background: '#07090F' }}>
+
+      {/* ── Top header ─────────────────────────────────────────────────────── */}
+      <header
+        className="shrink-0 flex items-center gap-3 px-4 z-50"
+        style={{
+          height: 48,
+          background: '#07090F',
+          borderBottom: '1px solid rgba(255,255,255,0.05)',
+        }}
+      >
+        {/* Hamburger */}
+        <button
+          onClick={() => setSidebarOpen((v) => !v)}
+          aria-label="Toggle sidebar"
+          className="shrink-0 w-8 h-8 flex flex-col justify-center items-center gap-[5px] rounded-md transition-colors hover:bg-white/5"
+        >
+          <span
+            className="block h-px bg-slate-400 transition-all duration-200"
+            style={{ width: sidebarOpen ? 14 : 16, transform: sidebarOpen ? 'none' : 'none' }}
+          />
+          <span className="block w-4 h-px bg-slate-400" />
+          <span
+            className="block h-px bg-slate-400 transition-all duration-200"
+            style={{ width: sidebarOpen ? 10 : 16 }}
+          />
+        </button>
+
+        <div className="h-4 w-px" style={{ background: 'rgba(255,255,255,0.08)' }} />
+
+        {/* Brand */}
+        <div className="flex items-center gap-2.5 min-w-0">
+          {/* Small trash icon accent */}
+          <span
+            className="shrink-0 w-6 h-6 rounded flex items-center justify-center text-sm leading-none"
+            style={{ background: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.2)' }}
+          >
+            🗑
+          </span>
+          <div className="min-w-0">
+            <span className="text-white font-semibold text-sm tracking-tight">Pristina Trash System</span>
+            <span className="hidden sm:inline text-slate-600 text-xs ml-2">Actor map · May 2026</span>
+          </div>
         </div>
+
+        {/* Active scenario pill */}
         <div className="ml-auto flex items-center gap-3">
           {activeLever && (
-            <span
-              className="text-[11px] font-semibold px-2 py-0.5 rounded-full"
+            <div
+              className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium transition-all"
               style={
                 activeLever.historical
-                  ? { background: '#451a03', color: '#fde68a', border: '1px solid #78350f' }
-                  : { background: '#fff', color: '#0f172a' }
+                  ? {
+                      background: 'rgba(251,191,36,0.1)',
+                      color: '#FDE68A',
+                      border: '1px solid rgba(251,191,36,0.25)',
+                    }
+                  : {
+                      background: 'rgba(255,255,255,0.07)',
+                      color: '#E2E8F0',
+                      border: '1px solid rgba(255,255,255,0.12)',
+                    }
               }
             >
-              {activeLever.emoji} {activeLever.title}
-            </span>
+              <span>{activeLever.emoji}</span>
+              <span className="max-w-[160px] truncate">{activeLever.title}</span>
+              {activeLever.historical && (
+                <span
+                  className="text-[8px] font-black uppercase tracking-widest px-1 py-0.5 rounded"
+                  style={{ background: 'rgba(251,191,36,0.2)', color: '#F59E0B' }}
+                >
+                  REPLAY
+                </span>
+              )}
+            </div>
           )}
+
           <a
             href="https://github.com/Aldikrasniqi/trash"
             target="_blank"
             rel="noreferrer"
-            className="text-slate-500 hover:text-slate-300 text-xs"
+            className="text-slate-600 hover:text-slate-400 text-xs transition-colors"
           >
             GitHub ↗
           </a>
         </div>
       </header>
 
-      {/* Breaking news / replay ticker — slides in when a lever is active */}
-      <NewsTicker lever={activeLever} />
+      {/* ── Body row ───────────────────────────────────────────────────────── */}
+      <div className="flex flex-1 overflow-hidden">
 
-      {/* Main canvas */}
-      <div className="flex-1 relative overflow-hidden">
-        <GraphCanvas
-          selectedNodeId={selectedNode?.id}
-          onNodeClick={handleNodeClick}
-          affectedNodeIds={affectedNodeIds}
-          affectedEdgeIds={affectedEdgeIds}
-          revealedNodeIds={revealedNodeIds}
-          revealedEdgeIds={revealedEdgeIds}
+        {/* Left sidebar */}
+        <LeftSidebar
+          open={sidebarOpen}
+          activeLeverId={activeLeverId}
           activeLever={activeLever}
+          onToggle={toggleLever}
         />
-        <Legend />
+
+        {/* Canvas wrapper */}
+        <div className="flex-1 relative overflow-hidden">
+          {/* Floating news ticker */}
+          {activeLever && <NewsTicker lever={activeLever} />}
+
+          <GraphCanvas
+            selectedNodeId={selectedNode?.id}
+            onNodeClick={handleNodeClick}
+            affectedNodeIds={affectedNodeIds}
+            affectedEdgeIds={affectedEdgeIds}
+            revealedNodeIds={revealedNodeIds}
+            revealedEdgeIds={revealedEdgeIds}
+            activeLever={activeLever}
+          />
+        </div>
+
+        {/* Actor detail panel */}
+        <ActorSidebar
+          node={selectedNode}
+          activeLever={activeLever}
+          onClose={handleCloseSidebar}
+        />
       </div>
-
-      {/* Actor sidebar */}
-      <ActorSidebar
-        node={selectedNode}
-        activeLever={activeLever}
-        onClose={handleClosesidebar}
-      />
-
-      {/* Lever panel (bottom) */}
-      <LeverPanel activeLeverId={activeLeverId} onToggle={toggleLever} />
     </div>
   )
 }

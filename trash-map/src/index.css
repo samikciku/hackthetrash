@@ -2,12 +2,7 @@
 @import "@xyflow/react/dist/style.css";
 
 /* ─── Fonts ──────────────────────────────────────────────────────────────── */
-/* DM Sans Variable — UI text, labels, headings                              */
-/* Optical-size axis (opsz) improves legibility at the small sizes this      */
-/* interface uses heavily (9 px – 13 px node/legend/lever text).             */
 @import "@fontsource-variable/dm-sans/opsz.css";
-
-/* DM Mono — stats values, data badges, any tabular/technical text           */
 @import "@fontsource/dm-mono/400.css";
 @import "@fontsource/dm-mono/500.css";
 
@@ -19,26 +14,26 @@
 
 :root {
   --color-operational: #F59E0B;
-  --color-municipal: #3B82F6;
-  --color-national: #8B5CF6;
-  --color-citizens: #10B981;
-  --color-informal: #94A3B8;
-  --color-external: #0EA5E9;
-  --color-endpoint: #78716C;
-  --color-blocked: #EF4444;
+  --color-municipal:   #3B82F6;
+  --color-national:    #8B5CF6;
+  --color-citizens:    #10B981;
+  --color-informal:    #94A3B8;
+  --color-external:    #0EA5E9;
+  --color-endpoint:    #78716C;
+  --color-blocked:     #EF4444;
 }
 
 body {
   margin: 0;
   font-family: var(--font-sans);
-  font-optical-sizing: auto; /* activates the opsz variable axis */
-  background: #0f172a;
+  font-optical-sizing: auto;
+  background: #07090F;
   color: #f1f5f9;
 }
 
-/* React Flow overrides */
+/* ─── React Flow overrides ───────────────────────────────────────────────── */
 .react-flow__background {
-  background: #0f172a;
+  background: #0F172A;
 }
 
 .react-flow__edge-path {
@@ -59,28 +54,33 @@ body {
 }
 
 .react-flow__controls {
-  background: #1e293b;
-  border: 1px solid #334155;
+  background: #0F1829;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
 }
 
 .react-flow__controls-button {
-  background: #1e293b;
-  border-bottom: 1px solid #334155;
-  color: #94a3b8;
+  background: #0F1829;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  color: #475569;
 }
 
 .react-flow__controls-button:hover {
-  background: #334155;
+  background: rgba(255,255,255,0.05);
+  color: #94A3B8;
 }
 
 .react-flow__minimap {
-  background: #1e293b;
-  border: 1px solid #334155;
+  background: #0F1829;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
 }
 
-/* ─── News ticker ────────────────────────────────────────────────────────── */
-/* The .ticker-track div has width: max-content and is exactly 2× the real  */
-/* content, so translating by -50% scrolls one full loop then resets.       */
+/* ─── News ticker scroll ─────────────────────────────────────────────────── */
 @keyframes tickerScroll {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
@@ -90,27 +90,55 @@ body {
   display: flex;
   align-items: center;
   width: max-content;
-  animation: tickerScroll 30s linear infinite;
+  animation: tickerScroll 35s linear infinite;
 }
 
-/* Slide/fade the whole ticker bar in when it mounts */
+/* Floating ticker pill reveal */
 @keyframes tickerReveal {
-  from { opacity: 0; transform: translateY(-4px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
 .ticker-container {
-  animation: tickerReveal 0.25s ease-out both;
+  animation: tickerReveal 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ─── Actor sidebar slide in ─────────────────────────────────────────────── */
+@keyframes sidebarSlideIn {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 /* ─── Reaction emoji pop ─────────────────────────────────────────────────── */
-/* Triggered because the element is newly created when a node is revealed.  */
 @keyframes reactionPop {
-  0%   { transform: scale(0) translateY(6px); opacity: 0; }
+  0%   { transform: scale(0) translateY(6px);  opacity: 0; }
   55%  { transform: scale(1.35) translateY(-3px); opacity: 1; }
-  100% { transform: scale(1) translateY(0); opacity: 1; }
+  100% { transform: scale(1) translateY(0);    opacity: 1; }
 }
 
 .reaction-pop {
   animation: reactionPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* ─── Sidebar scroll ─────────────────────────────────────────────────────── */
+.sidebar-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.08) transparent;
+}
+
+.sidebar-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.08);
+  border-radius: 4px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.14);
 }

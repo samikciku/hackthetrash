@@ -182,12 +182,12 @@ export default function GraphCanvas({
         maxZoom={2}
         defaultEdgeOptions={{ type: 'labeled' }}
       >
-        <Background color="#1e293b" gap={24} size={1} />
-        <Controls className="text-slate-400" />
+        <Background color="#1a2540" gap={28} size={1} variant="dots" />
+        <Controls />
         <MiniMap
-          nodeColor={(n) => TIER_COLORS[n.data?.tier] ?? '#64748B'}
-          maskColor="rgba(15,23,42,0.8)"
-          style={{ background: '#1e293b' }}
+          nodeColor={(n) => TIER_COLORS[n.data?.tier] ?? '#475569'}
+          maskColor="rgba(7,9,15,0.75)"
+          style={{ background: '#0F1829' }}
         />
       </ReactFlow>
     </div>

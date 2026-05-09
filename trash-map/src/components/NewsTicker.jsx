@@ -1,50 +1,73 @@
-// NewsTicker — scrolling breaking-news strip that appears when a lever is active.
-// Historical levers get amber "REPLAY" styling; others get red "BREAKING".
+// NewsTicker — floating pill banner that overlays the graph canvas.
+// Historical levers: amber archive style. Others: subtle white/glass style.
 
 export default function NewsTicker({ lever }) {
   if (!lever) return null
 
   const isHistorical = !!lever.historical
-  // Duplicate headlines for a seamless CSS loop (translateX -50% = one full set)
+  // Duplicate for seamless CSS loop
   const doubled = [...lever.headlines, ...lever.headlines]
 
   return (
     <div
-      className="ticker-container shrink-0 overflow-hidden flex items-stretch"
-      style={{
-        height: 28,
-        background: isHistorical ? '#451a03' : '#991b1b',
-        borderBottom: `1px solid ${isHistorical ? '#78350f' : '#7f1d1d'}`,
-      }}
+      className="ticker-container absolute top-4 left-1/2 z-30 pointer-events-none"
+      style={{ transform: 'translateX(-50%)', maxWidth: 'min(600px, calc(100% - 32px))' }}
     >
-      {/* Left label */}
       <div
-        className="shrink-0 flex items-center px-3 select-none"
-        style={{ background: isHistorical ? '#78350f' : '#7f1d1d' }}
+        className="flex items-stretch rounded-full overflow-hidden shadow-2xl"
+        style={{
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          border: isHistorical
+            ? '1px solid rgba(245,158,11,0.28)'
+            : '1px solid rgba(255,255,255,0.1)',
+          background: isHistorical
+            ? 'rgba(28,14,0,0.88)'
+            : 'rgba(10,13,22,0.88)',
+          boxShadow: isHistorical
+            ? '0 8px 40px rgba(245,158,11,0.12), 0 2px 8px rgba(0,0,0,0.5)'
+            : '0 8px 40px rgba(0,0,0,0.4)',
+        }}
       >
-        <span className="text-white text-[10px] font-black uppercase tracking-widest whitespace-nowrap">
-          {isHistorical ? '📼 REPLAY' : '🔴 BREAKING'}
-        </span>
-      </div>
+        {/* Label badge */}
+        <div
+          className="shrink-0 flex items-center px-3.5 select-none"
+          style={{
+            background: isHistorical
+              ? 'rgba(245,158,11,0.18)'
+              : 'rgba(255,255,255,0.07)',
+            borderRight: isHistorical
+              ? '1px solid rgba(245,158,11,0.2)'
+              : '1px solid rgba(255,255,255,0.07)',
+          }}
+        >
+          <span
+            className="text-[9px] font-black uppercase tracking-[0.14em] whitespace-nowrap"
+            style={{ color: isHistorical ? '#FDE68A' : '#94A3B8' }}
+          >
+            {isHistorical ? '📼 REPLAY' : '🔴 LIVE'}
+          </span>
+        </div>
 
-      {/* Scrolling track — overflow hidden is on the parent */}
-      <div className="flex-1 overflow-hidden relative flex items-center">
-        <div className="ticker-track flex items-center gap-0 whitespace-nowrap">
-          {doubled.map((headline, i) => (
-            <span
-              key={i}
-              className="text-[11px] font-medium px-5 shrink-0"
-              style={{ color: isHistorical ? '#fde68a' : '#fff1f2' }}
-            >
-              {headline}
+        {/* Scrolling text */}
+        <div className="flex-1 overflow-hidden flex items-center" style={{ minWidth: 0 }}>
+          <div className="ticker-track py-2 select-none">
+            {doubled.map((headline, i) => (
               <span
-                className="mx-4 opacity-40 text-[9px]"
-                style={{ color: isHistorical ? '#f59e0b' : '#fca5a5' }}
+                key={i}
+                className="text-[11px] font-medium px-4 shrink-0 whitespace-nowrap"
+                style={{ color: isHistorical ? '#FDE68A99' : '#64748B' }}
               >
-                ◆
+                {headline}
+                <span
+                  className="mx-3 text-[8px]"
+                  style={{ color: isHistorical ? 'rgba(245,158,11,0.35)' : 'rgba(255,255,255,0.12)' }}
+                >
+                  ◆
+                </span>
               </span>
-            </span>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
