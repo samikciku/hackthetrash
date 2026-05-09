@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { RequireAuth, useAuth } from "@/lib/auth";
 import { useI18n } from "@/lib/i18n";
+import Icon from "@/components/icons/Icon";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
@@ -91,7 +92,10 @@ function AdminInner() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold">🔐 {t("admin.title")}</h1>
+          <h1 className="text-2xl font-bold flex items-center gap-2">
+            <Icon name="shield-check" size={24} className="text-primary" />
+            {t("admin.title")}
+          </h1>
           <p className="text-sm text-gray-500">
             {t("admin.loggedAs")} <span className="font-mono">{user?.email}</span>
             {" "}· {t("admin.role")}: <span className="font-semibold">{user?.role}</span>
@@ -101,18 +105,24 @@ function AdminInner() {
           {user?.role === "admin" && (
             <a
               href="/admin/users"
-              className="text-sm text-gray-600 border border-gray-200 px-3 py-1 rounded hover:bg-gray-50"
+              className="text-sm text-gray-600 border border-gray-200 px-3 py-1.5 rounded hover:bg-gray-50 inline-flex items-center gap-1.5"
             >
-              👥 {t("admin.users")}
+              <Icon name="users" size={16} />
+              {t("admin.users")}
             </a>
           )}
           <a
             href="/admin/password"
-            className="text-sm text-gray-600 border border-gray-200 px-3 py-1 rounded hover:bg-gray-50"
+            className="text-sm text-gray-600 border border-gray-200 px-3 py-1.5 rounded hover:bg-gray-50 inline-flex items-center gap-1.5"
           >
-            🔑 {t("admin.changePassword")}
+            <Icon name="key" size={16} />
+            {t("admin.changePassword")}
           </a>
-          <button onClick={logout} className="text-sm text-red-600 border border-red-200 px-3 py-1 rounded hover:bg-red-50">
+          <button
+            onClick={logout}
+            className="text-sm text-red-600 border border-red-200 px-3 py-1.5 rounded hover:bg-red-50 inline-flex items-center gap-1.5"
+          >
+            <Icon name="log-out" size={16} />
             {t("admin.logout")}
           </button>
         </div>
@@ -140,7 +150,8 @@ function AdminInner() {
           onClick={load}
           className="ml-auto text-sm bg-white border border-gray-200 px-3 py-1 rounded hover:bg-gray-50"
         >
-          🔄 {t("map.refresh")}
+          <Icon name="refresh" size={14} className="inline mr-1" />
+          {t("map.refresh")}
         </button>
       </div>
 
@@ -186,7 +197,10 @@ function AdminInner() {
                       {t(`status.${r.status}`)}
                     </span>
                     {r.severity && (
-                      <span className="text-xs text-gray-500">📏 {t(`report.${r.severity}`)}</span>
+                      <span className="text-xs text-gray-500 inline-flex items-center gap-1">
+                        <Icon name="info" size={12} />
+                        {t(`report.${r.severity}`)}
+                      </span>
                     )}
                     {r.ai_score != null && (
                       <span
@@ -212,9 +226,10 @@ function AdminInner() {
                     </div>
                   )}
 
-                  <div className="text-xs text-gray-500 mt-auto pt-2 border-t">
-                    📍 {r.latitude.toFixed(5)}, {r.longitude.toFixed(5)}
-                    {created && <> · {new Date(created).toLocaleString()}</>}
+                  <div className="text-xs text-gray-500 mt-auto pt-2 border-t flex items-center gap-1">
+                    <Icon name="home" size={12} />
+                    <span className="font-mono">{r.latitude.toFixed(5)}, {r.longitude.toFixed(5)}</span>
+                    {created && <span>· {new Date(created).toLocaleString()}</span>}
                   </div>
 
                   {/* Actions */}
@@ -222,30 +237,34 @@ function AdminInner() {
                     <button
                       disabled={busyId === r.id || r.status === "verified"}
                       onClick={() => decide(r.id, "approve")}
-                      className="bg-green-600 text-white text-sm py-2 rounded font-semibold hover:opacity-90 disabled:opacity-40"
+                      className="bg-green-600 text-white text-sm py-2 rounded font-semibold hover:opacity-90 disabled:opacity-40 inline-flex items-center justify-center gap-1.5"
                     >
-                      ✅ {t("admin.approve")}
+                      <Icon name="check-circle" size={16} />
+                      {t("admin.approve")}
                     </button>
                     <button
                       disabled={busyId === r.id || r.status === "rejected"}
                       onClick={() => decide(r.id, "reject")}
-                      className="bg-red-600 text-white text-sm py-2 rounded font-semibold hover:opacity-90 disabled:opacity-40"
+                      className="bg-red-600 text-white text-sm py-2 rounded font-semibold hover:opacity-90 disabled:opacity-40 inline-flex items-center justify-center gap-1.5"
                     >
-                      ❌ {t("admin.reject")}
+                      <Icon name="x-circle" size={16} />
+                      {t("admin.reject")}
                     </button>
                     <button
                       disabled={busyId === r.id || r.status === "cleaning"}
                       onClick={() => decide(r.id, "cleaning")}
-                      className="bg-blue-600 text-white text-sm py-2 rounded font-semibold hover:opacity-90 disabled:opacity-40"
+                      className="bg-blue-600 text-white text-sm py-2 rounded font-semibold hover:opacity-90 disabled:opacity-40 inline-flex items-center justify-center gap-1.5"
                     >
-                      🧹 {t("status.cleaning")}
+                      <Icon name="broom" size={16} />
+                      {t("status.cleaning")}
                     </button>
                     <button
                       disabled={busyId === r.id || r.status === "cleaned"}
                       onClick={() => decide(r.id, "cleaned")}
-                      className="bg-emerald-600 text-white text-sm py-2 rounded font-semibold hover:opacity-90 disabled:opacity-40"
+                      className="bg-emerald-600 text-white text-sm py-2 rounded font-semibold hover:opacity-90 disabled:opacity-40 inline-flex items-center justify-center gap-1.5"
                     >
-                      ✨ {t("status.cleaned")}
+                      <Icon name="sparkles" size={16} />
+                      {t("status.cleaned")}
                     </button>
                   </div>
 
@@ -255,7 +274,8 @@ function AdminInner() {
                     rel="noreferrer"
                     className="mt-2 text-center text-xs text-primary hover:underline"
                   >
-                    🗺️ {t("admin.openOnMap")}
+                    <Icon name="external-link" size={12} className="inline mr-1" />
+                    {t("admin.openOnMap")}
                   </a>
                 </div>
               </div>
