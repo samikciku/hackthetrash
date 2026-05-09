@@ -1,6 +1,6 @@
 import { motion } from 'motion/react'
-import { X, ExternalLink } from 'lucide-react'
-import { actorsById, ROLE_STYLE, edgesBetween } from '../lib/raci'
+import { X, ExternalLink, Quote } from 'lucide-react'
+import { actorsById, ROLE_STYLE, EDGE_CATEGORY_COLORS, edgesBetween } from '../lib/raci'
 
 export default function CellDetailPanel({ activity, actorId, onClose }) {
   if (!activity || !actorId) return null
@@ -80,6 +80,67 @@ export default function CellDetailPanel({ activity, actorId, onClose }) {
             )}
           </div>
 
+          {/* Rich actor metadata (only if available — i.e. graph actors) */}
+          {actor?.rich && (
+            <details className="rounded-md overflow-hidden" open>
+              <summary
+                className="cursor-pointer text-slate-500 text-[10px] uppercase tracking-wider px-3 py-2 hover:text-slate-300 select-none"
+                style={{ background: 'rgba(255,255,255,0.02)' }}
+              >
+                About {actor.rich.label || actor.name}
+                {actor.rich.keyPerson && (
+                  <span className="text-slate-600 normal-case tracking-normal ml-2">
+                    · {actor.rich.keyPerson.name}
+                  </span>
+                )}
+              </summary>
+              <div className="p-3 space-y-2.5 text-[11px] leading-relaxed">
+                {actor.rich.role && (
+                  <p className="text-slate-300">{actor.rich.role}</p>
+                )}
+                {!!actor.rich.leverage?.length && (
+                  <RichList title="Leverage" items={actor.rich.leverage} color="#86EFAC" />
+                )}
+                {!!actor.rich.dependencies?.length && (
+                  <RichList title="Dependencies" items={actor.rich.dependencies} color="#93C5FD" />
+                )}
+                {!!actor.rich.fears?.length && (
+                  <RichList title="Fears" items={actor.rich.fears} color="#FCA5A5" />
+                )}
+                {!!actor.rich.stats?.length && (
+                  <div>
+                    <div className="text-slate-500 text-[9px] uppercase tracking-wider mb-1">Stats</div>
+                    <ul className="space-y-0.5">
+                      {actor.rich.stats.map((s, i) => (
+                        <li key={i} className="text-slate-400">
+                          <span className="text-slate-500">{s.label}:</span>{' '}
+                          <span className="text-slate-200 font-medium">{s.value}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {actor.rich.quote && (
+                  <div className="border-l-2 pl-2.5 py-1" style={{ borderColor: 'rgba(255,255,255,0.15)' }}>
+                    <Quote size={10} className="inline text-slate-600 mr-1" />
+                    <span className="text-slate-300 italic">{actor.rich.quote}</span>
+                    {actor.rich.quoteSource && (
+                      <div className="text-slate-600 text-[10px] mt-1">
+                        — {actor.rich.quoteSource}
+                        {actor.rich.quoteUrl && (
+                          <a href={actor.rich.quoteUrl} target="_blank" rel="noreferrer"
+                            className="ml-1 text-slate-500 hover:text-blue-400">
+                            <ExternalLink size={9} className="inline" />
+                          </a>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            </details>
+          )}
+
           {/* Row note */}
           {activity.note && (
             <div>
@@ -94,18 +155,31 @@ export default function CellDetailPanel({ activity, actorId, onClose }) {
           {relatedEdges.length > 0 && (
             <div>
               <div className="text-slate-500 text-[10px] uppercase tracking-wider mb-2">
-                Related edges from system map ({relatedEdges.length})
+                Edges that implement this ({relatedEdges.length})
               </div>
-              <ul className="space-y-1.5">
-                {relatedEdges.slice(0, 8).map((e, i) => (
-                  <li key={i} className="text-[11px] text-slate-400 leading-snug">
-                    <span className="font-mono text-slate-300">{e.from}</span>
-                    <span className="text-slate-500 mx-1">→</span>
-                    <span className="font-mono text-slate-300">{e.to}</span>
-                    <span className="text-amber-300 mx-1.5">{e.type}</span>
-                    {e.note && <span className="text-slate-500">— {e.note}</span>}
-                  </li>
-                ))}
+              <ul className="space-y-2">
+                {relatedEdges.slice(0, 10).map((e, i) => {
+                  const color = EDGE_CATEGORY_COLORS[e.category] || '#64748B'
+                  const label = e.graph?.label || e.type
+                  const note  = e.graph?.narrativeNote || e.systemNote
+                  return (
+                    <li key={i} className="text-[11px] leading-snug">
+                      <div className="flex items-baseline gap-1.5">
+                        <span
+                          className="px-1.5 py-0.5 rounded text-[8px] uppercase tracking-wider font-bold"
+                          style={{ background: `${color}1F`, color, border: `1px solid ${color}40` }}
+                        >
+                          {e.category}
+                        </span>
+                        <span className="font-mono text-slate-300 text-[10px]">{e.from}</span>
+                        <span className="text-slate-500">→</span>
+                        <span className="font-mono text-slate-300 text-[10px]">{e.to}</span>
+                      </div>
+                      <div className="text-slate-300 mt-0.5">{label}</div>
+                      {note && <div className="text-slate-500 text-[10px] mt-0.5">{note}</div>}
+                    </li>
+                  )
+                })}
               </ul>
             </div>
           )}
@@ -178,5 +252,20 @@ function RoleChip({ role, label, disputed }) {
       <span className="font-mono">{role}</span>
       <span className="font-medium opacity-80">{label}</span>
     </span>
+  )
+}
+
+function RichList({ title, items, color }) {
+  return (
+    <div>
+      <div className="text-slate-500 text-[9px] uppercase tracking-wider mb-1" style={{ color }}>
+        {title}
+      </div>
+      <ul className="space-y-0.5 list-disc pl-4">
+        {items.map((it, i) => (
+          <li key={i} className="text-slate-300">{it}</li>
+        ))}
+      </ul>
+    </div>
   )
 }
