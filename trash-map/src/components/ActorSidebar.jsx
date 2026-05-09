@@ -1,4 +1,6 @@
+import { X, ExternalLink } from 'lucide-react'
 import { TIER_COLORS } from '../data/nodes'
+import LeverIcon from './LeverIcon'
 
 const TIER_LABELS = {
   operational: 'Operational',
@@ -62,7 +64,7 @@ export default function ActorSidebar({ node, activeLever, onClose }) {
             onClick={onClose}
             className="shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-slate-600 hover:text-slate-300 hover:bg-white/5 transition-colors mt-0.5"
           >
-            ✕
+            <X size={14} strokeWidth={2} />
           </button>
         </div>
       </div>
@@ -141,9 +143,9 @@ export default function ActorSidebar({ node, activeLever, onClose }) {
                       href={d.quoteUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-sky-500 hover:text-sky-400 underline underline-offset-2 transition-colors"
+                      className="inline-flex items-center gap-0.5 text-sky-500 hover:text-sky-400 transition-colors"
                     >
-                      ↗
+                      <ExternalLink size={10} strokeWidth={2} />
                     </a>
                   </>
                 )}
@@ -198,7 +200,7 @@ function LeverBanner({ effect, lever }) {
       style={{ background: style.bg, border: `1px solid ${style.border}` }}
     >
       <div className="flex items-center gap-2 mb-2">
-        <span className="text-sm">{lever.emoji}</span>
+        <LeverIcon iconName={lever.iconName} size={13} style={{ color: style.text }} />
         <span className="text-[9px] font-bold uppercase tracking-widest" style={{ color: style.text }}>
           {style.label}
         </span>

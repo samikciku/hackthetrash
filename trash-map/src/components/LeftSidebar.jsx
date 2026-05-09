@@ -1,7 +1,9 @@
 import { useState } from 'react'
+import { ChevronDown, Film } from 'lucide-react'
 import { levers } from '../data/levers'
 import { TIER_COLORS } from '../data/nodes'
 import { EDGE_COLORS } from '../data/edges'
+import LeverIcon from './LeverIcon'
 
 const TIERS = [
   { key: 'operational', label: 'Operational' },
@@ -50,12 +52,12 @@ export default function LeftSidebar({ open, activeLeverId, activeLever, onToggle
               <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-600 group-hover:text-slate-400 transition-colors">
                 Legend
               </span>
-              <span
-                className="text-slate-700 text-[10px] transition-transform duration-150"
+              <ChevronDown
+                size={12}
+                strokeWidth={2}
+                className="text-slate-700 transition-transform duration-150"
                 style={{ transform: legendOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}
-              >
-                ▾
-              </span>
+              />
             </button>
 
             <div
@@ -148,7 +150,11 @@ export default function LeftSidebar({ open, activeLeverId, activeLever, onToggle
                     <div className="px-3.5 pt-3 pb-2">
                       <div className="flex items-start justify-between gap-2 mb-1.5">
                         <div className="flex items-center gap-2 min-w-0">
-                          <span className="text-[15px] leading-none shrink-0">{lever.emoji}</span>
+                          <LeverIcon
+                            iconName={lever.iconName}
+                            size={14}
+                            className={`shrink-0 ${isActive ? 'text-white' : 'text-slate-500'}`}
+                          />
                           <span
                             className={`text-[12px] font-semibold leading-snug ${
                               isActive ? 'text-white' : 'text-slate-300'
@@ -190,10 +196,11 @@ export default function LeftSidebar({ open, activeLeverId, activeLever, onToggle
                       >
                         {isHistory && (
                           <p
-                            className="text-[9px] font-bold uppercase tracking-widest mb-1.5"
+                            className="flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-widest mb-1.5"
                             style={{ color: '#F59E0B' }}
                           >
-                            📼 {lever.historicalDate}
+                            <Film size={10} strokeWidth={2} />
+                            {lever.historicalDate}
                           </p>
                         )}
                         <p className="text-[11px] text-slate-400 leading-relaxed">{lever.context}</p>

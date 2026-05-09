@@ -1,4 +1,6 @@
+import { Film } from 'lucide-react'
 import { levers } from '../data/levers'
+import LeverIcon from './LeverIcon'
 
 export default function LeverPanel({ activeLeverId, onToggle }) {
   const activeLever = levers.find((l) => l.id === activeLeverId)
@@ -15,13 +17,15 @@ export default function LeverPanel({ activeLeverId, onToggle }) {
             style={{ background: 'rgba(69, 26, 3, 0.5)', borderColor: '#78350f' }}
           >
             <div className="max-w-3xl">
-              <p className="text-[10px] font-black uppercase tracking-widest mb-1"
+              <p className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest mb-1"
                 style={{ color: '#f59e0b' }}>
-                📼 Based on true events · {activeLever.historicalDate}
+                <Film size={11} strokeWidth={2} />
+                Based on true events · {activeLever.historicalDate}
               </p>
               <p className="text-xs leading-relaxed" style={{ color: '#fde68a99' }}>
-                <span className="font-semibold" style={{ color: '#fde68a' }}>
-                  {activeLever.emoji} {activeLever.title}:
+                <span className="inline-flex items-center gap-1.5 font-semibold" style={{ color: '#fde68a' }}>
+                  <LeverIcon iconName={activeLever.iconName} size={12} style={{ color: '#fde68a' }} />
+                  {activeLever.title}:
                 </span>
                 {' '}{activeLever.context}
               </p>
@@ -32,8 +36,9 @@ export default function LeverPanel({ activeLeverId, onToggle }) {
           <div className="px-4 pt-3 pb-1 border-b border-slate-800">
             <div className="max-w-3xl">
               <p className="text-slate-400 text-xs leading-relaxed">
-                <span className="text-white font-semibold">
-                  {activeLever.emoji} {activeLever.title}:
+                <span className="inline-flex items-center gap-1.5 text-white font-semibold">
+                  <LeverIcon iconName={activeLever.iconName} size={12} className="text-white" />
+                  {activeLever.title}:
                 </span>
                 {' '}{activeLever.context}
               </p>
@@ -70,7 +75,7 @@ export default function LeverPanel({ activeLeverId, onToggle }) {
               onClick={() => onToggle(lever.id)}
               className={btnClass}
             >
-              <span>{lever.emoji}</span>
+              <LeverIcon iconName={lever.iconName} size={12} />
               <span>{lever.title}</span>
               {historical && (
                 <span

@@ -1,6 +1,8 @@
 // NewsTicker — floating pill banner that overlays the graph canvas.
 // Historical levers: amber archive style. Others: subtle white/glass style.
 
+import { Film, Radio } from 'lucide-react'
+
 export default function NewsTicker({ lever }) {
   if (!lever) return null
 
@@ -42,10 +44,13 @@ export default function NewsTicker({ lever }) {
           }}
         >
           <span
-            className="text-[9px] font-black uppercase tracking-[0.14em] whitespace-nowrap"
+            className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-[0.14em] whitespace-nowrap"
             style={{ color: isHistorical ? '#FDE68A' : '#94A3B8' }}
           >
-            {isHistorical ? '📼 REPLAY' : '🔴 LIVE'}
+            {isHistorical
+              ? <><Film size={10} strokeWidth={2} /> REPLAY</>
+              : <><Radio size={10} strokeWidth={2} /> LIVE</>
+            }
           </span>
         </div>
 

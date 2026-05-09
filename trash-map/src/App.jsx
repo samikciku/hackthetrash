@@ -1,8 +1,10 @@
 import { useState, useCallback } from 'react'
+import { Trash2, ExternalLink } from 'lucide-react'
 import GraphCanvas from './components/GraphCanvas'
 import ActorSidebar from './components/ActorSidebar'
 import NewsTicker from './components/NewsTicker'
 import LeftSidebar from './components/LeftSidebar'
+import LeverIcon from './components/LeverIcon'
 import { useActiveLever } from './hooks/useActiveLever'
 
 export default function App() {
@@ -60,10 +62,10 @@ export default function App() {
         <div className="flex items-center gap-2.5 min-w-0">
           {/* Small trash icon accent */}
           <span
-            className="shrink-0 w-6 h-6 rounded flex items-center justify-center text-sm leading-none"
+            className="shrink-0 w-6 h-6 rounded flex items-center justify-center"
             style={{ background: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.2)' }}
           >
-            🗑
+            <Trash2 size={13} className="text-red-400" strokeWidth={1.75} />
           </span>
           <div className="min-w-0">
             <span className="text-white font-semibold text-sm tracking-tight">Pristina Trash System</span>
@@ -90,7 +92,11 @@ export default function App() {
                     }
               }
             >
-              <span>{activeLever.emoji}</span>
+              <LeverIcon
+                iconName={activeLever.iconName}
+                size={13}
+                style={{ color: activeLever.historical ? '#FDE68A' : '#E2E8F0' }}
+              />
               <span className="max-w-[160px] truncate">{activeLever.title}</span>
               {activeLever.historical && (
                 <span
@@ -107,9 +113,10 @@ export default function App() {
             href="https://github.com/Aldikrasniqi/trash"
             target="_blank"
             rel="noreferrer"
-            className="text-slate-600 hover:text-slate-400 text-xs transition-colors"
+            className="flex items-center gap-1 text-slate-600 hover:text-slate-400 text-xs transition-colors"
           >
-            GitHub ↗
+            GitHub
+            <ExternalLink size={10} strokeWidth={2} />
           </a>
         </div>
       </header>
