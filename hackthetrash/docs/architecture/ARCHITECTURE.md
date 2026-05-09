@@ -2,20 +2,24 @@
 
 ## High-level
 ```
-Client (Next.js PWA)
-   │  REST/JSON
-   ▼
-API (Express + TypeScript)
-   │
-   ├── PostgreSQL + PostGIS (reports, users, geo queries)
-   ├── Object Storage (S3 / Cloudinary)
-   └── Optional: AI service (image classification)
+Web (Next.js PWA)        Mobile (React Native + Expo)
+      │                              │
+      │  REST + multipart upload     │
+      └─────────► API ◄──────────────┘
+              (Express + TS)
+                    │
+   ┌────────────────┼────────────────────────┐
+   ▼                ▼                        ▼
+PostgreSQL +   Object Storage         AI Classifier
+ PostGIS       (S3 / Cloudinary /     (Mock / HuggingFace)
+ (geo)          local for dev)
 ```
 
 ## Folder Layout
 - `frontend/` — Next.js 14 App Router, Tailwind, Leaflet
-- `backend/` — Express, multer (uploads), JWT auth
-- `docs/` — wireframes, API docs, architecture
+- `mobile/` — React Native (Expo) app, Leaflet via WebView
+- `backend/` — Express, multer (uploads), JWT auth, PostGIS, AI
+- `docs/` — wireframes, mockups, API docs, architecture
 - `scripts/` — dev helpers
 
 ## Data Flow — Submit Report

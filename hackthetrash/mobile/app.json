@@ -1,0 +1,44 @@
+{
+  "expo": {
+    "name": "HackTheTrash",
+    "slug": "hackthetrash",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#16A34A"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "org.hackthetrash.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "HackTheTrash needs the camera to photograph illegal trash dumps.",
+        "NSPhotoLibraryUsageDescription": "HackTheTrash needs access to your photos so you can attach them to reports.",
+        "NSLocationWhenInUseUsageDescription": "HackTheTrash needs your location to pin reports on the map."
+      }
+    },
+    "android": {
+      "package": "org.hackthetrash.app",
+      "permissions": [
+        "CAMERA",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ],
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#16A34A"
+      }
+    },
+    "web": {
+      "favicon": "./assets/icon.png"
+    },
+    "extra": {
+      "apiUrl": "http://10.0.2.2:4000"
+    }
+  }
+}

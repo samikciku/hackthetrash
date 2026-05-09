@@ -25,12 +25,13 @@ Illegal trash dumps pollute our forests, rivers, and neighborhoods. **HackTheTra
 
 | Layer | Tech |
 |-------|------|
-| Frontend | Next.js 14 + TypeScript + TailwindCSS + Leaflet |
+| Frontend (web) | Next.js 14 + TypeScript + TailwindCSS + Leaflet |
+| Mobile app | React Native + Expo + Leaflet (WebView) |
 | Backend | Node.js + Express + TypeScript |
 | Database | PostgreSQL + PostGIS |
 | Storage | AWS S3 / Cloudinary |
 | Auth | JWT |
-| Hosting | Vercel + Railway |
+| Hosting | Vercel + Railway + EAS Build |
 
 ## 📂 Project Structure
 
@@ -48,10 +49,16 @@ hackthetrash/
 │   │   ├── routes/
 │   │   ├── controllers/
 │   │   ├── models/
+│   │   ├── ai/        # Pluggable image classifier
+│   │   ├── db/        # Migrations + seeds (PostGIS)
 │   │   ├── middleware/
 │   │   └── services/
 │   └── uploads/
-├── docs/              # Wireframes, architecture, API docs
+├── mobile/            # React Native (Expo) app
+│   ├── App.tsx
+│   ├── src/screens/   # Home, Report (camera+GPS), Map (OSM), Success
+│   └── src/lib/
+├── docs/              # Wireframes, mockups, architecture, API docs
 └── scripts/           # Dev / deployment scripts
 ```
 
