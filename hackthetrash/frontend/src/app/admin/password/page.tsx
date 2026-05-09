@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { RequireAuth, useAuth } from "@/lib/auth";
 import { useI18n } from "@/lib/i18n";
+import Icon from "@/components/icons/Icon";
 
 function PasswordInner() {
   const { user, apiFetch } = useAuth();
@@ -46,7 +47,9 @@ function PasswordInner() {
   if (success) {
     return (
       <div className="max-w-md mx-auto p-8 text-center">
-        <div className="text-6xl mb-4">✅</div>
+        <div className="mx-auto mb-4 inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 text-green-600">
+          <Icon name="check-circle" size={36} />
+        </div>
         <h2 className="text-2xl font-bold mb-2">{t("admin.passwordChanged")}</h2>
         <p className="text-gray-600 mb-6">{t("admin.passwordChangedNote")}</p>
         <Link href="/admin" className="bg-primary text-white px-4 py-2 rounded">
@@ -58,10 +61,14 @@ function PasswordInner() {
 
   return (
     <div className="max-w-md mx-auto p-6">
-      <Link href="/admin" className="text-sm text-gray-500 hover:underline mb-4 inline-block">
-        ← {t("admin.backToPanel")}
+      <Link href="/admin" className="text-sm text-gray-500 hover:underline mb-4 inline-flex items-center gap-1">
+        <Icon name="chevron-left" size={14} />
+        {t("admin.backToPanel")}
       </Link>
-      <h1 className="text-2xl font-bold mb-1">🔑 {t("admin.changePassword")}</h1>
+      <h1 className="text-2xl font-bold mb-1 flex items-center gap-2">
+        <Icon name="key" size={22} className="text-primary" />
+        {t("admin.changePassword")}
+      </h1>
       <p className="text-sm text-gray-500 mb-6">
         {t("admin.loggedAs")} <span className="font-mono">{user?.email}</span>
       </p>

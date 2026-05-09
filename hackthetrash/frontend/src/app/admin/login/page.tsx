@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth, API_URL } from "@/lib/auth";
 import { useI18n } from "@/lib/i18n";
+import Icon from "@/components/icons/Icon";
 
 type BackendStatus = "checking" | "ok" | "down";
 
@@ -65,7 +66,9 @@ function LoginInner() {
     <div className="min-h-[calc(100vh-60px)] flex items-center justify-center bg-gray-50 px-4">
       <form onSubmit={onSubmit} className="w-full max-w-sm bg-white rounded-2xl shadow-md border p-8 space-y-4">
         <div className="text-center">
-          <div className="text-4xl mb-2">🔐</div>
+          <div className="mx-auto mb-3 inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary">
+            <Icon name="shield-check" size={32} />
+          </div>
           <h1 className="text-2xl font-bold">{t("admin.login")}</h1>
           <p className="text-sm text-gray-500">{t("app.name")} - {t("admin.loginSubtitle")}</p>
         </div>
@@ -147,8 +150,9 @@ npm run dev`}
 
         {process.env.NODE_ENV === "development" && (
           <div className="mt-4 border-2 border-dashed border-yellow-300 bg-yellow-50 p-3 rounded-lg text-xs">
-            <div className="font-semibold text-yellow-900 mb-1">
-              🧪 {t("admin.demoCreds")}
+            <div className="font-semibold text-yellow-900 mb-1 flex items-center gap-1.5">
+              <Icon name="info" size={14} />
+              {t("admin.demoCreds")}
             </div>
             <div className="font-mono text-yellow-900 select-all">
               admin@hackthetrash.org

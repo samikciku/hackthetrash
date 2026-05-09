@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { RequireAuth, useAuth, Role } from "@/lib/auth";
 import { useI18n } from "@/lib/i18n";
+import Icon from "@/components/icons/Icon";
 
 type AdminUser = {
   id: string;
@@ -127,25 +128,32 @@ function UsersInner() {
 
   return (
     <div className="max-w-5xl mx-auto p-4">
-      <Link href="/admin" className="text-sm text-gray-500 hover:underline mb-4 inline-block">
-        ← {t("admin.backToPanel")}
+      <Link href="/admin" className="text-sm text-gray-500 hover:underline mb-4 inline-flex items-center gap-1">
+        <Icon name="chevron-left" size={14} />
+        {t("admin.backToPanel")}
       </Link>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold">👥 {t("admin.users")}</h1>
+          <h1 className="text-2xl font-bold flex items-center gap-2">
+            <Icon name="users" size={24} className="text-primary" />
+            {t("admin.users")}
+          </h1>
           <p className="text-sm text-gray-500">{t("admin.usersSubtitle")}</p>
         </div>
         <button
           onClick={() => setShowInvite((v) => !v)}
-          className="bg-primary text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90"
+          className="bg-primary text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90 inline-flex items-center gap-1.5"
         >
-          {showInvite ? t("common.cancel") : `+ ${t("admin.invite")}`}
+          {showInvite ? <><Icon name="x" size={16} />{t("common.cancel")}</> : <><Icon name="plus" size={16} />{t("admin.invite")}</>}
         </button>
       </div>
 
       {showInvite && (
         <form onSubmit={submitInvite} className="bg-white border rounded-2xl shadow-sm p-5 mb-6 grid gap-3 sm:grid-cols-2">
-          <h2 className="sm:col-span-2 font-bold text-lg">📧 {t("admin.inviteUser")}</h2>
+          <h2 className="sm:col-span-2 font-bold text-lg flex items-center gap-2">
+            <Icon name="user" size={18} className="text-primary" />
+            {t("admin.inviteUser")}
+          </h2>
           {inviteError && (
             <div className="sm:col-span-2 bg-red-50 border border-red-200 text-red-700 text-sm p-3 rounded">
               {inviteError}
