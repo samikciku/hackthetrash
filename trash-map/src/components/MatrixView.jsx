@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react'
 import { AnimatePresence } from 'motion/react'
+import { ChevronDown, ChevronRight } from 'lucide-react'
 import {
   stages, stagesById,
   filterActivities, activitiesByStage,
@@ -17,6 +18,14 @@ export default function MatrixView() {
   const [selectedLayers, setSelectedLayers] = useState(['operational', 'policy', 'enforcement', 'recommendations'])
   const [query, setQuery] = useState('')
   const [phantomOnly, setPhantomOnly] = useState(false)
+
+  // Collapsed stage rows
+  const [collapsedStages, setCollapsedStages] = useState(() => new Set())
+  const toggleCollapse = (id) => setCollapsedStages(prev => {
+    const next = new Set(prev)
+    next.has(id) ? next.delete(id) : next.add(id)
+    return next
+  })
 
   // Selected cell
   const [selected, setSelected] = useState(null)  // { activity, actorId }
@@ -75,6 +84,16 @@ export default function MatrixView() {
           <span><b className="text-slate-300">{filtered.length}</b> activities</span>
           <span><b className="text-slate-300">{columnActors.length}</b> actors involved</span>
           <span><b className="text-slate-300">{visibleStages.length}</b> stages</span>
+          <button
+            onClick={() => setCollapsedStages(
+              collapsedStages.size === visibleStages.length
+                ? new Set()
+                : new Set(visibleStages.map(s => s.id))
+            )}
+            className="ml-2 text-slate-500 hover:text-slate-300 underline text-[10px]"
+          >
+            {collapsedStages.size === visibleStages.length ? 'expand all' : 'collapse all'}
+          </button>
           <span className="ml-auto text-slate-600">
             R = Responsible · A = Accountable · C = Consulted · I = Informed · ⚠ disputed · ? unverified
           </span>
@@ -132,6 +151,8 @@ export default function MatrixView() {
                     stage={stage}
                     activities={grouped[stage.id]}
                     columnActors={columnActors}
+                    isCollapsed={collapsedStages.has(stage.id)}
+                    onToggleCollapse={() => toggleCollapse(stage.id)}
                     onCellClick={(activity, actorId) => setSelected({ activity, actorId })}
                     selected={selected}
                     hoveredCol={hoveredCol}
@@ -162,6 +183,7 @@ export default function MatrixView() {
 
 function StageBlock({
   stage, activities, columnActors,
+  isCollapsed, onToggleCollapse,
   onCellClick, selected,
   hoveredCol, setHoveredCol, hoveredRow, setHoveredRow,
 }) {
@@ -170,7 +192,7 @@ function StageBlock({
       <tr>
         <td
           colSpan={columnActors.length + 1}
-          className="text-[10px] uppercase tracking-widest font-semibold sticky left-0 z-10"
+          className="text-[10px] uppercase tracking-widest font-semibold sticky left-0 z-10 cursor-pointer select-none hover:bg-blue-500/15 transition-colors"
           style={{
             background: 'linear-gradient(90deg, rgba(59, 130, 246, 0.10), transparent)',
             color: '#93C5FD',
@@ -178,15 +200,28 @@ function StageBlock({
             borderTop: '1px solid rgba(59, 130, 246, 0.2)',
             borderBottom: '1px solid rgba(59, 130, 246, 0.1)',
           }}
+          onClick={onToggleCollapse}
         >
-          {stage.name}{' '}
+          <span className="inline-flex items-center gap-2 align-middle">
+            <span
+              className="inline-flex items-center justify-center"
+              style={{
+                width: 14, height: 14,
+                transition: 'transform 0.15s ease',
+                transform: isCollapsed ? 'rotate(-90deg)' : 'rotate(0deg)',
+              }}
+            >
+              <ChevronDown size={12} strokeWidth={2.5} />
+            </span>
+            {stage.name}
+          </span>
           <span className="text-slate-500 font-normal normal-case tracking-normal ml-2">
             {stage.blurb}
           </span>
           <span className="ml-2 text-slate-600">({activities.length})</span>
         </td>
       </tr>
-      {activities.map((activity, rowIdx) => (
+      {!isCollapsed && activities.map((activity, rowIdx) => (
         <tr
           key={activity.id}
           onMouseEnter={() => setHoveredRow(activity.id)}
