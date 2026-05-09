@@ -110,7 +110,7 @@ export default function App() {
           )}
 
           <a
-            href="https://github.com/Aldikrasniqi/trash"
+            href="https://github.com/flosskosova/trash"
             target="_blank"
             rel="noreferrer"
             className="flex items-center gap-1 text-slate-600 hover:text-slate-400 text-xs transition-colors"
