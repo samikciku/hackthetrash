@@ -1,9 +1,12 @@
 // All 12 actor nodes. Positions follow a 5-tier layout:
-// y=60   external pressure
-// y=220  national oversight
-// y=390  municipal / political
-// y=560  operational
-// y=740  end actors
+// y=100   external pressure
+// y=420   national oversight
+// y=740   municipal / political
+// y=1060  operational
+// y=1380  end actors
+//
+// Grid columns (stride 300px, node width 148px, gap 152px):
+// C0=80  C1=380  C2=680  C3=980  C4=1280
 
 export const TIER_COLORS = {
   operational: '#F59E0B',
@@ -17,11 +20,11 @@ export const TIER_COLORS = {
 };
 
 export const initialNodes = [
-  // ── TIER 1: External pressure (y=60) ──────────────────────────────────
+  // ── TIER 1: External pressure (y=100) ─────────────────────────────────
   {
     id: 'eu',
     type: 'actorNode',
-    position: { x: 760, y: 60 },
+    position: { x: 380, y: 100 },
     data: {
       label: 'EU Delegation',
       fullName: 'EU Office in Pristina',
@@ -54,7 +57,7 @@ export const initialNodes = [
   {
     id: 'donors',
     type: 'actorNode',
-    position: { x: 1060, y: 60 },
+    position: { x: 680, y: 100 },
     data: {
       label: 'Int\'l Donors',
       fullName: 'JICA / GIZ / EU IPA / World Bank',
@@ -85,11 +88,11 @@ export const initialNodes = [
     },
   },
 
-  // ── TIER 2: National oversight (y=220) ────────────────────────────────
+  // ── TIER 2: National oversight (y=420) ────────────────────────────────
   {
     id: 'courts',
     type: 'actorNode',
-    position: { x: 160, y: 220 },
+    position: { x: 80, y: 420 },
     data: {
       label: 'Supreme Court',
       fullName: 'Supreme Court of Kosovo',
@@ -118,7 +121,7 @@ export const initialNodes = [
   {
     id: 'mmphi',
     type: 'actorNode',
-    position: { x: 430, y: 220 },
+    position: { x: 380, y: 420 },
     data: {
       label: 'Ministry of Env.',
       fullName: 'Ministry of Environment, Spatial Planning and Infrastructure (MMPHI)',
@@ -152,7 +155,7 @@ export const initialNodes = [
   {
     id: 'ammk',
     type: 'actorNode',
-    position: { x: 720, y: 220 },
+    position: { x: 980, y: 420 },
     data: {
       label: 'Env. Agency (AMMK)',
       fullName: 'Kosovo Environmental Protection Agency (AMMK/KEPA)',
@@ -181,7 +184,7 @@ export const initialNodes = [
   {
     id: 'ombudsperson',
     type: 'actorNode',
-    position: { x: 1000, y: 220 },
+    position: { x: 1280, y: 420 },
     data: {
       label: 'Ombudsperson',
       fullName: 'Ombudsperson Institution of Kosovo',
@@ -211,11 +214,11 @@ export const initialNodes = [
     },
   },
 
-  // ── TIER 3: Municipal / political (y=390) ─────────────────────────────
+  // ── TIER 3: Municipal / political (y=740) ─────────────────────────────
   {
     id: 'municipality',
     type: 'actorNode',
-    position: { x: 160, y: 390 },
+    position: { x: 80, y: 740 },
     data: {
       label: 'Municipality',
       fullName: 'Municipality of Pristina',
@@ -252,7 +255,7 @@ export const initialNodes = [
   {
     id: 'assembly',
     type: 'actorNode',
-    position: { x: 490, y: 390 },
+    position: { x: 380, y: 740 },
     data: {
       label: 'Municipal Assembly',
       fullName: 'Pristina Municipal Assembly',
@@ -284,11 +287,11 @@ export const initialNodes = [
     },
   },
 
-  // ── TIER 4: Operational (y=560) ───────────────────────────────────────
+  // ── TIER 4: Operational (y=1060) ──────────────────────────────────────
   {
     id: 'workers',
     type: 'actorNode',
-    position: { x: 100, y: 560 },
+    position: { x: 80, y: 1060 },
     data: {
       label: 'Pastrimi Workers',
       fullName: 'Pastrimi Workers\' Union',
@@ -323,7 +326,7 @@ export const initialNodes = [
   {
     id: 'pastrimi',
     type: 'actorNode',
-    position: { x: 370, y: 560 },
+    position: { x: 680, y: 1060 },
     data: {
       label: 'Pastrimi',
       fullName: 'KRM Pastrimi JSC',
@@ -364,7 +367,7 @@ export const initialNodes = [
   {
     id: 'klmc',
     type: 'actorNode',
-    position: { x: 680, y: 560 },
+    position: { x: 980, y: 1060 },
     data: {
       label: 'KLMC',
       fullName: 'Kosovo Landfill Management Company (KLMC / KMDK)',
@@ -400,7 +403,7 @@ export const initialNodes = [
   {
     id: 'private_operators',
     type: 'actorNode',
-    position: { x: 960, y: 560 },
+    position: { x: 1280, y: 1060 },
     data: {
       label: 'Private Operators',
       fullName: 'Private Waste Operators (tender candidates)',
@@ -427,11 +430,11 @@ export const initialNodes = [
     },
   },
 
-  // ── TIER 5: End actors (y=740) ────────────────────────────────────────
+  // ── TIER 5: End actors (y=1380) ───────────────────────────────────────
   {
     id: 'citizens',
     type: 'actorNode',
-    position: { x: 160, y: 740 },
+    position: { x: 80, y: 1380 },
     data: {
       label: 'Citizens',
       fullName: 'Pristina Residents & Households',
@@ -466,7 +469,7 @@ export const initialNodes = [
   {
     id: 'informal_collectors',
     type: 'actorNode',
-    position: { x: 530, y: 740 },
+    position: { x: 680, y: 1380 },
     data: {
       label: 'Informal Collectors',
       fullName: 'Informal Waste Pickers (predominantly RAE community)',
@@ -502,7 +505,7 @@ export const initialNodes = [
   {
     id: 'mirash',
     type: 'actorNode',
-    position: { x: 870, y: 740 },
+    position: { x: 980, y: 1380 },
     data: {
       label: 'Mirash Landfill',
       fullName: 'Mirash Regional Landfill (Obiliq municipality)',
