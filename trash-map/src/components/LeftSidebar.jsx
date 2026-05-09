@@ -1,9 +1,20 @@
 import { useState } from 'react'
 import { ChevronDown, Film } from 'lucide-react'
+import { motion, AnimatePresence } from 'motion/react'
 import { levers } from '../data/levers'
 import { TIER_COLORS } from '../data/nodes'
 import { EDGE_COLORS } from '../data/edges'
 import LeverIcon from './LeverIcon'
+
+const scenariosListVariants = {
+  hidden: { opacity: 0 },
+  show:   { opacity: 1, transition: { staggerChildren: 0.05, delayChildren: 0.1 } },
+}
+
+const scenarioCardVariants = {
+  hidden: { opacity: 0, y: 12 },
+  show:   { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 360, damping: 26 } },
+}
 
 const TIERS = [
   { key: 'operational', label: 'Operational' },
@@ -28,11 +39,13 @@ export default function LeftSidebar({ open, activeLeverId, activeLever, onToggle
   const [legendOpen, setLegendOpen] = useState(true)
 
   return (
-    /* Outer shell — width animates open/closed */
-    <aside
-      className="shrink-0 flex flex-col overflow-hidden transition-[width] duration-200 ease-in-out"
+    /* Outer shell — width animates open/closed with a spring */
+    <motion.aside
+      initial={false}
+      animate={{ width: open ? 288 : 0 }}
+      transition={{ type: 'spring', stiffness: 320, damping: 34, mass: 0.9 }}
+      className="shrink-0 flex flex-col overflow-hidden"
       style={{
-        width: open ? 288 : 0,
         borderRight: '1px solid rgba(255,255,255,0.05)',
         background: '#0A0D16',
       }}
@@ -60,48 +73,59 @@ export default function LeftSidebar({ open, activeLeverId, activeLever, onToggle
               />
             </button>
 
-            <div
-              className="overflow-hidden transition-[max-height,opacity] duration-200"
-              style={{ maxHeight: legendOpen ? 400 : 0, opacity: legendOpen ? 1 : 0 }}
-            >
-              <div className="pt-3 pb-4 space-y-4">
-                {/* Node tiers grid */}
-                <div>
-                  <p className="text-[9px] uppercase tracking-[0.1em] text-slate-700 mb-2.5">Node tiers</p>
-                  <div className="grid grid-cols-2 gap-x-3 gap-y-2">
-                    {TIERS.map(({ key, label }) => (
-                      <div key={key} className="flex items-center gap-2">
-                        <span
-                          className="w-2 h-2 rounded-full shrink-0"
-                          style={{ background: TIER_COLORS[key] }}
-                        />
-                        <span className="text-slate-400 text-[11px]">{label}</span>
+            <AnimatePresence initial={false}>
+              {legendOpen && (
+                <motion.div
+                  key="legend-body"
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{    height: 0, opacity: 0 }}
+                  transition={{
+                    height:  { type: 'spring', stiffness: 320, damping: 32, mass: 0.8 },
+                    opacity: { duration: 0.18 },
+                  }}
+                  className="overflow-hidden"
+                >
+                  <div className="pt-3 pb-4 space-y-4">
+                    {/* Node tiers grid */}
+                    <div>
+                      <p className="text-[9px] uppercase tracking-[0.1em] text-slate-700 mb-2.5">Node tiers</p>
+                      <div className="grid grid-cols-2 gap-x-3 gap-y-2">
+                        {TIERS.map(({ key, label }) => (
+                          <div key={key} className="flex items-center gap-2">
+                            <span
+                              className="w-2 h-2 rounded-full shrink-0"
+                              style={{ background: TIER_COLORS[key] }}
+                            />
+                            <span className="text-slate-400 text-[11px]">{label}</span>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                </div>
+                    </div>
 
-                {/* Edge types */}
-                <div>
-                  <p className="text-[9px] uppercase tracking-[0.1em] text-slate-700 mb-2.5">Edge types</p>
-                  <div className="space-y-2">
-                    {EDGE_LEGEND.map(({ key, label, dash }) => (
-                      <div key={key} className="flex items-center gap-2">
-                        <svg width="20" height="8" className="shrink-0">
-                          <line
-                            x1="0" y1="4" x2="20" y2="4"
-                            stroke={EDGE_COLORS[key] ?? '#64748B'}
-                            strokeWidth="1.5"
-                            strokeDasharray={dash ?? undefined}
-                          />
-                        </svg>
-                        <span className="text-slate-400 text-[11px]">{label}</span>
+                    {/* Edge types */}
+                    <div>
+                      <p className="text-[9px] uppercase tracking-[0.1em] text-slate-700 mb-2.5">Edge types</p>
+                      <div className="space-y-2">
+                        {EDGE_LEGEND.map(({ key, label, dash }) => (
+                          <div key={key} className="flex items-center gap-2">
+                            <svg width="20" height="8" className="shrink-0">
+                              <line
+                                x1="0" y1="4" x2="20" y2="4"
+                                stroke={EDGE_COLORS[key] ?? '#64748B'}
+                                strokeWidth="1.5"
+                                strokeDasharray={dash ?? undefined}
+                              />
+                            </svg>
+                            <span className="text-slate-400 text-[11px]">{label}</span>
+                          </div>
+                        ))}
                       </div>
-                    ))}
+                    </div>
                   </div>
-                </div>
-              </div>
-            </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </section>
 
           {/* Divider */}
@@ -118,7 +142,12 @@ export default function LeftSidebar({ open, activeLeverId, activeLever, onToggle
               </p>
             </div>
 
-            <div className="space-y-2">
+            <motion.div
+              variants={scenariosListVariants}
+              initial="hidden"
+              animate="show"
+              className="space-y-2"
+            >
               {levers.map((lever) => {
                 const isActive  = activeLeverId === lever.id
                 const isHistory = !!lever.historical
@@ -140,10 +169,15 @@ export default function LeftSidebar({ open, activeLeverId, activeLever, onToggle
                     }
 
                 return (
-                  <button
+                  <motion.button
                     key={lever.id}
+                    variants={scenarioCardVariants}
+                    layout
+                    whileHover={{ y: -2, scale: 1.01 }}
+                    whileTap={{ scale: 0.985 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 26 }}
                     onClick={() => onToggle(lever.id)}
-                    className="w-full text-left rounded-xl border transition-all duration-150 hover:border-white/10 hover:bg-white/[0.04]"
+                    className="w-full text-left rounded-xl border hover:border-white/10 hover:bg-white/[0.04]"
                     style={cardStyle}
                   >
                     {/* Card header */}
@@ -189,37 +223,49 @@ export default function LeftSidebar({ open, activeLeverId, activeLever, onToggle
                     </div>
 
                     {/* Expanded context when active */}
-                    {isActive && (
-                      <div
-                        className="px-3.5 pb-3 pt-2.5 border-t"
-                        style={{ borderColor: 'rgba(255,255,255,0.06)' }}
-                      >
-                        {isHistory && (
-                          <p
-                            className="flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-widest mb-1.5"
-                            style={{ color: '#F59E0B' }}
-                          >
-                            <Film size={10} strokeWidth={2} />
-                            {lever.historicalDate}
-                          </p>
-                        )}
-                        <p className="text-[11px] text-slate-400 leading-relaxed">{lever.context}</p>
-
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            onToggle(lever.id)
+                    <AnimatePresence initial={false}>
+                      {isActive && (
+                        <motion.div
+                          key="ctx"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{    height: 0, opacity: 0 }}
+                          transition={{
+                            height:  { type: 'spring', stiffness: 360, damping: 32 },
+                            opacity: { duration: 0.16 },
                           }}
-                          className="mt-3 text-[10px] text-slate-600 hover:text-slate-400 transition-colors underline underline-offset-2"
+                          className="overflow-hidden border-t"
+                          style={{ borderColor: 'rgba(255,255,255,0.06)' }}
                         >
-                          Clear scenario
-                        </button>
-                      </div>
-                    )}
-                  </button>
+                          <div className="px-3.5 pb-3 pt-2.5">
+                            {isHistory && (
+                              <p
+                                className="flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-widest mb-1.5"
+                                style={{ color: '#F59E0B' }}
+                              >
+                                <Film size={10} strokeWidth={2} />
+                                {lever.historicalDate}
+                              </p>
+                            )}
+                            <p className="text-[11px] text-slate-400 leading-relaxed">{lever.context}</p>
+
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                onToggle(lever.id)
+                              }}
+                              className="mt-3 text-[10px] text-slate-600 hover:text-slate-400 transition-colors underline underline-offset-2"
+                            >
+                              Clear scenario
+                            </button>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.button>
                 )
               })}
-            </div>
+            </motion.div>
 
             {/* Tap-to-deselect hint when nothing is active */}
             {!activeLeverId && (
@@ -239,6 +285,6 @@ export default function LeftSidebar({ open, activeLeverId, activeLever, onToggle
           <p className="text-[10px] text-slate-700">May 2026</p>
         </div>
       </div>
-    </aside>
+    </motion.aside>
   )
 }

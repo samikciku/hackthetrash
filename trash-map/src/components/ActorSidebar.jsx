@@ -1,6 +1,21 @@
 import { X, ExternalLink } from 'lucide-react'
+import { motion } from 'motion/react'
 import { TIER_COLORS } from '../data/nodes'
 import LeverIcon from './LeverIcon'
+
+/* Stagger settings shared between sections */
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.06, delayChildren: 0.08 },
+  },
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 10 },
+  show:   { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 360, damping: 26 } },
+}
 
 const TIER_LABELS = {
   operational: 'Operational',
@@ -21,14 +36,17 @@ export default function ActorSidebar({ node, activeLever, onClose }) {
   const leverEffect = activeLever?.nodeEffects?.[node.id] ?? null
 
   return (
-    <aside
+    <motion.aside
+      initial={{ x: 60, opacity: 0 }}
+      animate={{ x: 0,  opacity: 1 }}
+      exit={{    x: 60, opacity: 0 }}
+      transition={{ type: 'spring', stiffness: 380, damping: 32, mass: 0.8 }}
       className="flex-shrink-0 flex flex-col overflow-hidden"
       style={{
         width: 340,
         background: '#0A0D16',
         borderLeft: '1px solid rgba(255,255,255,0.05)',
         boxShadow: '-16px 0 48px rgba(0,0,0,0.4)',
-        animation: 'sidebarSlideIn 0.18s ease-out both',
       }}
     >
       {/* ── Header ────────────────────────────────────────────────────────── */}
@@ -70,62 +88,80 @@ export default function ActorSidebar({ node, activeLever, onClose }) {
       </div>
 
       {/* ── Scrollable body ───────────────────────────────────────────────── */}
-      <div className="flex-1 overflow-y-auto sidebar-scroll px-5 py-5 space-y-6">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
+        className="flex-1 overflow-y-auto sidebar-scroll px-5 py-5 space-y-6"
+      >
 
         {/* Lever effect banner */}
         {leverEffect && (
-          <LeverBanner effect={leverEffect} lever={activeLever} />
+          <motion.div variants={itemVariants}>
+            <LeverBanner effect={leverEffect} lever={activeLever} />
+          </motion.div>
         )}
 
         {/* Role */}
-        <Section title="Role">
-          <p className="text-slate-300 text-sm leading-relaxed">{d.role}</p>
-        </Section>
+        <motion.div variants={itemVariants}>
+          <Section title="Role">
+            <p className="text-slate-300 text-sm leading-relaxed">{d.role}</p>
+          </Section>
+        </motion.div>
 
         {/* What they control */}
         {d.leverage?.length > 0 && (
-          <Section title="What they control">
-            <BulletList items={d.leverage} accentColor="#34D399" />
-          </Section>
+          <motion.div variants={itemVariants}>
+            <Section title="What they control">
+              <BulletList items={d.leverage} accentColor="#34D399" />
+            </Section>
+          </motion.div>
         )}
 
         {/* What they need */}
         {d.dependencies?.length > 0 && (
-          <Section title="What they need">
-            <BulletList items={d.dependencies} accentColor="#FBBF24" />
-          </Section>
+          <motion.div variants={itemVariants}>
+            <Section title="What they need">
+              <BulletList items={d.dependencies} accentColor="#FBBF24" />
+            </Section>
+          </motion.div>
         )}
 
         {/* What they fear */}
         {d.fears?.length > 0 && (
-          <Section title="What they fear">
-            <BulletList items={d.fears} accentColor="#F87171" />
-          </Section>
+          <motion.div variants={itemVariants}>
+            <Section title="What they fear">
+              <BulletList items={d.fears} accentColor="#F87171" />
+            </Section>
+          </motion.div>
         )}
 
         {/* Stats table */}
         {d.stats?.length > 0 && (
-          <Section title="Key numbers">
-            <div className="rounded-lg overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.06)' }}>
-              {d.stats.map((s, i) => (
-                <div
-                  key={i}
-                  className="flex justify-between items-start gap-3 px-3 py-2.5 text-sm"
-                  style={{
-                    borderBottom: i < d.stats.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none',
-                  }}
-                >
-                  <span className="text-slate-500 text-[11px] shrink-0 pt-px">{s.label}</span>
-                  <span className="text-slate-200 text-[12px] font-medium text-right font-mono">{s.value}</span>
-                </div>
-              ))}
-            </div>
-          </Section>
+          <motion.div variants={itemVariants}>
+            <Section title="Key numbers">
+              <div className="rounded-lg overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.06)' }}>
+                {d.stats.map((s, i) => (
+                  <div
+                    key={i}
+                    className="flex justify-between items-start gap-3 px-3 py-2.5 text-sm"
+                    style={{
+                      borderBottom: i < d.stats.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none',
+                    }}
+                  >
+                    <span className="text-slate-500 text-[11px] shrink-0 pt-px">{s.label}</span>
+                    <span className="text-slate-200 text-[12px] font-medium text-right font-mono">{s.value}</span>
+                  </div>
+                ))}
+              </div>
+            </Section>
+          </motion.div>
         )}
 
         {/* Quote */}
         {d.quote && (
-          <div
+          <motion.div
+            variants={itemVariants}
             className="rounded-lg px-4 py-3"
             style={{
               background:   'rgba(255,255,255,0.03)',
@@ -151,10 +187,10 @@ export default function ActorSidebar({ node, activeLever, onClose }) {
                 )}
               </p>
             )}
-          </div>
+          </motion.div>
         )}
-      </div>
-    </aside>
+      </motion.div>
+    </motion.aside>
   )
 }
 
@@ -195,7 +231,10 @@ function LeverBanner({ effect, lever }) {
   const style = levels[effect.stressLevel] ?? levels.none
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, scale: 0.92, y: -6 }}
+      animate={{ opacity: 1, scale: 1,    y: 0  }}
+      transition={{ type: 'spring', stiffness: 420, damping: 22 }}
       className="rounded-xl px-3.5 py-3"
       style={{ background: style.bg, border: `1px solid ${style.border}` }}
     >
@@ -208,6 +247,6 @@ function LeverBanner({ effect, lever }) {
       <p className="text-sm leading-relaxed" style={{ color: style.text + 'CC' }}>
         {effect.narrative}
       </p>
-    </div>
+    </motion.div>
   )
 }

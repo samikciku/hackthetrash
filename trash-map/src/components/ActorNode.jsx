@@ -1,4 +1,5 @@
 import { Handle, Position } from '@xyflow/react'
+import { motion, AnimatePresence } from 'motion/react'
 import { TIER_COLORS } from '../data/nodes'
 
 const STRESS_GLOW = {
@@ -13,14 +14,21 @@ export default function ActorNode({ data, selected }) {
   const glow  = STRESS_GLOW[data.stressLevel ?? 'none']
 
   return (
-    <div
+    <motion.div
+      initial={false}
+      animate={{
+        opacity: data.dimmed ? 0.2 : 1,
+        scale:   data.stressLevel && data.stressLevel !== 'none' ? 1.04 : 1,
+      }}
+      whileHover={data.dimmed ? undefined : { scale: 1.06, y: -2 }}
+      whileTap={{ scale: 0.97 }}
+      transition={{ type: 'spring', stiffness: 320, damping: 22, mass: 0.6 }}
       style={{
         border: `2px solid ${selected ? '#fff' : color}`,
         boxShadow: selected
           ? `0 0 0 3px ${color}55, ${glow}`
           : glow,
-        opacity: data.dimmed ? 0.2 : 1,
-        transition: 'opacity 0.3s, box-shadow 0.4s, border-color 0.3s',
+        transition: 'box-shadow 0.4s, border-color 0.3s',
         minWidth: 148,
         maxWidth: 148,
       }}
@@ -56,16 +64,24 @@ export default function ActorNode({ data, selected }) {
         </p>
       )}
 
-      {/* stress badge */}
-      {data.stressLevel && data.stressLevel !== 'none' && (
-        <div className={`mt-1.5 text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded text-center
-          ${data.stressLevel === 'high'   ? 'bg-red-900/70 text-red-300'    : ''}
-          ${data.stressLevel === 'medium' ? 'bg-orange-900/70 text-orange-300' : ''}
-          ${data.stressLevel === 'low'    ? 'bg-yellow-900/70 text-yellow-300' : ''}`}
-        >
-          {data.stressLevel} stress
-        </div>
-      )}
-    </div>
+      {/* stress badge — spring pop in/out as lever waves reveal stressed actors */}
+      <AnimatePresence>
+        {data.stressLevel && data.stressLevel !== 'none' && (
+          <motion.div
+            key={data.stressLevel}
+            initial={{ opacity: 0, scale: 0.4, y: 4 }}
+            animate={{ opacity: 1, scale: 1,   y: 0 }}
+            exit={{    opacity: 0, scale: 0.4, y: 4 }}
+            transition={{ type: 'spring', stiffness: 480, damping: 18, mass: 0.5 }}
+            className={`mt-1.5 text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded text-center
+              ${data.stressLevel === 'high'   ? 'bg-red-900/70 text-red-300'       : ''}
+              ${data.stressLevel === 'medium' ? 'bg-orange-900/70 text-orange-300' : ''}
+              ${data.stressLevel === 'low'    ? 'bg-yellow-900/70 text-yellow-300' : ''}`}
+          >
+            {data.stressLevel} stress
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   )
 }

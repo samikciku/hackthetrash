@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react'
 import { Trash2, ExternalLink } from 'lucide-react'
+import { AnimatePresence, motion } from 'motion/react'
 import GraphCanvas from './components/GraphCanvas'
 import ActorSidebar from './components/ActorSidebar'
 import NewsTicker from './components/NewsTicker'
@@ -75,39 +76,47 @@ export default function App() {
 
         {/* Active scenario pill */}
         <div className="ml-auto flex items-center gap-3">
-          {activeLever && (
-            <div
-              className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium transition-all"
-              style={
-                activeLever.historical
-                  ? {
-                      background: 'rgba(251,191,36,0.1)',
-                      color: '#FDE68A',
-                      border: '1px solid rgba(251,191,36,0.25)',
-                    }
-                  : {
-                      background: 'rgba(255,255,255,0.07)',
-                      color: '#E2E8F0',
-                      border: '1px solid rgba(255,255,255,0.12)',
-                    }
-              }
-            >
-              <LeverIcon
-                iconName={activeLever.iconName}
-                size={13}
-                style={{ color: activeLever.historical ? '#FDE68A' : '#E2E8F0' }}
-              />
-              <span className="max-w-[160px] truncate">{activeLever.title}</span>
-              {activeLever.historical && (
-                <span
-                  className="text-[8px] font-black uppercase tracking-widest px-1 py-0.5 rounded"
-                  style={{ background: 'rgba(251,191,36,0.2)', color: '#F59E0B' }}
-                >
-                  REPLAY
-                </span>
-              )}
-            </div>
-          )}
+          <AnimatePresence mode="wait">
+            {activeLever && (
+              <motion.div
+                key={activeLever.id}
+                layout
+                initial={{ opacity: 0, scale: 0.85, y: -4 }}
+                animate={{ opacity: 1, scale: 1,    y: 0  }}
+                exit={{    opacity: 0, scale: 0.85, y: -4 }}
+                transition={{ type: 'spring', stiffness: 420, damping: 28, mass: 0.6 }}
+                className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium"
+                style={
+                  activeLever.historical
+                    ? {
+                        background: 'rgba(251,191,36,0.1)',
+                        color: '#FDE68A',
+                        border: '1px solid rgba(251,191,36,0.25)',
+                      }
+                    : {
+                        background: 'rgba(255,255,255,0.07)',
+                        color: '#E2E8F0',
+                        border: '1px solid rgba(255,255,255,0.12)',
+                      }
+                }
+              >
+                <LeverIcon
+                  iconName={activeLever.iconName}
+                  size={13}
+                  style={{ color: activeLever.historical ? '#FDE68A' : '#E2E8F0' }}
+                />
+                <span className="max-w-[160px] truncate">{activeLever.title}</span>
+                {activeLever.historical && (
+                  <span
+                    className="text-[8px] font-black uppercase tracking-widest px-1 py-0.5 rounded"
+                    style={{ background: 'rgba(251,191,36,0.2)', color: '#F59E0B' }}
+                  >
+                    REPLAY
+                  </span>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <a
             href="https://github.com/flosskosova/trash"
@@ -135,7 +144,9 @@ export default function App() {
         {/* Canvas wrapper */}
         <div className="flex-1 relative overflow-hidden">
           {/* Floating news ticker */}
-          {activeLever && <NewsTicker lever={activeLever} />}
+          <AnimatePresence>
+            {activeLever && <NewsTicker lever={activeLever} />}
+          </AnimatePresence>
 
           <GraphCanvas
             selectedNodeId={selectedNode?.id}
@@ -149,11 +160,16 @@ export default function App() {
         </div>
 
         {/* Actor detail panel */}
-        <ActorSidebar
-          node={selectedNode}
-          activeLever={activeLever}
-          onClose={handleCloseSidebar}
-        />
+        <AnimatePresence mode="wait">
+          {selectedNode && (
+            <ActorSidebar
+              key={selectedNode.id}
+              node={selectedNode}
+              activeLever={activeLever}
+              onClose={handleCloseSidebar}
+            />
+          )}
+        </AnimatePresence>
       </div>
     </div>
   )

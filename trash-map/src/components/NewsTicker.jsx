@@ -2,6 +2,7 @@
 // Historical levers: amber archive style. Others: subtle white/glass style.
 
 import { Film, Radio } from 'lucide-react'
+import { motion } from 'motion/react'
 
 export default function NewsTicker({ lever }) {
   if (!lever) return null
@@ -11,9 +12,14 @@ export default function NewsTicker({ lever }) {
   const doubled = [...lever.headlines, ...lever.headlines]
 
   return (
-    <div
-      className="ticker-container absolute top-4 left-1/2 z-30 pointer-events-none"
-      style={{ transform: 'translateX(-50%)', maxWidth: 'min(600px, calc(100% - 32px))' }}
+    <motion.div
+      key={lever.id}
+      initial={{ opacity: 0, y: -16, x: '-50%', scale: 0.94 }}
+      animate={{ opacity: 1, y: 0,   x: '-50%', scale: 1    }}
+      exit={{    opacity: 0, y: -16, x: '-50%', scale: 0.94 }}
+      transition={{ type: 'spring', stiffness: 360, damping: 26, mass: 0.7 }}
+      className="absolute top-4 left-1/2 z-30 pointer-events-none"
+      style={{ maxWidth: 'min(600px, calc(100% - 32px))' }}
     >
       <div
         className="flex items-stretch rounded-full overflow-hidden shadow-2xl"
@@ -75,6 +81,6 @@ export default function NewsTicker({ lever }) {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
