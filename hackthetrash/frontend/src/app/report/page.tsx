@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
 const LocationPicker = dynamic(
@@ -20,14 +20,37 @@ export default function ReportPage() {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [submittedId, setSubmittedId] = useState<string | null>(null);
+  const [locating, setLocating] = useState(false);
+  const [locationError, setLocationError] = useState<string | null>(null);
 
   const useMyLocation = () => {
-    if (!navigator.geolocation) return alert("Geolocation not supported");
+    if (!navigator.geolocation) {
+      setLocationError("Geolocation not supported by this browser");
+      return;
+    }
+    setLocating(true);
+    setLocationError(null);
     navigator.geolocation.getCurrentPosition(
-      (pos) => setCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
-      () => alert("Could not get location")
+      (pos) => {
+        setCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+        setLocating(false);
+      },
+      (err) => {
+        setLocating(false);
+        setLocationError(
+          err.code === err.PERMISSION_DENIED
+            ? "Location permission denied — pick on the map or tap to retry"
+            : "Could not get location — pick on the map or tap to retry"
+        );
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
     );
   };
+
+  useEffect(() => {
+    useMyLocation();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const toggleTag = (t: string) =>
     setTags((prev) => (prev.includes(t) ? prev.filter((x) => x !== t) : [...prev, t]));
@@ -107,10 +130,13 @@ export default function ReportPage() {
       {/* Location */}
       <div>
         <label className="block font-semibold mb-2">📍 Location</label>
-        <button type="button" onClick={useMyLocation}
-          className="bg-blue-100 text-blue-700 px-3 py-1 rounded text-sm mb-2">
-          Use my location
+        <button type="button" onClick={useMyLocation} disabled={locating}
+          className="bg-blue-100 text-blue-700 px-3 py-1 rounded text-sm mb-2 disabled:opacity-50">
+          {locating ? "Locating…" : coords ? "Update my location" : "Use my location"}
         </button>
+        {locationError && (
+          <p className="text-xs text-red-600 mt-1 mb-1">{locationError}</p>
+        )}
         <LocationPicker coords={coords} onChange={setCoords} />
         {coords && (
           <p className="text-xs text-gray-500 mt-1">
