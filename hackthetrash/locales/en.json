@@ -1,21 +1,41 @@
 {
-  "app": { "name": "HackTheTrash", "tagline": "Together, we clean up our cities." },
-  "nav": { "home": "Home", "report": "Report", "map": "Map", "dashboard": "Dashboard", "signIn": "Sign in" },
+  "app": {
+    "name": "HackTheTrash",
+    "tagline": "Together, let's clean up our cities."
+  },
+  "nav": {
+    "home": "Home",
+    "report": "Report",
+    "map": "Map",
+    "dashboard": "Dashboard",
+    "stats": "Stats",
+    "about": "About",
+    "settings": "Settings",
+    "signIn": "Sign in",
+    "language": "Language"
+  },
   "home": {
     "ctaReport": "Report Trash",
     "ctaMap": "View Map",
     "subtitle": "Spot illegal trash? Snap a photo, drop a pin, change your community.",
+    "howItWorks": "How it works",
     "step1": "Snap",
-    "step1d": "Photograph the trash",
+    "step1d": "Photograph the dumped trash",
     "step2": "Locate",
-    "step2d": "Auto-detect GPS",
+    "step2d": "Auto-detect or pin GPS",
     "step3": "Submit",
-    "step3d": "Anonymous or signed-in"
+    "step3d": "Anonymous or signed-in",
+    "stats": {
+      "reports": "{{count}} reports",
+      "cleaned": "{{count}} cleaned",
+      "cities": "{{count}} cities"
+    },
+    "pristina": "Pilot project in Prishtina - help us map illegal dumps in your neighbourhood."
   },
   "report": {
     "title": "Report Illegal Trash",
-    "photos": "Photos",
-    "addPhotos": "Tap to add photos",
+    "photos": "Photos (max 5)",
+    "addPhoto": "Add photo",
     "takePhoto": "Take Photo",
     "fromLibrary": "From Library",
     "tapToRemove": "tap to remove",
@@ -28,12 +48,12 @@
     "medium": "Medium",
     "large": "Large",
     "description": "Description (optional)",
-    "descriptionPlaceholder": "e.g. Pile of debris near the park entrance",
+    "descriptionPlaceholder": "e.g. Pile of construction debris near park entrance",
     "anonymous": "Submit anonymously",
     "submit": "SUBMIT REPORT",
     "submitting": "Submitting...",
     "queuedTitle": "Saved offline",
-    "queuedBody": "You are offline. Your report was saved and will be submitted when you are back online.",
+    "queuedBody": "You are offline. Your report was saved and will be submitted automatically when you are back online.",
     "errorMissingLocation": "Please add a location.",
     "errorMissingPhoto": "Please add at least one photo.",
     "errorSubmit": "Submission failed. Is the backend running?"
@@ -55,7 +75,7 @@
   },
   "success": {
     "title": "Thank you!",
-    "body": "Your report has been submitted. It now appears as a new pin on the OpenStreetMap layer.",
+    "body": "Your report has been added to the public map. It will appear as a new pin on the OpenStreetMap layer.",
     "seeOnMap": "See it on the map",
     "backHome": "Back to home"
   },
@@ -64,20 +84,61 @@
     "refresh": "Refresh",
     "demoMode": "Showing demo data (server unreachable)",
     "yourReport": "(your report)",
-    "legend": "Legend"
+    "legend": "Legend",
+    "filters": "Filters",
+    "showing": "Showing {{count}} reports",
+    "lastUpdated": "Last updated: {{time}}",
+    "filterStatus": "Status",
+    "filterSeverity": "Severity",
+    "filterType": "Type",
+    "filterDate": "Date",
+    "last30days": "Last 30 days",
+    "last7days": "Last 7 days",
+    "allTime": "All time"
   },
   "dashboard": {
     "title": "Authority Dashboard",
     "total": "Total",
     "queue": "Reports queue",
-    "noReports": "No reports yet."
+    "noReports": "No reports yet.",
+    "loading": "Loading...",
+    "header": "Reports queue",
+    "columns": {
+      "id": "ID",
+      "status": "Status",
+      "severity": "Severity",
+      "description": "Description",
+      "coords": "Coords",
+      "aiScore": "AI Score",
+      "created": "Created"
+    }
   },
   "queue": {
     "pending_one": "{{count}} report waiting to upload",
     "pending_other": "{{count}} reports waiting to upload",
     "syncNow": "Sync now",
     "syncing": "Syncing...",
-    "lastSync": "Last sync: {{time}}"
+    "lastSync": "Last sync: {{time}}",
+    "remove": "Remove",
+    "noPending": "No reports waiting."
   },
-  "lang": { "en": "English", "sq": "Shqip", "it": "Italiano" }
+  "settings": {
+    "language": "Language",
+    "offlineQueue": "Offline queue",
+    "pushNotifications": "Push notifications",
+    "pushRegistered": "Registered: {{token}}...",
+    "pushNotRegistered": "Not registered (simulator or denied)"
+  },
+  "common": {
+    "back": "Back",
+    "cancel": "Cancel",
+    "save": "Save",
+    "ok": "OK",
+    "loading": "Loading..."
+  },
+  "lang": {
+    "en": "English",
+    "sq": "Shqip",
+    "it": "Italiano"
+  }
 }

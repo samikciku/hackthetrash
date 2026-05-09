@@ -1,50 +1,70 @@
 {
-  "app": { "name": "HackTheTrash", "tagline": "Bashke pastrojme qytetin tone." },
-  "nav": { "home": "Kreu", "report": "Raporto", "map": "Harta", "dashboard": "Paneli", "signIn": "Hyr" },
+  "app": {
+    "name": "HackTheTrash",
+    "tagline": "Së bashku të pastrojmë qytetet tona."
+  },
+  "nav": {
+    "home": "Kreu",
+    "report": "Raporto",
+    "map": "Harta",
+    "dashboard": "Paneli",
+    "stats": "Statistika",
+    "about": "Rreth nesh",
+    "settings": "Cilësimet",
+    "signIn": "Hyr",
+    "language": "Gjuha"
+  },
   "home": {
     "ctaReport": "Raporto Mbeturina",
-    "ctaMap": "Shiko Harten",
-    "subtitle": "Ke pare mbeturina? Bej nje foto, vendos piken, ndrysho komunitetin tend.",
+    "ctaMap": "Shih Hartën",
+    "subtitle": "Ke parë mbeturina ilegale? Bëj një foto, vendos pikën, ndrysho komunitetin tënd.",
+    "howItWorks": "Si funksionon",
     "step1": "Foto",
-    "step1d": "Fotografo mbeturinat",
+    "step1d": "Fotografo mbeturinat e hedhura",
     "step2": "Vendndodhja",
-    "step2d": "GPS automatik",
-    "step3": "Dergo",
-    "step3d": "Anonim ose i kycur"
+    "step2d": "Zbulim automatik ose pin GPS",
+    "step3": "Dërgo",
+    "step3d": "Në mënyrë anonime ose i regjistruar",
+    "stats": {
+      "reports": "{{count}} raporte",
+      "cleaned": "{{count}} të pastruara",
+      "cities": "{{count}} qytete"
+    },
+    "pristina": "Projekt pilot në Prishtinë - na ndihmoni të hartografojmë mbeturinat ilegale në lagjen tuaj."
   },
   "report": {
-    "title": "Raporto Mbeturina te Paligjshme",
-    "photos": "Foto",
-    "addPhotos": "Shtyp per te shtuar foto",
-    "takePhoto": "Bej Foto",
+    "title": "Raporto Mbeturina të Paligjshme",
+    "photos": "Fotografi (maksimumi 5)",
+    "addPhoto": "Shto foto",
+    "takePhoto": "Bëj Foto",
     "fromLibrary": "Nga Galeria",
-    "tapToRemove": "shtyp per ta hequr",
+    "tapToRemove": "shtyp për ta hequr",
     "location": "Vendndodhja",
-    "useMyLocation": "Perdor vendndodhjen time",
-    "updateLocation": "Perditeso vendndodhjen",
-    "trashType": "Cfare lloj mbeturine?",
-    "size": "Madhesia",
-    "small": "E vogel",
+    "useMyLocation": "Përdor vendndodhjen time",
+    "updateLocation": "Përditëso vendndodhjen",
+    "trashType": "Çfarë lloji mbeturine?",
+    "size": "Madhësia",
+    "small": "E vogël",
     "medium": "Mesatare",
     "large": "E madhe",
-    "description": "Pershkrim (opsional)",
-    "descriptionPlaceholder": "p.sh. Grumbull mbeturinash prane hyrjes se parkut",
-    "anonymous": "Dergo ne menyre anonime",
-    "submit": "DERGO RAPORTIN",
-    "submitting": "Po dergohet...",
-    "queuedTitle": "Ruajtur jashte linje",
-    "queuedBody": "Jeni jashte linje. Raporti u ruajt dhe do te dergohet automatikisht sapo te lidheni ne internet.",
-    "errorMissingLocation": "Ju lutem shtoni nje vendndodhje.",
-    "errorMissingPhoto": "Ju lutem shtoni te pakten nje foto.",
-    "errorSubmit": "Deshtoi dergimi. A po funksionon backend-i?"
+    "description": "Përshkrim (opsional)",
+    "descriptionPlaceholder": "p.sh. Grumbull mbetjesh ndërtimi pranë hyrjes së parkut",
+    "anonymous": "Dërgo në mënyrë anonime",
+    "submit": "DËRGO RAPORTIN",
+    "submitting": "Po dërgohet...",
+    "queuedTitle": "Ruajtur jashtë linje",
+    "queuedBody": "Jeni jashtë linje. Raporti u ruajt dhe do të dërgohet automatikisht sapo të lidheni në internet.",
+    "errorMissingLocation": "Ju lutemi shtoni një vendndodhje.",
+    "errorMissingPhoto": "Ju lutemi shtoni të paktën një fotografi.",
+    "errorSubmit": "Dështoi dërgimi. A po funksionon backend-i?"
   },
   "tags": {
-    "Plastic": "Plastike",
+    "Plastic": "Plastikë",
     "E-waste": "Mbeturina elektronike",
-    "Hazardous": "Te rrezikshme",
-    "Construction": "Ndertimi",
+    "Hazardous": "Të rrezikshme",
+    "Construction": "Ndërtimi",
     "Organic": "Organike",
-    "Other": "Tjera"
+    "Other": "Të tjera"
   },
   "status": {
     "reported": "E raportuar",
@@ -55,29 +75,70 @@
   },
   "success": {
     "title": "Faleminderit!",
-    "body": "Raporti juaj u dergua. Tani shfaqet si nje pike e re ne harten OpenStreetMap.",
-    "seeOnMap": "Shihe ne harte",
-    "backHome": "Kthehu ne kreu"
+    "body": "Raporti juaj u shtua në hartën publike. Tani shfaqet si një pikë e re në shtresën OpenStreetMap.",
+    "seeOnMap": "Shihe në hartë",
+    "backHome": "Kthehu te kreu"
   },
   "map": {
     "loading": "Po ngarkohen raportet...",
     "refresh": "Rifresko",
-    "demoMode": "Po shfaqen te dhena demo (serveri nuk arrihet)",
+    "demoMode": "Po shfaqen të dhëna demo (serveri nuk arrihet)",
     "yourReport": "(raporti juaj)",
-    "legend": "Legjenda"
+    "legend": "Legjenda",
+    "filters": "Filtrat",
+    "showing": "Po shfaqen {{count}} raporte",
+    "lastUpdated": "Përditësimi i fundit: {{time}}",
+    "filterStatus": "Statusi",
+    "filterSeverity": "Përmasa",
+    "filterType": "Lloji",
+    "filterDate": "Data",
+    "last30days": "30 ditët e fundit",
+    "last7days": "7 ditët e fundit",
+    "allTime": "Gjithë kohën"
   },
   "dashboard": {
     "title": "Paneli i Autoritetit",
     "total": "Gjithsej",
     "queue": "Radha e raporteve",
-    "noReports": "Ende pa raporte."
+    "noReports": "Ende pa raporte.",
+    "loading": "Po ngarkohet...",
+    "header": "Radha e raporteve",
+    "columns": {
+      "id": "ID",
+      "status": "Statusi",
+      "severity": "Përmasa",
+      "description": "Përshkrimi",
+      "coords": "Koordinatat",
+      "aiScore": "Vlerësimi AI",
+      "created": "Krijuar"
+    }
   },
   "queue": {
-    "pending_one": "{{count}} raport ne pritje",
-    "pending_other": "{{count}} raporte ne pritje",
+    "pending_one": "{{count}} raport në pritje",
+    "pending_other": "{{count}} raporte në pritje",
     "syncNow": "Sinkronizo tani",
     "syncing": "Po sinkronizohet...",
-    "lastSync": "Sinkronizimi i fundit: {{time}}"
+    "lastSync": "Sinkronizimi i fundit: {{time}}",
+    "remove": "Hiq",
+    "noPending": "Asnjë raport në pritje."
   },
-  "lang": { "en": "English", "sq": "Shqip", "it": "Italiano" }
+  "settings": {
+    "language": "Gjuha",
+    "offlineQueue": "Radha jashtë linje",
+    "pushNotifications": "Njoftimet push",
+    "pushRegistered": "I regjistruar: {{token}}...",
+    "pushNotRegistered": "I paregjistruar (simulator ose i refuzuar)"
+  },
+  "common": {
+    "back": "Mbrapa",
+    "cancel": "Anulo",
+    "save": "Ruaj",
+    "ok": "OK",
+    "loading": "Po ngarkohet..."
+  },
+  "lang": {
+    "en": "English",
+    "sq": "Shqip",
+    "it": "Italiano"
+  }
 }

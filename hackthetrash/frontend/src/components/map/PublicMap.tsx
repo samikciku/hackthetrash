@@ -5,6 +5,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { useI18n } from "@/lib/i18n";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
@@ -60,6 +61,7 @@ export default function PublicMap() {
   const [reports, setReports] = useState<Report[]>([]);
   const [loading, setLoading] = useState(true);
   const params = useSearchParams();
+  const { t } = useI18n();
 
   // /map?lat=...&lng=...&id=... will fly to that point (used after submission)
   const flyLat = params.get("lat");
@@ -87,8 +89,8 @@ export default function PublicMap() {
   useEffect(() => {
     load();
     // Poll every 30s so newly submitted reports appear on the OSM layer automatically
-    const t = setInterval(load, 30000);
-    return () => clearInterval(t);
+    const timer = setInterval(load, 30000);
+    return () => clearInterval(timer);
   }, []);
 
   const center: [number, number] = flyTarget ?? [45.4642, 9.19];
@@ -132,8 +134,9 @@ export default function PublicMap() {
                     </div>
                   )}
 
-                  <div style={{ fontWeight: 700, color: STATUS_COLORS[r.status] ?? "#999", textTransform: "capitalize" }}>
-                    ● {r.status} {isHighlight && <span style={{ fontSize: 11, color: "#16A34A" }}>(your report)</span>}
+                  <div style={{ fontWeight: 700, color: STATUS_COLORS[r.status] ?? "#999" }}>
+                    ● {t(`status.${r.status}`)}{" "}
+                    {isHighlight && <span style={{ fontSize: 11, color: "#16A34A" }}>{t("map.yourReport")}</span>}
                   </div>
 
                   {r.description && <div style={{ marginTop: 4 }}>{r.description}</div>}
@@ -145,7 +148,7 @@ export default function PublicMap() {
                   )}
 
                   {r.severity && (
-                    <div style={{ fontSize: 12, color: "#6B7280" }}>📏 {r.severity}</div>
+                    <div style={{ fontSize: 12, color: "#6B7280" }}>📏 {t(`report.${r.severity}`)}</div>
                   )}
 
                   <div style={{ fontSize: 11, color: "#9CA3AF", marginTop: 6 }}>
@@ -163,18 +166,18 @@ export default function PublicMap() {
       <button
         onClick={load}
         className="absolute top-3 right-3 z-[1000] bg-white shadow rounded-full px-3 py-2 text-sm font-medium border hover:bg-gray-50"
-        title="Refresh reports"
+        title={t("map.refresh")}
       >
-        {loading ? "Loading…" : "🔄 Refresh"}
+        {loading ? t("common.loading") : `🔄 ${t("map.refresh")}`}
       </button>
 
       {/* Floating legend */}
       <div className="absolute bottom-3 left-3 z-[1000] bg-white/95 backdrop-blur shadow rounded-lg p-3 text-xs space-y-1 border">
-        <div className="font-semibold mb-1">Legend</div>
-        <div className="flex items-center gap-2"><span className="inline-block w-3 h-3 rounded-full" style={{ background: "#DC2626" }} /> Reported</div>
-        <div className="flex items-center gap-2"><span className="inline-block w-3 h-3 rounded-full" style={{ background: "#F59E0B" }} /> Verified</div>
-        <div className="flex items-center gap-2"><span className="inline-block w-3 h-3 rounded-full" style={{ background: "#3B82F6" }} /> Cleaning</div>
-        <div className="flex items-center gap-2"><span className="inline-block w-3 h-3 rounded-full" style={{ background: "#10B981" }} /> Cleaned</div>
+        <div className="font-semibold mb-1">{t("map.legend")}</div>
+        <div className="flex items-center gap-2"><span className="inline-block w-3 h-3 rounded-full" style={{ background: "#DC2626" }} /> {t("status.reported")}</div>
+        <div className="flex items-center gap-2"><span className="inline-block w-3 h-3 rounded-full" style={{ background: "#F59E0B" }} /> {t("status.verified")}</div>
+        <div className="flex items-center gap-2"><span className="inline-block w-3 h-3 rounded-full" style={{ background: "#3B82F6" }} /> {t("status.cleaning")}</div>
+        <div className="flex items-center gap-2"><span className="inline-block w-3 h-3 rounded-full" style={{ background: "#10B981" }} /> {t("status.cleaned")}</div>
       </div>
     </div>
   );

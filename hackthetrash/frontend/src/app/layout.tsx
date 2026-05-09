@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import type { Metadata } from "next";
 import { I18nProvider } from "@/lib/i18n";
+import HtmlLangSync from "@/lib/HtmlLangSync";
 import Header from "@/components/layout/Header";
 
 export const metadata: Metadata = {
@@ -13,6 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <I18nProvider>
+          <HtmlLangSync />
           <Header />
           <main className="min-h-[calc(100vh-60px)]">{children}</main>
         </I18nProvider>
