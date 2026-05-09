@@ -39,6 +39,13 @@ function buildHtml(reports: Report[], focus?: { lat: number; lng: number; id?: s
   .popup .status{font-weight:700;text-transform:capitalize}
   .popup .meta{font-size:11px;color:#6B7280;margin-top:6px}
   .popup .tags{font-size:12px;color:#6B7280;margin-top:4px}
+  .leaflet-tooltip.htt-tooltip{
+    background:rgba(17,24,39,.95);
+    border:none;border-radius:8px;padding:6px;color:#fff;
+    box-shadow:0 4px 16px rgba(0,0,0,.3);pointer-events:none;
+  }
+  .leaflet-tooltip.htt-tooltip::before{display:none}
+  .leaflet-tooltip-top.htt-tooltip::before{border-top-color:rgba(17,24,39,.95);display:block}
 </style>
 </head><body>
 <div id="map"></div>
@@ -112,6 +119,28 @@ function buildHtml(reports: Report[], focus?: { lat: number; lng: number; id?: s
     var html = '<div class="popup">'+photosHtml+'<div class="status" style="color:'+color+'">&#9679; '+r.status+youHtml+'</div>'+
       (r.description ? '<div>'+r.description+'</div>' : '')+tagsHtml+sevHtml+coordHtml+'</div>';
     marker.bindPopup(html, { maxWidth: 260 });
+
+    // Hover preview tooltip - first photo + truncated description.
+    // Click still opens the full popup defined above.
+    var hoverHtml = "";
+    if (r.photos && r.photos.length) {
+      hoverHtml += '<img src="'+r.photos[0]+'" style="width:180px;height:120px;object-fit:cover;border-radius:6px;display:block"/>';
+      if (r.photos.length > 1) {
+        hoverHtml += '<div style="font-size:11px;color:#fff;text-align:center;margin-top:4px;font-weight:600">+'+(r.photos.length-1)+' more</div>';
+      }
+    }
+    hoverHtml += '<div style="font-size:11px;font-weight:700;color:'+color+';margin-top:4px;text-transform:capitalize">&#9679; '+r.status+'</div>';
+    if (r.description) {
+      var short = r.description.length > 60 ? r.description.slice(0,60) + '...' : r.description;
+      hoverHtml += '<div style="font-size:11px;color:#374151;margin-top:2px">'+short+'</div>';
+    }
+    marker.bindTooltip(hoverHtml, {
+      direction: "top",
+      offset: [0, -10],
+      opacity: 1,
+      className: "htt-tooltip"
+    });
+
     if (FOCUS && FOCUS.id === r.id) marker.openPopup();
   });
 </script>

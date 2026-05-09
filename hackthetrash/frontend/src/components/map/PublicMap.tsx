@@ -1,6 +1,6 @@
 "use client";
 
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, Tooltip, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
@@ -153,6 +153,65 @@ export default function PublicMap() {
               position={[r.latitude, r.longitude]}
               icon={colorIcon(STATUS_COLORS[r.status] ?? "#999")}
             >
+              {/* Hover preview tooltip - shows the first photo when the
+                  user mouses over the marker. Click still opens the
+                  full-size popup below. */}
+              <Tooltip
+                direction="top"
+                offset={[0, -10]}
+                opacity={1}
+                className="htt-tooltip"
+              >
+                <div style={{ maxWidth: 200 }}>
+                  {photos.length > 0 ? (
+                    <>
+                      <img
+                        src={fullPhotoUrl(photos[0])}
+                        alt="trash"
+                        style={{
+                          width: 200,
+                          height: 130,
+                          objectFit: "cover",
+                          borderRadius: 6,
+                          display: "block"
+                        }}
+                      />
+                      {photos.length > 1 && (
+                        <div style={{
+                          fontSize: 11, color: "#fff", marginTop: 4,
+                          textAlign: "center", fontWeight: 600
+                        }}>
+                          📷 +{photos.length - 1} more
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <div style={{ fontSize: 12, padding: 6 }}>
+                      {t("admin.noPhotos")}
+                    </div>
+                  )}
+                  <div style={{
+                    fontSize: 11,
+                    fontWeight: 700,
+                    color: STATUS_COLORS[r.status] ?? "#999",
+                    marginTop: 4,
+                    textTransform: "capitalize"
+                  }}>
+                    ● {t(`status.${r.status}`)}
+                  </div>
+                  {r.description && (
+                    <div style={{ fontSize: 11, color: "#374151", marginTop: 2 }}>
+                      {r.description.length > 60
+                        ? r.description.slice(0, 60) + "..."
+                        : r.description}
+                    </div>
+                  )}
+                  <div style={{ fontSize: 10, color: "#6B7280", marginTop: 4, fontStyle: "italic" }}>
+                    Click for details
+                  </div>
+                </div>
+              </Tooltip>
+
               <Popup>
                 <div style={{ minWidth: 220, maxWidth: 280 }}>
                   {/* Photo gallery */}

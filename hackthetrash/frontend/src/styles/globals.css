@@ -9,3 +9,19 @@ body {
   color: #111827;
 }
 .leaflet-container { height: 100%; width: 100%; }
+
+/* Hover tooltip on map markers - bigger photo, dark themed */
+.leaflet-tooltip.htt-tooltip {
+  background: rgba(17, 24, 39, 0.95);
+  border: none;
+  border-radius: 8px;
+  padding: 6px;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+.leaflet-tooltip.htt-tooltip::before { display: none; }
+.leaflet-tooltip-top.htt-tooltip::before {
+  border-top-color: rgba(17, 24, 39, 0.95);
+  display: block;
+}
