@@ -3,12 +3,16 @@ import { requireAuth, requireRole, AuthRequest } from "../middleware/auth";
 import { ReportRepo } from "../models/ReportRepo";
 import { reportsDB } from "../models/Report";
 import { notifyStatusChange } from "../services/push";
+import adminUsersRouter from "./admin-users";
 
 const router = Router();
 const USE_DB = !!process.env.DATABASE_URL;
 
 // All admin endpoints require auth + admin/moderator role
 router.use(requireAuth, requireRole("admin", "moderator", "authority"));
+
+// Sub-router: user management is admin-only (stricter check is inside)
+router.use("/users", adminUsersRouter);
 
 // GET /api/admin/reports?status=reported (full data, including AI score, photos)
 router.get("/reports", async (req, res) => {

@@ -44,14 +44,19 @@ ADMIN_EMAIL=you@example.com ADMIN_PASSWORD=SuperSecret npm run db:seed-admin
 
 All admin endpoints require `Authorization: Bearer <token>`.
 
-| Method | Path                                  | Action               |
-|--------|---------------------------------------|----------------------|
-| GET    | `/api/admin/stats`                    | Counts per status    |
-| GET    | `/api/admin/reports?status=reported`  | Filtered list        |
-| PATCH  | `/api/admin/reports/:id/approve`      | -> verified          |
-| PATCH  | `/api/admin/reports/:id/reject`       | -> rejected          |
-| PATCH  | `/api/admin/reports/:id/cleaning`     | -> cleaning          |
-| PATCH  | `/api/admin/reports/:id/cleaned`      | -> cleaned           |
+| Method | Path                                  | Action / role           |
+|--------|---------------------------------------|-------------------------|
+| GET    | `/api/admin/stats`                    | Counts per status       |
+| GET    | `/api/admin/reports?status=reported`  | Filtered list           |
+| PATCH  | `/api/admin/reports/:id/approve`      | -> verified             |
+| PATCH  | `/api/admin/reports/:id/reject`       | -> rejected             |
+| PATCH  | `/api/admin/reports/:id/cleaning`     | -> cleaning             |
+| PATCH  | `/api/admin/reports/:id/cleaned`      | -> cleaned              |
+| PATCH  | `/api/auth/password`                  | Self-serve change pwd   |
+| GET    | `/api/admin/users`                    | List users (admin only) |
+| POST   | `/api/admin/users`                    | Invite user (admin only)|
+| PATCH  | `/api/admin/users/:id/role`           | Change role (admin only)|
+| DELETE | `/api/admin/users/:id`                | Remove user (admin only)|
 
 Each status change:
 - writes a row to `status_updates` (audit trail)

@@ -180,7 +180,27 @@
     "passwordTooShort": "New password must be at least 8 characters.",
     "passwordMismatch": "New password and confirmation do not match.",
     "passwordSame": "New password must differ from the current one.",
-    "backToPanel": "Back to admin panel"
+    "backToPanel": "Back to admin panel",
+    "users": "Users",
+    "usersSubtitle": "Manage moderators, authorities and administrators",
+    "noUsers": "No users yet.",
+    "userName": "Name",
+    "userNamePlaceholder": "John Smith",
+    "region": "Region",
+    "actions": "Actions",
+    "remove": "Remove",
+    "you": "you",
+    "invite": "Invite user",
+    "inviteUser": "Invite a new user",
+    "cannotEditSelf": "You cannot change your own role or remove yourself",
+    "confirmRoleChange": "Change this user's role to {{role}}?",
+    "confirmRemove": "Remove user {{email}}? This cannot be undone.",
+    "roles": {
+      "citizen": "Citizen",
+      "moderator": "Moderator",
+      "authority": "Authority",
+      "admin": "Administrator"
+    }
   },
   "latestPictures": {
     "title": "Latest pictures of trash",

@@ -97,7 +97,15 @@ function AdminInner() {
             {" "}· {t("admin.role")}: <span className="font-semibold">{user?.role}</span>
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
+          {user?.role === "admin" && (
+            <a
+              href="/admin/users"
+              className="text-sm text-gray-600 border border-gray-200 px-3 py-1 rounded hover:bg-gray-50"
+            >
+              👥 {t("admin.users")}
+            </a>
+          )}
           <a
             href="/admin/password"
             className="text-sm text-gray-600 border border-gray-200 px-3 py-1 rounded hover:bg-gray-50"

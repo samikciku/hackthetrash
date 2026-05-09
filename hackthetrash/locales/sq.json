@@ -180,7 +180,27 @@
     "passwordTooShort": "Fjalëkalimi i ri duhet të ketë të paktën 8 karaktere.",
     "passwordMismatch": "Fjalëkalimi i ri dhe konfirmimi nuk përputhen.",
     "passwordSame": "Fjalëkalimi i ri duhet të jetë ndryshe nga ai aktual.",
-    "backToPanel": "Kthehu te paneli"
+    "backToPanel": "Kthehu te paneli",
+    "users": "Përdoruesit",
+    "usersSubtitle": "Menaxho moderatorët, autoritetet dhe administratorët",
+    "noUsers": "Ende pa përdorues.",
+    "userName": "Emri",
+    "userNamePlaceholder": "Agim Berisha",
+    "region": "Rajoni",
+    "actions": "Veprimet",
+    "remove": "Hiq",
+    "you": "ti",
+    "invite": "Fto përdorues",
+    "inviteUser": "Fto një përdorues të ri",
+    "cannotEditSelf": "Nuk mund të ndryshosh rolin tënd ose ta heqësh veten",
+    "confirmRoleChange": "Ndrysho rolin e këtij përdoruesi në {{role}}?",
+    "confirmRemove": "Hiq përdoruesin {{email}}? Ky veprim nuk mund të zhbëhet.",
+    "roles": {
+      "citizen": "Qytetar",
+      "moderator": "Moderator",
+      "authority": "Autoritet",
+      "admin": "Administrator"
+    }
   },
   "latestPictures": {
     "title": "Fotot e fundit të mbeturinave",
