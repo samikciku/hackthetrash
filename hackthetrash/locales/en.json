@@ -165,5 +165,12 @@
     "lockoutNote": "Brute-force protected. Locked after 5 failed attempts for 15 minutes.",
     "errorForbidden": "Your account does not have admin access.",
     "errorInvalid": "Invalid credentials"
+  },
+  "latestPictures": {
+    "title": "Latest pictures of trash",
+    "subtitle": "Most recent reports from Pristina",
+    "noPhotos": "No reports with photos yet. Be the first to report!",
+    "viewOnMap": "View on map",
+    "viewAll": "View all on map"
   }
 }

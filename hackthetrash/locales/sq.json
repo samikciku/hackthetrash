@@ -165,5 +165,12 @@
     "lockoutNote": "I mbrojtur nga sulmet brute-force. Bllokohet pas 5 përpjekjeve të dështuara për 15 minuta.",
     "errorForbidden": "Llogaria juaj nuk ka qasje administratori.",
     "errorInvalid": "Të dhëna të pasakta"
+  },
+  "latestPictures": {
+    "title": "Fotot e fundit të mbeturinave",
+    "subtitle": "Raportet më të reja nga Prishtina",
+    "noPhotos": "Ende nuk ka raporte me foto. Bëhu i pari që raporton!",
+    "viewOnMap": "Shihe në hartë",
+    "viewAll": "Shihe të gjitha në hartë"
   }
 }
