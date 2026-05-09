@@ -20,12 +20,22 @@ export default function ActorNode({ data, selected }) {
           ? `0 0 0 3px ${color}55, ${glow}`
           : glow,
         opacity: data.dimmed ? 0.2 : 1,
-        transition: 'opacity 0.3s, box-shadow 0.3s, border-color 0.3s',
+        transition: 'opacity 0.3s, box-shadow 0.4s, border-color 0.3s',
         minWidth: 148,
         maxWidth: 148,
       }}
-      className="rounded-lg bg-slate-800 px-3 py-2 cursor-pointer select-none"
+      className="relative rounded-lg bg-slate-800 px-3 py-2 cursor-pointer select-none"
     >
+      {/* Reaction emoji — pops in when the node is revealed by a wave */}
+      {data.reaction && (
+        <span
+          key={data.reaction}
+          className="reaction-pop absolute -top-5 -right-1 text-base leading-none pointer-events-none select-none"
+          aria-hidden="true"
+        >
+          {data.reaction}
+        </span>
+      )}
       <Handle type="target" position={Position.Top}    style={{ opacity: 0 }} />
       <Handle type="source" position={Position.Bottom} style={{ opacity: 0 }} />
       <Handle type="target" position={Position.Left}   style={{ opacity: 0 }} />

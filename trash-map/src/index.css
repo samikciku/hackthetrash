@@ -77,3 +77,40 @@ body {
   background: #1e293b;
   border: 1px solid #334155;
 }
+
+/* ─── News ticker ────────────────────────────────────────────────────────── */
+/* The .ticker-track div has width: max-content and is exactly 2× the real  */
+/* content, so translating by -50% scrolls one full loop then resets.       */
+@keyframes tickerScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.ticker-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: tickerScroll 30s linear infinite;
+}
+
+/* Slide/fade the whole ticker bar in when it mounts */
+@keyframes tickerReveal {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.ticker-container {
+  animation: tickerReveal 0.25s ease-out both;
+}
+
+/* ─── Reaction emoji pop ─────────────────────────────────────────────────── */
+/* Triggered because the element is newly created when a node is revealed.  */
+@keyframes reactionPop {
+  0%   { transform: scale(0) translateY(6px); opacity: 0; }
+  55%  { transform: scale(1.35) translateY(-3px); opacity: 1; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.reaction-pop {
+  animation: reactionPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}

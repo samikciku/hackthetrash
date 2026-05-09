@@ -90,42 +90,50 @@ export default function GraphCanvas({
   onNodeClick,
   affectedNodeIds,
   affectedEdgeIds,
+  revealedNodeIds,
+  revealedEdgeIds,
   activeLever,
 }) {
   const hasLever = !!activeLever
 
-  // Derive display nodes with dimming + stress level applied
+  // Derive display nodes:
+  // - dimming uses full affectedNodeIds (stable from lever activation, no flicker)
+  // - stressLevel + reaction use revealedNodeIds (grows wave-by-wave)
   const displayNodes = useMemo(() => {
     return initialNodes.map((n) => {
-      const affected = affectedNodeIds.has(n.id)
-      const effect   = activeLever?.nodeEffects?.[n.id]
+      const inAffected = affectedNodeIds.has(n.id)
+      const inRevealed = revealedNodeIds.has(n.id)
+      const effect     = activeLever?.nodeEffects?.[n.id]
       return {
         ...n,
         data: {
           ...n.data,
-          dimmed:      hasLever && !affected,
-          stressLevel: effect?.stressLevel ?? null,
+          dimmed:      hasLever && !inAffected,
+          stressLevel: inRevealed ? (effect?.stressLevel ?? null) : null,
+          reaction:    inRevealed ? (effect?.reaction    ?? null) : null,
         },
       }
     })
-  }, [hasLever, affectedNodeIds, activeLever])
+  }, [hasLever, affectedNodeIds, revealedNodeIds, activeLever])
 
-  // Derive display edges with dimming + highlight applied
+  // Derive display edges:
+  // - dimming uses affectedEdgeIds; animation uses revealedEdgeIds
   const displayEdges = useMemo(() => {
     return initialEdges.map((e) => {
-      const affected = affectedEdgeIds.has(e.id)
+      const inAffected = affectedEdgeIds.has(e.id)
+      const inRevealed = revealedEdgeIds.has(e.id)
       return {
         ...e,
         type: 'labeled',
-        animated: hasLever && affected,
+        animated: hasLever && inRevealed,
         data: {
           ...e.data,
-          dimmed:      hasLever && !affected,
-          highlighted: hasLever && affected,
+          dimmed:      hasLever && !inAffected,
+          highlighted: hasLever && inRevealed,
         },
         markerEnd: {
           type: 'arrowclosed',
-          color: hasLever && !affected
+          color: hasLever && !inAffected
             ? '#1e293b'
             : EDGE_COLORS[e.data.relationshipType] ?? '#64748B',
           width: 12,
@@ -133,7 +141,7 @@ export default function GraphCanvas({
         },
       }
     })
-  }, [hasLever, affectedEdgeIds])
+  }, [hasLever, affectedEdgeIds, revealedEdgeIds])
 
   const [nodes, , onNodesChange] = useNodesState(displayNodes)
   const [edges, , onEdgesChange] = useEdgesState(displayEdges)

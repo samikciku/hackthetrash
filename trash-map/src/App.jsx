@@ -2,13 +2,21 @@ import { useState, useCallback } from 'react'
 import GraphCanvas from './components/GraphCanvas'
 import ActorSidebar from './components/ActorSidebar'
 import LeverPanel from './components/LeverPanel'
+import NewsTicker from './components/NewsTicker'
 import Legend from './components/Legend'
 import { useActiveLever } from './hooks/useActiveLever'
 
 export default function App() {
   const [selectedNode, setSelectedNode] = useState(null)
-  const { activeLever, activeLeverId, affectedNodeIds, affectedEdgeIds, toggleLever } =
-    useActiveLever()
+  const {
+    activeLever,
+    activeLeverId,
+    affectedNodeIds,
+    affectedEdgeIds,
+    revealedNodeIds,
+    revealedEdgeIds,
+    toggleLever,
+  } = useActiveLever()
 
   const handleNodeClick = useCallback((node) => {
     setSelectedNode((prev) => (prev?.id === node.id ? null : node))
@@ -30,7 +38,14 @@ export default function App() {
         </div>
         <div className="ml-auto flex items-center gap-3">
           {activeLever && (
-            <span className="bg-white text-slate-900 text-[11px] font-semibold px-2 py-0.5 rounded-full">
+            <span
+              className="text-[11px] font-semibold px-2 py-0.5 rounded-full"
+              style={
+                activeLever.historical
+                  ? { background: '#451a03', color: '#fde68a', border: '1px solid #78350f' }
+                  : { background: '#fff', color: '#0f172a' }
+              }
+            >
               {activeLever.emoji} {activeLever.title}
             </span>
           )}
@@ -45,6 +60,9 @@ export default function App() {
         </div>
       </header>
 
+      {/* Breaking news / replay ticker — slides in when a lever is active */}
+      <NewsTicker lever={activeLever} />
+
       {/* Main canvas */}
       <div className="flex-1 relative overflow-hidden">
         <GraphCanvas
@@ -52,6 +70,8 @@ export default function App() {
           onNodeClick={handleNodeClick}
           affectedNodeIds={affectedNodeIds}
           affectedEdgeIds={affectedEdgeIds}
+          revealedNodeIds={revealedNodeIds}
+          revealedEdgeIds={revealedEdgeIds}
           activeLever={activeLever}
         />
         <Legend />
