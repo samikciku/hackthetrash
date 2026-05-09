@@ -171,6 +171,10 @@
     "subtitle": "Raportet më të reja nga Prishtina",
     "noPhotos": "Ende nuk ka raporte me foto. Bëhu i pari që raporton!",
     "viewOnMap": "Shihe në hartë",
-    "viewAll": "Shihe të gjitha në hartë"
+    "viewAll": "Shihe të gjitha në hartë",
+    "prev": "Mbrapa",
+    "next": "Tjetri",
+    "auto": "Po rrotullohet",
+    "paused": "Pauzuar"
   }
 }

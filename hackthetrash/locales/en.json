@@ -171,6 +171,10 @@
     "subtitle": "Most recent reports from Pristina",
     "noPhotos": "No reports with photos yet. Be the first to report!",
     "viewOnMap": "View on map",
-    "viewAll": "View all on map"
+    "viewAll": "View all on map",
+    "prev": "Previous",
+    "next": "Next",
+    "auto": "Auto-rotating",
+    "paused": "Paused"
   }
 }
