@@ -168,13 +168,14 @@
   },
   "latestPictures": {
     "title": "Latest pictures of trash",
-    "subtitle": "Most recent reports from Pristina",
+    "subtitle": "Reports from the last {{days}} days in Pristina",
     "noPhotos": "No reports with photos yet. Be the first to report!",
     "viewOnMap": "View on map",
     "viewAll": "View all on map",
     "prev": "Previous",
     "next": "Next",
     "auto": "Auto-rotating",
-    "paused": "Paused"
+    "paused": "Paused",
+    "noPhotosWindow": "No reports with photos in the last {{days}} days. Be the first!"
   }
 }

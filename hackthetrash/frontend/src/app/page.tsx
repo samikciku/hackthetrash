@@ -44,8 +44,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Latest pictures of trash - corner section */}
-      <LatestPictures limit={8} />
+      {/* Latest pictures of trash - rotating carousel of the last month */}
+      <LatestPictures limit={16} withinDays={30} intervalMs={4000} />
     </div>
   );
 }

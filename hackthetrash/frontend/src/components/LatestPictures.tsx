@@ -43,9 +43,15 @@ interface Props {
   limit?: number;
   /** auto-advance interval in ms (set to 0 to disable) */
   intervalMs?: number;
+  /** only include reports submitted within the last N days (0 = no filter) */
+  withinDays?: number;
 }
 
-export default function LatestPictures({ limit = 16, intervalMs = 4000 }: Props) {
+export default function LatestPictures({
+  limit = 16,
+  intervalMs = 4000,
+  withinDays = 30
+}: Props) {
   const { t } = useI18n();
   const [cards, setCards] = useState<Card[]>([]);
   const [loading, setLoading] = useState(true);
@@ -62,8 +68,31 @@ export default function LatestPictures({ limit = 16, intervalMs = 4000 }: Props)
         if (!res.ok) throw new Error("api");
         const data = await res.json();
         const reports: Report[] = data.reports ?? [];
+
+        // Optional time-window filter: only photos uploaded within the
+        // last `withinDays` days. Reports without a createdAt timestamp
+        // are excluded when the filter is active so the carousel stays
+        // strictly time-bounded.
+        const cutoff = withinDays > 0 ? Date.now() - withinDays * 86_400_000 : 0;
+        const recent = withinDays > 0
+          ? reports.filter((r) => {
+              const ts = r.createdAt ?? r.created_at;
+              if (!ts) return false;
+              const t = Date.parse(ts);
+              return Number.isFinite(t) && t >= cutoff;
+            })
+          : reports;
+
+        // Already sorted newest-first by the backend, but be defensive
+        // in case future code changes that.
+        recent.sort((a, b) => {
+          const at = Date.parse(a.createdAt ?? a.created_at ?? "") || 0;
+          const bt = Date.parse(b.createdAt ?? b.created_at ?? "") || 0;
+          return bt - at;
+        });
+
         const expanded: Card[] = [];
-        for (const r of reports) {
+        for (const r of recent) {
           const photos = r.photoUrls ?? r.photo_urls ?? [];
           for (const u of photos) {
             expanded.push({
@@ -136,7 +165,11 @@ export default function LatestPictures({ limit = 16, intervalMs = 4000 }: Props)
       <div className="flex items-center justify-between mb-4">
         <div>
           <h2 className="text-xl font-bold flex items-center gap-2">📷 {t("latestPictures.title")}</h2>
-          <p className="text-sm text-gray-500">{t("latestPictures.subtitle")}</p>
+          <p className="text-sm text-gray-500">
+            {withinDays > 0
+              ? t("latestPictures.subtitle", { days: withinDays })
+              : t("latestPictures.subtitle")}
+          </p>
         </div>
         <Link href="/map" className="text-sm text-primary font-semibold hover:underline">
           {t("latestPictures.viewAll")} →
@@ -146,7 +179,11 @@ export default function LatestPictures({ limit = 16, intervalMs = 4000 }: Props)
       {loading ? (
         <div className="aspect-[16/9] rounded-lg bg-gray-100 animate-pulse" />
       ) : cards.length === 0 ? (
-        <p className="text-sm text-gray-400 text-center py-12">{t("latestPictures.noPhotos")}</p>
+        <p className="text-sm text-gray-400 text-center py-12">
+          {withinDays > 0
+            ? t("latestPictures.noPhotosWindow", { days: withinDays })
+            : t("latestPictures.noPhotos")}
+        </p>
       ) : (
         <>
           {/* Stage */}

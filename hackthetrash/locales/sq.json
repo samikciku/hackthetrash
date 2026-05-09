@@ -168,13 +168,14 @@
   },
   "latestPictures": {
     "title": "Fotot e fundit të mbeturinave",
-    "subtitle": "Raportet më të reja nga Prishtina",
+    "subtitle": "Raportet e {{days}} ditëve të fundit në Prishtinë",
     "noPhotos": "Ende nuk ka raporte me foto. Bëhu i pari që raporton!",
     "viewOnMap": "Shihe në hartë",
     "viewAll": "Shihe të gjitha në hartë",
     "prev": "Mbrapa",
     "next": "Tjetri",
     "auto": "Po rrotullohet",
-    "paused": "Pauzuar"
+    "paused": "Pauzuar",
+    "noPhotosWindow": "Asnjë raport me foto në {{days}} ditët e fundit. Bëhu i pari!"
   }
 }
