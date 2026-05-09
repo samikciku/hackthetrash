@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Linking } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../App";
 import { colors } from "../lib/theme";
@@ -76,6 +76,15 @@ export default function HomeScreen({ navigation }: Props) {
           </View>
         ))}
       </View>
+
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>
+          Powered by{" "}
+          <Text style={styles.footerLink} onPress={() => Linking.openURL("https://flossk.org")}>
+            FLOSSK
+          </Text>
+        </Text>
+      </View>
     </ScrollView>
   );
 }
@@ -97,5 +106,8 @@ const styles = StyleSheet.create({
   step: { backgroundColor: "#fff", padding: 16, borderRadius: 12, borderWidth: 1, borderColor: colors.border },
   stepNum: { fontSize: 28, fontWeight: "800", color: colors.primary },
   stepTitle: { fontSize: 16, fontWeight: "700", color: colors.text, marginTop: 4 },
-  stepDesc: { fontSize: 13, color: colors.muted, marginTop: 2 }
+  stepDesc: { fontSize: 13, color: colors.muted, marginTop: 2 },
+  footer: { marginTop: 32, marginBottom: 8, alignItems: "center" },
+  footerText: { fontSize: 12, color: colors.muted },
+  footerLink: { color: colors.primary, fontWeight: "700", textDecorationLine: "underline" }
 });

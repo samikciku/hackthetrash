@@ -144,3 +144,7 @@ MIT © 2026 HackTheTrash Contributors
 ## 💚 Acknowledgements
 
 Built for a cleaner planet 🌱
+
+---
+
+Powered by [**FLOSSK**](https://flossk.org)
