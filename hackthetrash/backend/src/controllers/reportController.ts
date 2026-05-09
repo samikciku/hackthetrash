@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import path from "path";
 import { ReportRepo } from "../models/ReportRepo";
 import { autoModerate } from "../ai/moderation";
+import { notifyStatusChange } from "../services/push";
 
 const USE_DB = !!process.env.DATABASE_URL;
 
@@ -110,11 +111,16 @@ export const updateStatus = async (req: Request, res: Response) => {
     if (USE_DB) {
       await ReportRepo.updateStatus(req.params.id, status);
       const r = await ReportRepo.findById(req.params.id);
+      if (r) {
+        // Fire-and-forget push to subscribed devices
+        notifyStatusChange({ id: r.id, status: r.status, latitude: r.latitude, longitude: r.longitude }).catch(() => {});
+      }
       return res.json(r);
     }
     const r = reportsDB.find((x) => x.id === req.params.id);
     if (!r) return res.status(404).json({ error: "Not found" });
     r.status = status;
+    notifyStatusChange({ id: r.id, status: r.status, latitude: r.latitude, longitude: r.longitude }).catch(() => {});
     res.json(r);
   } catch (e: any) {
     res.status(500).json({ error: e.message });

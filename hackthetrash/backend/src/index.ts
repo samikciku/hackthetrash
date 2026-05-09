@@ -4,6 +4,7 @@ import cors from "cors";
 import path from "path";
 import reportsRouter from "./routes/reports";
 import authRouter from "./routes/auth";
+import devicesRouter from "./routes/devices";
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -17,6 +18,7 @@ app.get("/health", (_req, res) => res.json({ status: "healthy" }));
 
 app.use("/api/reports", reportsRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/devices", devicesRouter);
 
 app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error(err);

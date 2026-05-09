@@ -1,0 +1,83 @@
+{
+  "app": { "name": "HackTheTrash", "tagline": "Together, we clean up our cities." },
+  "nav": { "home": "Home", "report": "Report", "map": "Map", "dashboard": "Dashboard", "signIn": "Sign in" },
+  "home": {
+    "ctaReport": "Report Trash",
+    "ctaMap": "View Map",
+    "subtitle": "Spot illegal trash? Snap a photo, drop a pin, change your community.",
+    "step1": "Snap",
+    "step1d": "Photograph the trash",
+    "step2": "Locate",
+    "step2d": "Auto-detect GPS",
+    "step3": "Submit",
+    "step3d": "Anonymous or signed-in"
+  },
+  "report": {
+    "title": "Report Illegal Trash",
+    "photos": "Photos",
+    "addPhotos": "Tap to add photos",
+    "takePhoto": "Take Photo",
+    "fromLibrary": "From Library",
+    "tapToRemove": "tap to remove",
+    "location": "Location",
+    "useMyLocation": "Use my location",
+    "updateLocation": "Update location",
+    "trashType": "What kind of trash?",
+    "size": "Size",
+    "small": "Small",
+    "medium": "Medium",
+    "large": "Large",
+    "description": "Description (optional)",
+    "descriptionPlaceholder": "e.g. Pile of debris near the park entrance",
+    "anonymous": "Submit anonymously",
+    "submit": "SUBMIT REPORT",
+    "submitting": "Submitting...",
+    "queuedTitle": "Saved offline",
+    "queuedBody": "You are offline. Your report was saved and will be submitted when you are back online.",
+    "errorMissingLocation": "Please add a location.",
+    "errorMissingPhoto": "Please add at least one photo.",
+    "errorSubmit": "Submission failed. Is the backend running?"
+  },
+  "tags": {
+    "Plastic": "Plastic",
+    "E-waste": "E-waste",
+    "Hazardous": "Hazardous",
+    "Construction": "Construction",
+    "Organic": "Organic",
+    "Other": "Other"
+  },
+  "status": {
+    "reported": "Reported",
+    "verified": "Verified",
+    "cleaning": "Cleaning",
+    "cleaned": "Cleaned",
+    "rejected": "Rejected"
+  },
+  "success": {
+    "title": "Thank you!",
+    "body": "Your report has been submitted. It now appears as a new pin on the OpenStreetMap layer.",
+    "seeOnMap": "See it on the map",
+    "backHome": "Back to home"
+  },
+  "map": {
+    "loading": "Loading reports...",
+    "refresh": "Refresh",
+    "demoMode": "Showing demo data (server unreachable)",
+    "yourReport": "(your report)",
+    "legend": "Legend"
+  },
+  "dashboard": {
+    "title": "Authority Dashboard",
+    "total": "Total",
+    "queue": "Reports queue",
+    "noReports": "No reports yet."
+  },
+  "queue": {
+    "pending_one": "{{count}} report waiting to upload",
+    "pending_other": "{{count}} reports waiting to upload",
+    "syncNow": "Sync now",
+    "syncing": "Syncing...",
+    "lastSync": "Last sync: {{time}}"
+  },
+  "lang": { "en": "English", "sq": "Shqip", "it": "Italiano" }
+}

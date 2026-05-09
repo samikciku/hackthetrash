@@ -3,29 +3,30 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../App";
 import { colors } from "../lib/theme";
+import { t } from "../lib/i18n";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Success">;
 
 export default function SuccessScreen({ navigation, route }: Props) {
-  const { lat, lng, id } = route.params;
+  const { lat, lng, id, queued } = route.params;
   return (
     <View style={styles.container}>
-      <Text style={styles.icon}>✅</Text>
-      <Text style={styles.title}>Thank you!</Text>
-      <Text style={styles.subtitle}>
-        Your report has been submitted. It now appears as a new pin on the OpenStreetMap layer.
-      </Text>
-      <TouchableOpacity
-        style={[styles.btn, styles.btnPrimary]}
-        onPress={() => navigation.replace("Map", { lat, lng, id })}
-      >
-        <Text style={styles.btnPrimaryText}>See it on the map</Text>
-      </TouchableOpacity>
+      <Text style={styles.icon}>{queued ? "📥" : "✅"}</Text>
+      <Text style={styles.title}>{queued ? t("report.queuedTitle") : t("success.title")}</Text>
+      <Text style={styles.subtitle}>{queued ? t("report.queuedBody") : t("success.body")}</Text>
+      {!queued && (
+        <TouchableOpacity
+          style={[styles.btn, styles.btnPrimary]}
+          onPress={() => navigation.replace("Map", { lat, lng, id })}
+        >
+          <Text style={styles.btnPrimaryText}>{t("success.seeOnMap")}</Text>
+        </TouchableOpacity>
+      )}
       <TouchableOpacity
         style={[styles.btn, styles.btnGhost]}
         onPress={() => navigation.popToTop()}
       >
-        <Text style={styles.btnGhostText}>Back to home</Text>
+        <Text style={styles.btnGhostText}>{t("success.backHome")}</Text>
       </TouchableOpacity>
     </View>
   );

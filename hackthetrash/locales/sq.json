@@ -1,0 +1,83 @@
+{
+  "app": { "name": "HackTheTrash", "tagline": "Bashke pastrojme qytetin tone." },
+  "nav": { "home": "Kreu", "report": "Raporto", "map": "Harta", "dashboard": "Paneli", "signIn": "Hyr" },
+  "home": {
+    "ctaReport": "Raporto Mbeturina",
+    "ctaMap": "Shiko Harten",
+    "subtitle": "Ke pare mbeturina? Bej nje foto, vendos piken, ndrysho komunitetin tend.",
+    "step1": "Foto",
+    "step1d": "Fotografo mbeturinat",
+    "step2": "Vendndodhja",
+    "step2d": "GPS automatik",
+    "step3": "Dergo",
+    "step3d": "Anonim ose i kycur"
+  },
+  "report": {
+    "title": "Raporto Mbeturina te Paligjshme",
+    "photos": "Foto",
+    "addPhotos": "Shtyp per te shtuar foto",
+    "takePhoto": "Bej Foto",
+    "fromLibrary": "Nga Galeria",
+    "tapToRemove": "shtyp per ta hequr",
+    "location": "Vendndodhja",
+    "useMyLocation": "Perdor vendndodhjen time",
+    "updateLocation": "Perditeso vendndodhjen",
+    "trashType": "Cfare lloj mbeturine?",
+    "size": "Madhesia",
+    "small": "E vogel",
+    "medium": "Mesatare",
+    "large": "E madhe",
+    "description": "Pershkrim (opsional)",
+    "descriptionPlaceholder": "p.sh. Grumbull mbeturinash prane hyrjes se parkut",
+    "anonymous": "Dergo ne menyre anonime",
+    "submit": "DERGO RAPORTIN",
+    "submitting": "Po dergohet...",
+    "queuedTitle": "Ruajtur jashte linje",
+    "queuedBody": "Jeni jashte linje. Raporti u ruajt dhe do te dergohet automatikisht sapo te lidheni ne internet.",
+    "errorMissingLocation": "Ju lutem shtoni nje vendndodhje.",
+    "errorMissingPhoto": "Ju lutem shtoni te pakten nje foto.",
+    "errorSubmit": "Deshtoi dergimi. A po funksionon backend-i?"
+  },
+  "tags": {
+    "Plastic": "Plastike",
+    "E-waste": "Mbeturina elektronike",
+    "Hazardous": "Te rrezikshme",
+    "Construction": "Ndertimi",
+    "Organic": "Organike",
+    "Other": "Tjera"
+  },
+  "status": {
+    "reported": "E raportuar",
+    "verified": "E verifikuar",
+    "cleaning": "Po pastrohet",
+    "cleaned": "E pastruar",
+    "rejected": "E refuzuar"
+  },
+  "success": {
+    "title": "Faleminderit!",
+    "body": "Raporti juaj u dergua. Tani shfaqet si nje pike e re ne harten OpenStreetMap.",
+    "seeOnMap": "Shihe ne harte",
+    "backHome": "Kthehu ne kreu"
+  },
+  "map": {
+    "loading": "Po ngarkohen raportet...",
+    "refresh": "Rifresko",
+    "demoMode": "Po shfaqen te dhena demo (serveri nuk arrihet)",
+    "yourReport": "(raporti juaj)",
+    "legend": "Legjenda"
+  },
+  "dashboard": {
+    "title": "Paneli i Autoritetit",
+    "total": "Gjithsej",
+    "queue": "Radha e raporteve",
+    "noReports": "Ende pa raporte."
+  },
+  "queue": {
+    "pending_one": "{{count}} raport ne pritje",
+    "pending_other": "{{count}} raporte ne pritje",
+    "syncNow": "Sinkronizo tani",
+    "syncing": "Po sinkronizohet...",
+    "lastSync": "Sinkronizimi i fundit: {{time}}"
+  },
+  "lang": { "en": "English", "sq": "Shqip", "it": "Italiano" }
+}

@@ -7,7 +7,8 @@ import * as Location from "expo-location";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../App";
 import { colors } from "../lib/theme";
-import { submitReport } from "../lib/api";
+import { submitOrQueue } from "../lib/queue";
+import { t } from "../lib/i18n";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Report">;
 
@@ -77,12 +78,12 @@ export default function ReportScreen({ navigation }: Props) {
     setPhotos((p) => p.filter((_, i) => i !== idx));
 
   const onSubmit = async () => {
-    if (!coords) return Alert.alert("Missing location", "Tap the location button first.");
-    if (photos.length === 0) return Alert.alert("Missing photo", "Please add at least one photo.");
+    if (!coords) return Alert.alert(t("report.title"), t("report.errorMissingLocation"));
+    if (photos.length === 0) return Alert.alert(t("report.title"), t("report.errorMissingPhoto"));
 
     setSubmitting(true);
     try {
-      const result = await submitReport({
+      const result = await submitOrQueue({
         latitude: coords.lat,
         longitude: coords.lng,
         photos: photos.map((uri, i) => ({ uri, name: `photo_${i}.jpg`, type: "image/jpeg" })),
@@ -91,9 +92,22 @@ export default function ReportScreen({ navigation }: Props) {
         description,
         anonymous
       });
-      navigation.replace("Success", { lat: coords.lat, lng: coords.lng, id: result.id });
+      if (result.queued) {
+        Alert.alert(t("report.queuedTitle"), t("report.queuedBody"));
+        navigation.replace("Success", {
+          lat: coords.lat,
+          lng: coords.lng,
+          queued: true
+        });
+      } else {
+        navigation.replace("Success", {
+          lat: coords.lat,
+          lng: coords.lng,
+          id: result.report?.id
+        });
+      }
     } catch (e: any) {
-      Alert.alert("Submission failed", e.message || "Could not reach the server.");
+      Alert.alert(t("report.title"), e.message || t("report.errorSubmit"));
     } finally {
       setSubmitting(false);
     }

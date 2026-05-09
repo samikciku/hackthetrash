@@ -116,7 +116,9 @@ NEXT_PUBLIC_MAPBOX_TOKEN=...
 - [x] PostgreSQL + PostGIS schema & migrations
 - [x] AI image verification (pluggable, HuggingFace ready)
 - [x] HTML mockups
-- [ ] Mobile app
+- [x] Mobile app (Expo)
+- [x] Push notifications + offline queue
+- [x] i18n (en / sq / it) shared by web + mobile
 
 See [docs/ROADMAP.md](docs/ROADMAP.md) for full details.
 
@@ -126,6 +128,7 @@ See [docs/ROADMAP.md](docs/ROADMAP.md) for full details.
 - [API Reference](docs/api/API.md)
 - [Database Setup](docs/DATABASE.md)
 - [AI Classification](docs/AI.md)
+- [Mobile App](docs/MOBILE.md)
 - [Wireframes](docs/wireframes/WIREFRAMES.md)
 - [HTML Mockups](docs/mockups/index.html)
 

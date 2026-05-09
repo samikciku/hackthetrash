@@ -1,0 +1,83 @@
+{
+  "app": { "name": "HackTheTrash", "tagline": "Insieme, puliamo le nostre citta." },
+  "nav": { "home": "Home", "report": "Segnala", "map": "Mappa", "dashboard": "Dashboard", "signIn": "Accedi" },
+  "home": {
+    "ctaReport": "Segnala Rifiuti",
+    "ctaMap": "Vedi Mappa",
+    "subtitle": "Hai visto rifiuti abbandonati? Scatta una foto, fissa un punto, cambia la tua citta.",
+    "step1": "Foto",
+    "step1d": "Fotografa i rifiuti",
+    "step2": "Posizione",
+    "step2d": "GPS automatico",
+    "step3": "Invia",
+    "step3d": "Anonimo o registrato"
+  },
+  "report": {
+    "title": "Segnala Rifiuti Illegali",
+    "photos": "Foto",
+    "addPhotos": "Tocca per aggiungere foto",
+    "takePhoto": "Scatta Foto",
+    "fromLibrary": "Dalla Galleria",
+    "tapToRemove": "tocca per rimuovere",
+    "location": "Posizione",
+    "useMyLocation": "Usa la mia posizione",
+    "updateLocation": "Aggiorna posizione",
+    "trashType": "Che tipo di rifiuti?",
+    "size": "Dimensione",
+    "small": "Piccolo",
+    "medium": "Medio",
+    "large": "Grande",
+    "description": "Descrizione (opzionale)",
+    "descriptionPlaceholder": "es. Cumulo di detriti vicino al parco",
+    "anonymous": "Invia in forma anonima",
+    "submit": "INVIA SEGNALAZIONE",
+    "submitting": "Invio...",
+    "queuedTitle": "Salvato offline",
+    "queuedBody": "Sei offline. La segnalazione verra inviata quando torni online.",
+    "errorMissingLocation": "Aggiungi una posizione.",
+    "errorMissingPhoto": "Aggiungi almeno una foto.",
+    "errorSubmit": "Invio fallito. Il backend e attivo?"
+  },
+  "tags": {
+    "Plastic": "Plastica",
+    "E-waste": "Rifiuti elettronici",
+    "Hazardous": "Pericolosi",
+    "Construction": "Edilizia",
+    "Organic": "Organico",
+    "Other": "Altro"
+  },
+  "status": {
+    "reported": "Segnalato",
+    "verified": "Verificato",
+    "cleaning": "In pulizia",
+    "cleaned": "Pulito",
+    "rejected": "Rifiutato"
+  },
+  "success": {
+    "title": "Grazie!",
+    "body": "La segnalazione e stata inviata. Ora appare come pin sul layer OpenStreetMap.",
+    "seeOnMap": "Vedi sulla mappa",
+    "backHome": "Torna alla home"
+  },
+  "map": {
+    "loading": "Caricamento segnalazioni...",
+    "refresh": "Aggiorna",
+    "demoMode": "Dati demo (server non raggiungibile)",
+    "yourReport": "(la tua segnalazione)",
+    "legend": "Legenda"
+  },
+  "dashboard": {
+    "title": "Dashboard Autorita",
+    "total": "Totale",
+    "queue": "Coda segnalazioni",
+    "noReports": "Ancora nessuna segnalazione."
+  },
+  "queue": {
+    "pending_one": "{{count}} segnalazione in coda",
+    "pending_other": "{{count}} segnalazioni in coda",
+    "syncNow": "Sincronizza ora",
+    "syncing": "Sincronizzazione...",
+    "lastSync": "Ultima sincronizzazione: {{time}}"
+  },
+  "lang": { "en": "English", "sq": "Shqip", "it": "Italiano" }
+}
