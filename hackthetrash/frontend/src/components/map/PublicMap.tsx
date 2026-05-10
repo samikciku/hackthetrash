@@ -37,6 +37,8 @@ type Report = {
   photo_urls?: string[];
   createdAt?: string;
   created_at?: string;
+  takenAt?: string;
+  taken_at?: string;
 };
 
 // Helper: prepend API base to relative photo URLs
@@ -47,6 +49,9 @@ const getPhotos = (r: Report): string[] => r.photoUrls ?? r.photo_urls ?? [];
 
 // Helper: pick createdAt from either field name
 const getCreated = (r: Report): string | undefined => r.createdAt ?? r.created_at;
+
+// Helper: pick takenAt (when the photo was taken, from EXIF) from either field name
+const getTaken = (r: Report): string | undefined => r.takenAt ?? r.taken_at;
 
 // Pristina city centre (used as the default starting view of the map)
 const PRISTINA_CENTER: [number, number] = [42.6629, 21.1655];
@@ -87,6 +92,16 @@ export default function PublicMap() {
   const flyTarget: [number, number] | null =
     flyLat && flyLng ? [Number(flyLat), Number(flyLng)] : null;
   const highlightId = params.get("id");
+  const justSubmitted = params.get("just") === "1";
+
+  // Toast banner shown right after a successful submission. Auto-fades after
+  // ~6s; the URL is left intact so a refresh re-shows it (cheap + obvious).
+  const [showToast, setShowToast] = useState(justSubmitted);
+  useEffect(() => {
+    if (!justSubmitted) return;
+    const t = setTimeout(() => setShowToast(false), 6000);
+    return () => clearTimeout(t);
+  }, [justSubmitted]);
 
   const load = () => {
     fetch(`${API_URL}/api/reports`)
@@ -124,6 +139,21 @@ export default function PublicMap() {
 
   return (
     <div className="relative h-full w-full">
+      {showToast && (
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 z-[1000] bg-emerald-600 text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-2 max-w-[90%]">
+          <span className="text-2xl">✅</span>
+          <div>
+            <div className="font-semibold text-sm">Report logged</div>
+            <div className="text-xs opacity-90">Authorities can now see this on the public map.</div>
+          </div>
+          <button
+            type="button"
+            onClick={() => setShowToast(false)}
+            className="ml-2 text-white/70 hover:text-white text-lg leading-none"
+            aria-label="Dismiss"
+          >×</button>
+        </div>
+      )}
       <MapContainer
         center={center}
         zoom={initialZoom}
@@ -145,6 +175,7 @@ export default function PublicMap() {
         {reports.map((r) => {
           const photos = getPhotos(r);
           const created = getCreated(r);
+          const taken = getTaken(r);
           const isHighlight = r.id === highlightId;
 
           return (
@@ -152,6 +183,13 @@ export default function PublicMap() {
               key={r.id}
               position={[r.latitude, r.longitude]}
               icon={colorIcon(STATUS_COLORS[r.status] ?? "#999")}
+              ref={(m) => {
+                // Auto-open the popup on the freshly submitted report so the
+                // user immediately sees confirmation + details.
+                if (isHighlight && m) {
+                  setTimeout(() => m.openPopup(), 600);
+                }
+              }}
             >
               {/* Hover preview tooltip - shows the first photo when the
                   user mouses over the marker. Click still opens the
@@ -248,8 +286,17 @@ export default function PublicMap() {
 
                   <div style={{ fontSize: 11, color: "#9CA3AF", marginTop: 6 }}>
                     📍 {r.latitude.toFixed(5)}, {r.longitude.toFixed(5)}
-                    {created && <> · {new Date(created).toLocaleString()}</>}
                   </div>
+                  {taken && (
+                    <div style={{ fontSize: 11, color: "#6B7280", marginTop: 2 }}>
+                      📷 Taken {new Date(taken).toLocaleString()}
+                    </div>
+                  )}
+                  {created && (
+                    <div style={{ fontSize: 11, color: "#9CA3AF", marginTop: 2 }}>
+                      📨 Reported {new Date(created).toLocaleString()}
+                    </div>
+                  )}
                 </div>
               </Popup>
             </Marker>
