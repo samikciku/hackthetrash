@@ -1,0 +1,42 @@
+{
+  "centre": {
+    "lat": 42.6666493,
+    "lon": 21.061689
+  },
+  "half_km": 0.4,
+  "px": 768,
+  "native_px": 80,
+  "roi_half_km": 0.2,
+  "ndvi_bare_threshold": 0.25,
+  "bsi_bare_threshold": 0.0,
+  "bbox": [
+    21.05680228753391,
+    42.66304991189598,
+    21.066575712466094,
+    42.670248688104024
+  ],
+  "max_cloud_pct": 15,
+  "window": [
+    "2017-04-01",
+    "2026-05-10"
+  ],
+  "sample_months": [
+    4,
+    6,
+    8,
+    10
+  ],
+  "pins": [
+    {
+      "name": "muni",
+      "lat": 42.6666493,
+      "lon": 21.061689
+    },
+    {
+      "name": "ash",
+      "lat": 42.662365,
+      "lon": 21.067158
+    }
+  ],
+  "data_source": "Microsoft Planetary Computer \u00b7 sentinel-2-l2a"
+}
