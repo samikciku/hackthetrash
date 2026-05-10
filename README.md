@@ -60,6 +60,7 @@ A free-Sentinel-2 pipeline for monitoring waste accumulations across Kosovo. 10m
 - **[`PHASES.md`](TrashFromSpace/PHASES.md)** — 6-phase project roadmap (known sites first, then candidates, then validation against AMMK)
 - **[`known-sites.geojson`](TrashFromSpace/known-sites.geojson)** — 14 Kosovo waste sites (7 sanitary landfills + 4 non-sanitary + 3 recycling/processing facilities)
 - **[`docs/PHASE1-PLAN.md`](TrashFromSpace/docs/PHASE1-PLAN.md)** — step-by-step Phase 1 build plan
+- **Google Earth aerial views:** [Landfill in Landovicë](https://earth.google.com/web/search/42%2e255789,+20%2e700171/@42.25626622,20.70126828,393.82371163a,1008.0013057d,35y,0h,0t,0r/data=Cj4iJgokCbt39kAkVkVAEY08Eo0XVEVAGYaQ4fSiFTVAIX-G4bO0CjVAKhAIARIKMjAxMy0wNC0yNRgBQgIIAToDCgEwQgIIAEoNCP___________wEQAA?authuser=0) · [Mirash](https://earth.google.com/web/search/Deponia+e+mbeturinave+komunale,+Pristina/@42.66390519,21.06681019,524.32853775a,3037.28792639d,35y,0h,0t,0r/data=Cj4iJgokCQ0SjoCrV0VAETxAka2ZUEVAGRFTFJf_GzVAIVsjTeNJ9jRAKhAIARIKMjAyNS0wNy0xORgBQgIIAToDCgEwQgIIAEoNCP___________wEQAA?authuser=0)
 
 #### Active build on [`feat/timelapse`](https://github.com/flosskosova/trash/tree/feat/timelapse) (Barlli — depth-first on Mirash)
 
