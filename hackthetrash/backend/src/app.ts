@@ -32,10 +32,15 @@ export function createApp(): express.Express {
   });
 
   app.use(express.json({ limit: "1mb" }));
-  app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+  const uploadsDir = path.join(__dirname, "../uploads");
+  // Expose under `/api/uploads` so the same paths work behind Vercel Services (API prefix `/api`)
+  app.use("/api/uploads", express.static(uploadsDir));
+  app.use("/uploads", express.static(uploadsDir));
 
   app.get("/", (_req, res) => res.json({ ok: true, service: "HackTheTrash API" }));
-  app.get("/health", (_req, res) => res.json({ status: "healthy" }));
+  const healthPayload = () => ({ status: "healthy" as const });
+  app.get("/health", (_req, res) => res.json(healthPayload()));
+  app.get("/api/health", (_req, res) => res.json(healthPayload()));
 
   app.use("/api/reports", reportsRouter);
   app.use("/api/reports", commentsRouter); // /api/reports/:id/comments

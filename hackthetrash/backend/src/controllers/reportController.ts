@@ -76,7 +76,7 @@ export const createReport = async (req: AuthRequest, res: Response) => {
         aiScore: ai.best.score,
         aiLabel: ai.best.label
       });
-      const photoUrls = files.map((f) => `/uploads/${f.filename}`);
+      const photoUrls = files.map((f) => `/api/uploads/${f.filename}`);
       await ReportRepo.addPhotos(created.id, photoUrls);
 
       // Auto-status from AI
@@ -99,7 +99,7 @@ export const createReport = async (req: AuthRequest, res: Response) => {
               : ai.recommendation === "auto_reject" ? "rejected"
               : "reported",
         anonymous: isAnonymous,
-        photoUrls: files.map((f) => `/uploads/${f.filename}`),
+        photoUrls: files.map((f) => `/api/uploads/${f.filename}`),
         createdAt: new Date().toISOString(),
         takenAt: typeof takenAt === "string" && !isNaN(Date.parse(takenAt)) ? takenAt : undefined,
         userId: userId ?? undefined
