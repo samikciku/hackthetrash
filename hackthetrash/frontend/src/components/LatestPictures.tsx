@@ -121,7 +121,7 @@ export default function LatestPictures({
     load();
     const refresh = setInterval(load, 60000); // refresh every minute
     return () => { alive = false; clearInterval(refresh); };
-  }, [limit]);
+  }, [limit, withinDays]);
 
   // Auto-rotate
   useEffect(() => {

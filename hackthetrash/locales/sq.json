@@ -218,5 +218,42 @@
     "auto": "Po rrotullohet",
     "paused": "Pauzuar",
     "noPhotosWindow": "Asnjë raport me foto në {{days}} ditët e fundit. Bëhu i pari!"
+  },
+  "comments": {
+    "title": "Komentet",
+    "empty": "Ende pa komente. Bëhu i pari.",
+    "anonymous": "Anonim",
+    "namePlaceholder": "Emri yt (opsional)",
+    "placeholder": "Shkruaj një koment...",
+    "send": "Posto komentin"
+  },
+  "flag": {
+    "button": "Raporto këtë postim",
+    "title": "Raporto këtë postim",
+    "send": "Dërgo raportimin",
+    "thanks": "Faleminderit për raportimin. Një moderator do ta shqyrtojë.",
+    "notePlaceholder": "Shënim opsional për moderatorët",
+    "reasons": {
+      "spam": "Spam",
+      "duplicate": "Dyfishim",
+      "inaccurate": "I pasaktë",
+      "offensive": "Ofendues",
+      "other": "Tjetër"
+    }
+  },
+  "subscribe": {
+    "title": "Merr përditësime për pastrimet me email",
+    "subtitle": "Do të të dërgojmë email kur raportet pranë teje ndryshojnë status.",
+    "button": "Abonohu",
+    "regionPlaceholder": "Rajoni",
+    "thanks": "Faleminderit! Kontrollo inbox-in. Mund të çabonohesh në çdo kohë."
+  },
+  "profile": {
+    "title": "Profili",
+    "totalReports": "Raporte gjithsej",
+    "badges": "Distinktivat",
+    "noBadges": "Ende pa distinktiva. Dërgo raportin tënd të parë për ta fituar të parin!",
+    "recentReports": "Raportet e fundit",
+    "notFound": "Profili nuk u gjet."
   }
 }

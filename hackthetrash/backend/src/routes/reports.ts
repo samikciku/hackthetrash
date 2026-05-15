@@ -8,6 +8,7 @@ import {
   getReport,
   updateStatus
 } from "../controllers/reportController";
+import { optionalAuth } from "../middleware/auth";
 
 const router = Router();
 
@@ -26,7 +27,7 @@ const upload = multer({
 
 router.get("/", listReports);
 router.get("/:id", getReport);
-router.post("/", upload.array("photos", 5), createReport);
+router.post("/", optionalAuth, upload.array("photos", 5), createReport);
 router.patch("/:id/status", updateStatus);
 
 export default router;

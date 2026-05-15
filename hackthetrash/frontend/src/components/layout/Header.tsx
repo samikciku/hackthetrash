@@ -44,6 +44,14 @@ export default function Header() {
           {user ? (
             <>
               <Link
+                href={`/profile/${user.id}`}
+                className="hover:text-primary inline-flex items-center gap-1.5 px-2 py-1 rounded transition-colors"
+                title={t("profile.title")}
+              >
+                <Icon name="user" size={16} />
+                {t("profile.title")}
+              </Link>
+              <Link
                 href="/admin"
                 className="text-primary font-semibold hover:underline inline-flex items-center gap-1.5 px-2 py-1"
               >

@@ -3,6 +3,10 @@ import path from "path";
 import { ReportRepo } from "../models/ReportRepo";
 import { autoModerate } from "../ai/moderation";
 import { notifyStatusChange } from "../services/push";
+import { evaluateCountBadges } from "../models/Badge";
+import { statsForUser } from "../services/profileStats";
+import { sendStatusEmail } from "../services/email";
+import { AuthRequest } from "../middleware/auth";
 
 const USE_DB = !!process.env.DATABASE_URL;
 
@@ -38,7 +42,7 @@ export const getReport = async (req: Request, res: Response) => {
   }
 };
 
-export const createReport = async (req: Request, res: Response) => {
+export const createReport = async (req: AuthRequest, res: Response) => {
   try {
     const files = (req.files as Express.Multer.File[]) || [];
     const { latitude, longitude, severity, description, anonymous, takenAt } = req.body;
@@ -49,19 +53,26 @@ export const createReport = async (req: Request, res: Response) => {
       return res.status(400).json({ error: "latitude & longitude required" });
     }
 
+    const isAnonymous = anonymous === "true" || !req.auth;
+    const userId = isAnonymous ? null : req.auth?.sub ?? null;
+
     // Run AI moderation on uploaded images
     const imagePaths = files.map((f) => path.join(__dirname, "../../uploads", f.filename));
     const ai = await autoModerate(imagePaths);
     console.log(`[AI] best=${ai.best.label} score=${ai.best.score} -> ${ai.recommendation}`);
 
+    let createdId: string;
+    let response: any;
+
     if (USE_DB) {
       const created = await ReportRepo.create({
+        userId,
         latitude: Number(latitude),
         longitude: Number(longitude),
         description,
         severity,
         tags,
-        anonymous: anonymous === "true",
+        anonymous: isAnonymous,
         aiScore: ai.best.score,
         aiLabel: ai.best.label
       });
@@ -74,29 +85,46 @@ export const createReport = async (req: Request, res: Response) => {
       } else if (ai.recommendation === "auto_reject") {
         await ReportRepo.updateStatus(created.id, "rejected", "AI auto-rejected");
       }
-      // Return the new report with photo_urls so the client can immediately
-      // place a marker on the OpenStreetMap layer with the picture in the popup.
-      return res.status(201).json({ ...created, photo_urls: photoUrls, ai });
+      createdId = created.id;
+      response = { ...created, photo_urls: photoUrls, ai };
+    } else {
+      const report: Report = {
+        id: uuid(),
+        latitude: Number(latitude),
+        longitude: Number(longitude),
+        severity: severity || "medium",
+        description: description || "",
+        tags,
+        status: ai.recommendation === "auto_verify" ? "verified"
+              : ai.recommendation === "auto_reject" ? "rejected"
+              : "reported",
+        anonymous: isAnonymous,
+        photoUrls: files.map((f) => `/uploads/${f.filename}`),
+        createdAt: new Date().toISOString(),
+        takenAt: typeof takenAt === "string" && !isNaN(Date.parse(takenAt)) ? takenAt : undefined,
+        userId: userId ?? undefined
+      };
+      reportsDB.unshift(report);
+      createdId = report.id;
+      response = { ...report, ai };
     }
 
-    // Fallback: in-memory
-    const report: Report = {
-      id: uuid(),
-      latitude: Number(latitude),
-      longitude: Number(longitude),
-      severity: severity || "medium",
-      description: description || "",
-      tags,
-      status: ai.recommendation === "auto_verify" ? "verified"
-            : ai.recommendation === "auto_reject" ? "rejected"
-            : "reported",
-      anonymous: anonymous === "true",
-      photoUrls: files.map((f) => `/uploads/${f.filename}`),
-      createdAt: new Date().toISOString(),
-      takenAt: typeof takenAt === "string" && !isNaN(Date.parse(takenAt)) ? takenAt : undefined
-    };
-    reportsDB.unshift(report);
-    res.status(201).json({ ...report, ai });
+    // Phase 2: award count + state badges to attributed (non-anonymous) reports
+    let newlyAwarded: string[] = [];
+    if (userId) {
+      try {
+        const stats = await statsForUser(userId);
+        newlyAwarded = await evaluateCountBadges(userId, stats.totalReports, {
+          hasVerified: stats.hasVerified,
+          hasCleaned: stats.hasCleaned
+        });
+      } catch (e) {
+        console.warn("[badges] failed to evaluate", e);
+      }
+    }
+    response.badges_awarded = newlyAwarded;
+
+    return res.status(201).json(response);
   } catch (e: any) {
     console.error(e);
     res.status(500).json({ error: e.message });
@@ -113,8 +141,14 @@ export const updateStatus = async (req: Request, res: Response) => {
       await ReportRepo.updateStatus(req.params.id, status);
       const r = await ReportRepo.findById(req.params.id);
       if (r) {
-        // Fire-and-forget push to subscribed devices
         notifyStatusChange({ id: r.id, status: r.status, latitude: r.latitude, longitude: r.longitude }).catch(() => {});
+        sendStatusEmail({ id: r.id, status: r.status, latitude: r.latitude, longitude: r.longitude }).catch(() => {});
+        if (r.user_id) {
+          const stats = await statsForUser(r.user_id);
+          evaluateCountBadges(r.user_id, stats.totalReports, {
+            hasVerified: stats.hasVerified, hasCleaned: stats.hasCleaned
+          }).catch(() => {});
+        }
       }
       return res.json(r);
     }
@@ -122,6 +156,13 @@ export const updateStatus = async (req: Request, res: Response) => {
     if (!r) return res.status(404).json({ error: "Not found" });
     r.status = status;
     notifyStatusChange({ id: r.id, status: r.status, latitude: r.latitude, longitude: r.longitude }).catch(() => {});
+    sendStatusEmail({ id: r.id, status: r.status, latitude: r.latitude, longitude: r.longitude }).catch(() => {});
+    if (r.userId) {
+      const stats = await statsForUser(r.userId);
+      evaluateCountBadges(r.userId, stats.totalReports, {
+        hasVerified: stats.hasVerified, hasCleaned: stats.hasCleaned
+      }).catch(() => {});
+    }
     res.json(r);
   } catch (e: any) {
     res.status(500).json({ error: e.message });

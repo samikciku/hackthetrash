@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n";
 import LatestPictures from "@/components/LatestPictures";
+import EmailSubscribe from "@/components/EmailSubscribe";
 
 export default function HomePage() {
   const { t } = useI18n();
@@ -46,6 +47,11 @@ export default function HomePage() {
 
       {/* Latest pictures of trash - rotating carousel of the last month */}
       <LatestPictures limit={16} withinDays={30} intervalMs={4000} />
+
+      {/* Phase 2: email subscriptions */}
+      <div className="mt-12 max-w-2xl mx-auto">
+        <EmailSubscribe />
+      </div>
     </div>
   );
 }

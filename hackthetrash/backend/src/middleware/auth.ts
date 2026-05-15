@@ -1,9 +1,11 @@
 import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { SignOptions } from "jsonwebtoken";
 import { Users, Role } from "../services/users";
 
 const JWT_SECRET = process.env.JWT_SECRET || "dev_only_change_me";
-const JWT_EXPIRES = process.env.JWT_EXPIRES || "12h";
+// `jsonwebtoken` v9 narrows expiresIn to `number | StringValue`, so we cast
+// here once rather than scattering casts at every call site.
+const JWT_EXPIRES = (process.env.JWT_EXPIRES || "12h") as SignOptions["expiresIn"];
 
 export interface AuthPayload {
   sub: string;       // user id
@@ -42,6 +44,23 @@ export const requireAuth = async (req: AuthRequest, res: Response, next: NextFun
   if (user.role !== payload.role) return res.status(401).json({ error: "Role changed, please re-login" });
 
   req.auth = payload;
+  next();
+};
+
+/**
+ * Soft auth: populates req.auth if a valid token is present, but does not
+ * reject anonymous requests. Used by public endpoints (comments, flags,
+ * reports) where signed-in users get attribution but anonymous reads/writes
+ * are still allowed.
+ */
+export const optionalAuth = async (req: AuthRequest, _res: Response, next: NextFunction) => {
+  const header = req.headers.authorization || "";
+  const token = header.startsWith("Bearer ") ? header.slice(7) : null;
+  if (!token) return next();
+  const payload = verifyToken(token);
+  if (!payload) return next();
+  const user = await Users.findById(payload.sub);
+  if (user && user.role === payload.role) req.auth = payload;
   next();
 };
 

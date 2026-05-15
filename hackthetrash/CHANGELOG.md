@@ -7,7 +7,95 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-Nothing yet - track work in progress here.
+### Added — Phase 2 (community, ops, testing)
+
+#### Community features
+- **Comments on reports**: `GET/POST /api/reports/:id/comments` with public
+  read access, signed-in or anonymous post (with optional display name).
+  Wired into the public map's marker popup as a `CommentThread` component.
+- **Flagging system**: `POST /api/reports/:id/flags` with reasons
+  (`spam`, `duplicate`, `inaccurate`, `offensive`, `other`) plus a
+  per-marker `FlagButton`. Admins/moderators can browse open flags via
+  `GET /api/admin/flags?resolved=false` and resolve them with
+  `PATCH /api/admin/flags/:id/resolve`. Open-flag count surfaces in
+  `/api/admin/stats`.
+- **User profiles**: `GET /api/profile/:id` (public view) and
+  `GET /api/profile/me` (full view). New web page `/profile/[id]` with
+  avatar bubble, role chip, total/verified/cleaning/cleaned stats,
+  badge gallery, and a recent-reports list.
+- **Badge engine**: `backend/src/models/Badge.ts` with a shared catalog
+  (`first_report`, `five_reports`, `twentyfive`, `hundred`,
+  `verified`, `cleaned`). Re-evaluated automatically when a logged-in
+  citizen submits a report or when an admin changes a report's status.
+  Catalog exposed at `GET /api/profile/badges`.
+- **Email notifications**: `services/email.ts` with two transports —
+  `console` (default in dev/test) and `smtp` (nodemailer). Public sign-up
+  at `POST /api/email-subscriptions`, token-based unsubscribe at
+  `GET /api/email-subscriptions/unsubscribe/:token`. Status-change emails
+  fan out to subscribers in the same region.
+- **Email subscribe widget** on the home page (`<EmailSubscribe />`).
+
+#### Schema
+- New migration `003_phase2.sql`:
+  - extends `users` with `display_name`, `bio`, `avatar_url`
+  - extends `flags` with `note` and `resolved` (+ index)
+  - new `badges` table with a unique `(user_id, code)` constraint
+  - new `email_subscriptions` table with a UUID `unsubscribe_token`
+
+#### Reports controller
+- Reports submitted by an authenticated, non-anonymous citizen now record
+  `user_id` (via the new `optionalAuth` middleware on `POST /api/reports`).
+- Successful submissions return `badges_awarded: string[]` so the client
+  can celebrate freshly earned badges.
+
+#### Testing
+- **Backend**: Jest + `ts-jest` + Supertest. New `tests/` suite covers
+  health, auth (login / `/me` / hardening headers), reports (public list +
+  admin gate), AI mock classifier + `autoModerate`, comments, flags
+  (incl. admin resolve), profile catalog/me, email subscribe + unsubscribe.
+- **Frontend**: Vitest + React Testing Library + jsdom. Initial suite
+  covers `Footer` and the `I18nProvider` (English fallback + missing-key
+  behaviour).
+
+#### Operations
+- **Docker Compose** stack at the repo root: `postgis/postgis:16-3.4-alpine`
+  with the migrations mounted into `docker-entrypoint-initdb.d`, plus
+  multi-stage Dockerfiles for the backend and frontend (`dev`, `build`,
+  `prod` targets).
+- **Cross-platform dev scripts**: `scripts/dev.mjs` and `scripts/setup.mjs`
+  (Node, work on macOS / Linux / Windows with prefixed `[backend]` /
+  `[frontend]` log streams), plus `scripts/dev.ps1` and `scripts/setup.ps1`
+  for PowerShell.
+- **CI overhaul** (`.github/workflows/ci.yml`): three parallel jobs —
+  `backend` (typecheck + jest + build), `frontend` (typecheck + lint +
+  vitest + build), `mobile` (typecheck) — all with `npm ci` caching.
+
+#### Refactors
+- Backend `src/index.ts` split: HTTP wiring lives in a new
+  `src/app.ts` `createApp()` factory so Supertest can mount the same
+  app without `app.listen()`. `index.ts` now only loads dotenv and starts
+  the listener.
+- New `optionalAuth` middleware: populates `req.auth` if a valid token is
+  present but does not reject anonymous requests. Used by reports/comments/
+  flags/email-subscriptions endpoints.
+
+#### Documentation
+- `docs/ROADMAP.md` rewritten to reflect the shipped 0.1.0 baseline and
+  to track the new Phase 2 / Phase 5 items as `[x]` or `[ ]`.
+- README dev section updated with Docker Compose and cross-platform
+  Node-based instructions.
+
+### Fixed
+- Backend `tsc --noEmit`: `pool.query<T>()` return typing and `JWT_EXPIRES`
+  cast for `jsonwebtoken` v9 `SignOptions`.
+- Frontend ESLint: added `frontend/.eslintrc.json` (non-interactive
+  `next lint`), disabled `@next/next/no-img-element` for dynamic map /
+  API image URLs, and fixed `react-hooks/exhaustive-deps` in
+  `LatestPictures` (`withinDays` in the effect dependency list).
+- `scripts/dev.ps1` now runs `cmd.exe /c npm run dev` so `npm` resolves
+  correctly when spawned from PowerShell.
+- Frontend `npm test` defaults to `vitest run` (no watch mode hang); CI
+  frontend job calls `npm test` without extra flags.
 
 ## [0.1.0] - 2026-05-09
 

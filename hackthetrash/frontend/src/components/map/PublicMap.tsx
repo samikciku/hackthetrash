@@ -6,6 +6,8 @@ import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useI18n } from "@/lib/i18n";
+import CommentThread from "@/components/reports/CommentThread";
+import FlagButton from "@/components/reports/FlagButton";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
@@ -297,6 +299,9 @@ export default function PublicMap() {
                       📨 Reported {new Date(created).toLocaleString()}
                     </div>
                   )}
+
+                  <CommentThread reportId={r.id} />
+                  <FlagButton reportId={r.id} />
                 </div>
               </Popup>
             </Marker>

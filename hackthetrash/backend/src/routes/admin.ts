@@ -3,6 +3,10 @@ import { requireAuth, requireRole, AuthRequest } from "../middleware/auth";
 import { ReportRepo } from "../models/ReportRepo";
 import { reportsDB } from "../models/Report";
 import { notifyStatusChange } from "../services/push";
+import { Flags } from "../models/Flag";
+import { sendStatusEmail } from "../services/email";
+import { evaluateCountBadges } from "../models/Badge";
+import { statsForUser } from "../services/profileStats";
 import adminUsersRouter from "./admin-users";
 
 const router = Router();
@@ -50,6 +54,15 @@ const applyDecision = async (
       notifyStatusChange({
         id: r.id, status: r.status, latitude: r.latitude, longitude: r.longitude
       }).catch(() => {});
+      sendStatusEmail({
+        id: r.id, status: r.status, latitude: r.latitude, longitude: r.longitude
+      }).catch(() => {});
+      if (r.user_id) {
+        const stats = await statsForUser(r.user_id);
+        evaluateCountBadges(r.user_id, stats.totalReports, {
+          hasVerified: stats.hasVerified, hasCleaned: stats.hasCleaned
+        }).catch(() => {});
+      }
       return res.json(r);
     }
 
@@ -59,6 +72,15 @@ const applyDecision = async (
     notifyStatusChange({
       id: r.id, status: r.status, latitude: r.latitude, longitude: r.longitude
     }).catch(() => {});
+    sendStatusEmail({
+      id: r.id, status: r.status, latitude: r.latitude, longitude: r.longitude
+    }).catch(() => {});
+    if (r.userId) {
+      const stats = await statsForUser(r.userId);
+      evaluateCountBadges(r.userId, stats.totalReports, {
+        hasVerified: stats.hasVerified, hasCleaned: stats.hasCleaned
+      }).catch(() => {});
+    }
     res.json(r);
   } catch (e: any) {
     res.status(500).json({ error: e.message });
@@ -78,7 +100,31 @@ router.get("/stats", async (_req, res) => {
       acc[r.status] = (acc[r.status] || 0) + 1;
       return acc;
     }, {});
-    res.json({ total: all.length, byStatus: counts });
+    const openFlags = (await Flags.listAll({ resolved: false })).length;
+    res.json({ total: all.length, byStatus: counts, openFlags });
+  } catch (e: any) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// GET /api/admin/flags?resolved=false (default: open flags)
+router.get("/flags", async (req, res) => {
+  try {
+    const param = req.query.resolved as string | undefined;
+    const resolved = param === "true" ? true : param === "false" ? false : undefined;
+    const list = await Flags.listAll({ resolved });
+    res.json({ flags: list });
+  } catch (e: any) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// PATCH /api/admin/flags/:id/resolve
+router.patch("/flags/:id/resolve", async (req, res) => {
+  try {
+    const ok = await Flags.resolve(req.params.id);
+    if (!ok) return res.status(404).json({ error: "Not found" });
+    res.json({ ok: true });
   } catch (e: any) {
     res.status(500).json({ error: e.message });
   }

@@ -76,19 +76,29 @@ hackthetrash/
 ### Installation
 
 ```bash
-# Clone
 git clone https://github.com/yourusername/hackthetrash.git
 cd hackthetrash
+```
 
-# Frontend
-cd frontend
-npm install
-npm run dev
+**Option A — Docker Compose (everything, including Postgres+PostGIS):**
 
-# Backend (in another terminal)
-cd backend
-npm install
-npm run dev
+```bash
+docker compose up --build
+# Web:     http://localhost:3000
+# API:     http://localhost:4000
+# DB:      postgres://htt:htt@localhost:5432/hackthetrash
+```
+
+**Option B — Local Node (no Docker):**
+
+```bash
+# Cross-platform (macOS / Linux / Windows):
+node scripts/setup.mjs       # install backend + frontend deps
+node scripts/dev.mjs         # start both services with prefixed logs
+
+# Or platform-specific helpers:
+bash scripts/setup.sh && bash scripts/dev.sh        # bash
+pwsh scripts/setup.ps1; pwsh scripts/dev.ps1        # PowerShell
 ```
 
 ### Environment Variables

@@ -1,0 +1,68 @@
+services:
+  db:
+    image: postgis/postgis:16-3.4-alpine
+    container_name: htt_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: htt
+      POSTGRES_PASSWORD: htt
+      POSTGRES_DB: hackthetrash
+    ports:
+      - "5432:5432"
+    volumes:
+      - htt_pgdata:/var/lib/postgresql/data
+      - ./backend/src/db/migrations:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U htt -d hackthetrash"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: dev
+    container_name: htt_backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: development
+      PORT: 4000
+      DATABASE_URL: postgresql://htt:htt@db:5432/hackthetrash
+      JWT_SECRET: dev_only_change_me_in_production_please
+      JWT_EXPIRES: 12h
+      ADMIN_EMAIL: admin@hackthetrash.org
+      ADMIN_PASSWORD: ChangeMe!2026
+      CORS_ORIGINS: http://localhost:3000
+      AI_PROVIDER: mock
+      SMTP_TRANSPORT: console
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./backend/src:/app/src
+      - ./backend/uploads:/app/uploads
+      - ./locales:/locales:ro
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: dev
+    container_name: htt_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      NODE_ENV: development
+      NEXT_PUBLIC_API_URL: http://localhost:4000
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/src:/app/src
+      - ./locales:/locales:ro
+
+volumes:
+  htt_pgdata:

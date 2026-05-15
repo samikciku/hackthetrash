@@ -218,5 +218,42 @@
     "auto": "Auto-rotating",
     "paused": "Paused",
     "noPhotosWindow": "No reports with photos in the last {{days}} days. Be the first!"
+  },
+  "comments": {
+    "title": "Comments",
+    "empty": "No comments yet. Be the first.",
+    "anonymous": "Anonymous",
+    "namePlaceholder": "Your name (optional)",
+    "placeholder": "Write a comment...",
+    "send": "Post comment"
+  },
+  "flag": {
+    "button": "Flag this report",
+    "title": "Flag this report",
+    "send": "Send flag",
+    "thanks": "Thanks for flagging. A moderator will review it.",
+    "notePlaceholder": "Optional note for moderators",
+    "reasons": {
+      "spam": "Spam",
+      "duplicate": "Duplicate",
+      "inaccurate": "Inaccurate",
+      "offensive": "Offensive",
+      "other": "Other"
+    }
+  },
+  "subscribe": {
+    "title": "Get cleanup updates by email",
+    "subtitle": "We will email you when reports near you change status.",
+    "button": "Subscribe",
+    "regionPlaceholder": "Region",
+    "thanks": "Thanks! Check your inbox to confirm. You can unsubscribe at any time."
+  },
+  "profile": {
+    "title": "Profile",
+    "totalReports": "Total reports",
+    "badges": "Badges",
+    "noBadges": "No badges yet. Submit your first report to earn one!",
+    "recentReports": "Recent reports",
+    "notFound": "Profile not found."
   }
 }
