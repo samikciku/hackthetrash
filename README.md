@@ -35,6 +35,14 @@ A structured, cross-linked research package on how Pristina's waste system actua
 
 Source materials in [`enrichment/`](enrichment/) — 5 documents (Albanian + English) contributed by Barlli at the start of the hackathon. Field imagery in [`prishtina-trash-images/`](prishtina-trash-images/) — photographs from Sunny Hill and UÇK Street by Bleron.
 
+Before we started making apps, we started with a small whiteboard chart:
+
+![Early whiteboard draft showing how the reporting platform started](screenshots/whiteboard-Start.jpg)
+
+That first sketch grew into something much bigger by the end of the day:
+
+![Final whiteboard draft showing the expanded HackTheTrash system](screenshots/whiteboard-final.jpg)
+
 ### 📱 [`hackthetrash/`](hackthetrash/) — the citizen reporting platform
 
 End-to-end MVP for citizens reporting illegal dumps with photo + GPS. Production-grade infrastructure, built end-to-end during the weekend by sami and contributors.
