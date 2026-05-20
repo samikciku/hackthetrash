@@ -41,7 +41,7 @@ Before we started making apps, we started with a small whiteboard chart:
 
 That first sketch grew into something much bigger by the end of the day:
 
-![Final whiteboard draft showing the expanded HackTheTrash system](screenshots/whiteboard-final.jpg)
+![Final whiteboard draft showing the expanded HackTheTrash system](screenshots/whiteboard-Final.jpg)
 
 ### 📱 [`hackthetrash/`](hackthetrash/) — the citizen reporting platform
 
