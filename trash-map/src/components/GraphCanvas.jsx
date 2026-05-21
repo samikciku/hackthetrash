@@ -11,7 +11,7 @@ import {
   useEdgesState,
 } from '@xyflow/react'
 import ActorNode from './ActorNode'
-import { initialNodes, initialEdges, TIER_COLORS, EDGE_COLORS } from '../lib/graphData'
+import { buildGraph, TIER_COLORS, EDGE_COLORS } from '../lib/graphData'
 
 const nodeTypes = { actorNode: ActorNode }
 
@@ -92,14 +92,18 @@ export default function GraphCanvas({
   revealedNodeIds,
   revealedEdgeIds,
   activeLever,
+  mode = 'full',
 }) {
   const hasLever = !!activeLever
+
+  // Base graph for the active density mode (core / current / full mess).
+  const base = useMemo(() => buildGraph(mode), [mode])
 
   // Derive display nodes:
   // - dimming uses full affectedNodeIds (stable from lever activation, no flicker)
   // - stressLevel + reaction use revealedNodeIds (grows wave-by-wave)
   const displayNodes = useMemo(() => {
-    return initialNodes.map((n) => {
+    return base.nodes.map((n) => {
       const inAffected = affectedNodeIds.has(n.id)
       const inRevealed = revealedNodeIds.has(n.id)
       const effect     = activeLever?.nodeEffects?.[n.id]
@@ -113,12 +117,12 @@ export default function GraphCanvas({
         },
       }
     })
-  }, [hasLever, affectedNodeIds, revealedNodeIds, activeLever])
+  }, [base, hasLever, affectedNodeIds, revealedNodeIds, activeLever])
 
   // Derive display edges:
   // - dimming uses affectedEdgeIds; animation uses revealedEdgeIds
   const displayEdges = useMemo(() => {
-    return initialEdges.map((e) => {
+    return base.edges.map((e) => {
       const inAffected = affectedEdgeIds.has(e.id)
       const inRevealed = revealedEdgeIds.has(e.id)
       return {
@@ -140,7 +144,7 @@ export default function GraphCanvas({
         },
       }
     })
-  }, [hasLever, affectedEdgeIds, revealedEdgeIds])
+  }, [base, hasLever, affectedEdgeIds, revealedEdgeIds])
 
   const [nodes, , onNodesChange] = useNodesState(displayNodes)
   const [edges, , onEdgesChange] = useEdgesState(displayEdges)

@@ -17,14 +17,14 @@ export default function ActorNode({ data, selected }) {
     <motion.div
       initial={false}
       animate={{
-        opacity: data.dimmed ? 0.2 : 1,
+        opacity: data.dimmed ? 0.2 : (data.future ? 0.82 : 1),
         scale:   data.stressLevel && data.stressLevel !== 'none' ? 1.04 : 1,
       }}
       whileHover={data.dimmed ? undefined : { scale: 1.06, y: -2 }}
       whileTap={{ scale: 0.97 }}
       transition={{ type: 'spring', stiffness: 320, damping: 22, mass: 0.6 }}
       style={{
-        border: `2px solid ${selected ? '#fff' : color}`,
+        border: `2px ${data.future ? 'dashed' : 'solid'} ${selected ? '#fff' : color}`,
         boxShadow: selected
           ? `0 0 0 3px ${color}55, ${glow}`
           : glow,

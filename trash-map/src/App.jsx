@@ -8,11 +8,13 @@ import LeftSidebar from './components/LeftSidebar'
 import LeverIcon from './components/LeverIcon'
 import MatrixView from './components/MatrixView'
 import { useActiveLever } from './hooks/useActiveLever'
+import { GRAPH_MODES } from './lib/graphData'
 
 export default function App() {
   const [selectedNode, setSelectedNode] = useState(null)
   const [sidebarOpen, setSidebarOpen] = useState(true)
-  const [view, setView] = useState('matrix')  // 'graph' | 'matrix'
+  const [view, setView] = useState('graph')  // 'graph' | 'matrix'
+  const [mode, setMode] = useState('core')   // 'core' | 'current' | 'full' (graph density)
 
   const {
     activeLever,
@@ -162,7 +164,11 @@ export default function App() {
                 {activeLever && <NewsTicker lever={activeLever} />}
               </AnimatePresence>
 
+              <ModeToggle mode={mode} onChange={setMode} />
+
               <GraphCanvas
+                key={mode}
+                mode={mode}
                 selectedNodeId={selectedNode?.id}
                 onNodeClick={handleNodeClick}
                 affectedNodeIds={affectedNodeIds}
@@ -188,6 +194,35 @@ export default function App() {
           <MatrixView />
         )}
       </div>
+    </div>
+  )
+}
+
+function ModeToggle({ mode, onChange }) {
+  return (
+    <div
+      className="absolute top-3 left-3 z-30 flex items-center rounded-md p-0.5 gap-0.5"
+      style={{
+        background: 'rgba(7,9,15,0.85)',
+        border: '1px solid rgba(255,255,255,0.1)',
+        backdropFilter: 'blur(4px)',
+      }}
+    >
+      {GRAPH_MODES.map((m) => (
+        <button
+          key={m.id}
+          onClick={() => onChange(m.id)}
+          title={`${m.label} — ${m.count} actors`}
+          className="flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] font-medium transition-colors"
+          style={{
+            background: mode === m.id ? 'rgba(59,130,246,0.18)' : 'transparent',
+            color: mode === m.id ? '#93C5FD' : '#94A3B8',
+          }}
+        >
+          {m.label}
+          <span className="text-[9px] font-mono opacity-60">{m.count}</span>
+        </button>
+      ))}
     </div>
   )
 }
