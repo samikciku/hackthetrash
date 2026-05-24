@@ -169,6 +169,10 @@ Contributions welcome on any of these — see issue thread for what to verify an
 - Several numbers are flagged as ⚠ (in active tension between sources) or ? (pending verification). See [`dossier/tensions.md`](dossier/tensions.md).
 - Future-dated events (post-May 2026) are planned/announced. Verification status varies — see open issues.
 
+## Websites
+https://hackthetrash.vercel.app |
+https://trash-map.quarterly.systems/
+
 ## License
 
 MIT. The hackathon was hosted by [FLOSSK](https://flossk.org) — Free Libre Open Source Software Kosova.
