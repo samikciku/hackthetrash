@@ -13,6 +13,17 @@ const LocationPicker = dynamic(
 
 const TRASH_TYPES = ["Plastic", "E-waste", "Hazardous", "Construction", "Organic", "Other"];
 
+/** Windows / drag-drop often yield empty type or octet-stream; still allow known extensions. */
+const LIKELY_IMAGE_EXT = /\.(jpe?g|png|gif|webp|heic|heif|bmp|tiff?)$/i;
+function isLikelyImageFile(f: File): boolean {
+  const m = (f.type || "").toLowerCase();
+  if (m.startsWith("image/")) return true;
+  if (m === "application/octet-stream" || m === "" || m === "binary/octet-stream") {
+    return LIKELY_IMAGE_EXT.test(f.name);
+  }
+  return false;
+}
+
 type ExifFinding = { gps: boolean; takenAt: boolean };
 type CoordsSource = "exif" | "geo" | "manual" | null;
 
@@ -45,8 +56,11 @@ export default function ReportPage() {
     setTags((prev) => (prev.includes(tg) ? prev.filter((x) => x !== tg) : [...prev, tg]));
 
   const ingestFiles = async (incoming: File[]) => {
-    const files = incoming.filter((f) => f.type.startsWith("image/")).slice(0, 5);
-    if (files.length === 0) return;
+    const files = incoming.filter(isLikelyImageFile).slice(0, 5);
+    if (files.length === 0) {
+      alert(t("report.errorRejectedFiles"));
+      return;
+    }
     setPhotos(files);
 
     let gpsHit = false;
@@ -137,7 +151,17 @@ export default function ReportPage() {
         `${getApiBase()}/api/reports`,
         { method: "POST", body: fd }
       );
-      if (!res.ok) throw new Error("Submission failed");
+      if (!res.ok) {
+        let detail = "";
+        try {
+          const j = await res.json();
+          if (typeof j?.error === "string") detail = j.error;
+        } catch {
+          /* ignore */
+        }
+        alert(detail ? `${t("report.errorSubmit")}\n\n${detail}` : t("report.errorSubmit"));
+        return;
+      }
       const created = await res.json();
       const id = created?.id ?? null;
       setSubmittedId(id);

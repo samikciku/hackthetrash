@@ -56,7 +56,8 @@
     "queuedBody": "Jeni jashtë linje. Raporti u ruajt dhe do të dërgohet automatikisht sapo të lidheni në internet.",
     "errorMissingLocation": "Ju lutemi shtoni një vendndodhje.",
     "errorMissingPhoto": "Ju lutemi shtoni të paktën një fotografi.",
-    "errorSubmit": "Dështoi dërgimi. A po funksionon backend-i?"
+    "errorRejectedFiles": "Nuk u gjetën foto të përdorshme. Përdorni JPG, PNG ose HEIC — ose provoni një shfletues tjetër nëse skedarët u anashkaluan.",
+    "errorSubmit": "Nuk mund të dërgohej raporti."
   },
   "tags": {
     "Plastic": "Plastikë",

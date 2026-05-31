@@ -10,6 +10,7 @@ import {
 } from "../controllers/reportController";
 import { optionalAuth } from "../middleware/auth";
 import { useMemoryUploads } from "../services/reportPhotoUpload";
+import { isAllowedReportImage } from "../utils/imageUpload";
 
 const router = Router();
 
@@ -23,8 +24,8 @@ const upload = multer({
   storage,
   limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
   fileFilter: (_req, file, cb) => {
-    if (file.mimetype.startsWith("image/")) cb(null, true);
-    else cb(new Error("Only image files allowed"));
+    if (isAllowedReportImage(file)) cb(null, true);
+    else cb(new Error("Only image files are allowed (e.g. JPG, PNG, HEIC)."));
   }
 });
 

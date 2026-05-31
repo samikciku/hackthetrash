@@ -1,4 +1,5 @@
 import fs from "fs";
+import os from "os";
 import path from "path";
 import { v4 as uuid } from "uuid";
 import type { Express } from "express";
@@ -34,7 +35,7 @@ export function tempPathsForModeration(files: Express.Multer.File[]): TempImageP
     }
     if (f.buffer?.length) {
       const ext = path.extname(f.originalname) || ".jpg";
-      const tmp = path.join("/tmp", `htt-${uuid()}${ext}`);
+      const tmp = path.join(os.tmpdir(), `htt-${uuid()}${ext}`);
       fs.writeFileSync(tmp, f.buffer);
       paths.push(tmp);
       toUnlink.push(tmp);

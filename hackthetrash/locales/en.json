@@ -56,7 +56,8 @@
     "queuedBody": "You are offline. Your report was saved and will be submitted automatically when you are back online.",
     "errorMissingLocation": "Please add a location.",
     "errorMissingPhoto": "Please add at least one photo.",
-    "errorSubmit": "Submission failed. Is the backend running?"
+    "errorRejectedFiles": "No usable images were found. Use JPG, PNG, or HEIC — or try another browser if files were skipped.",
+    "errorSubmit": "Could not send your report."
   },
   "tags": {
     "Plastic": "Plastic",

@@ -45,6 +45,12 @@ export const getReport = async (req: Request, res: Response) => {
 export const createReport = async (req: AuthRequest, res: Response) => {
   try {
     const files = (req.files as Express.Multer.File[]) || [];
+    if (files.length === 0) {
+      return res.status(400).json({
+        error:
+          "No image files were received. Add at least one photo (JPG, PNG, HEIC, etc.) or check that the form field name is \"photos\"."
+      });
+    }
     const { latitude, longitude, severity, description, anonymous, takenAt } = req.body;
     let tags: string[] = [];
     try { tags = JSON.parse(req.body.tags || "[]"); } catch {}
