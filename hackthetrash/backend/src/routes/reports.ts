@@ -9,13 +9,16 @@ import {
   updateStatus
 } from "../controllers/reportController";
 import { optionalAuth } from "../middleware/auth";
+import { useMemoryUploads } from "../services/reportPhotoUpload";
 
 const router = Router();
 
-const storage = multer.diskStorage({
-  destination: (_req, _file, cb) => cb(null, path.join(__dirname, "../../uploads")),
-  filename: (_req, file, cb) => cb(null, `${uuid()}${path.extname(file.originalname)}`)
-});
+const storage = useMemoryUploads()
+  ? multer.memoryStorage()
+  : multer.diskStorage({
+      destination: (_req, _file, cb) => cb(null, path.join(__dirname, "../../uploads")),
+      filename: (_req, file, cb) => cb(null, `${uuid()}${path.extname(file.originalname)}`)
+    });
 const upload = multer({
   storage,
   limits: { fileSize: 10 * 1024 * 1024 }, // 10MB

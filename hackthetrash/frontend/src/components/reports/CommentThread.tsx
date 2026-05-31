@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useI18n } from "@/lib/i18n";
-import { useAuth, API_URL } from "@/lib/auth";
+import { useAuth } from "@/lib/auth";
+import { getApiBase } from "@/lib/apiBase";
 
 type Comment = {
   id: string;
@@ -22,7 +23,7 @@ export default function CommentThread({ reportId }: { reportId: string }) {
   const [submitting, setSubmitting] = useState(false);
 
   const load = () => {
-    fetch(`${API_URL}/api/reports/${reportId}/comments`)
+    fetch(`${getApiBase()}/api/reports/${reportId}/comments`)
       .then((r) => r.json())
       .then((d) => setComments(d.comments ?? []))
       .catch(() => setComments([]))
@@ -38,7 +39,7 @@ export default function CommentThread({ reportId }: { reportId: string }) {
     try {
       const headers: Record<string, string> = { "Content-Type": "application/json" };
       if (token) headers.Authorization = `Bearer ${token}`;
-      const res = await fetch(`${API_URL}/api/reports/${reportId}/comments`, {
+      const res = await fetch(`${getApiBase()}/api/reports/${reportId}/comments`, {
         method: "POST",
         headers,
         body: JSON.stringify({

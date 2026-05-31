@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useI18n } from "@/lib/i18n";
+import { getApiBase } from "@/lib/apiBase";
 
 type Report = {
   id: string;
@@ -20,7 +21,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"}/api/reports`)
+    fetch(`${getApiBase()}/api/reports`)
       .then((r) => r.json())
       .then((d) => setReports(d.reports ?? []))
       .catch(() => setReports([]))

@@ -4,8 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { RequireAuth, useAuth } from "@/lib/auth";
 import { useI18n } from "@/lib/i18n";
 import Icon from "@/components/icons/Icon";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+import { getApiBase, fullPhotoUrl } from "@/lib/apiBase";
 
 type Report = {
   id: string;
@@ -32,8 +31,6 @@ const STATUS_BADGE: Record<string, string> = {
 };
 
 const STATUS_FILTERS = ["all", "reported", "verified", "cleaning", "cleaned", "rejected"];
-
-const fullPhotoUrl = (u: string) => (u.startsWith("http") ? u : `${API_URL}${u}`);
 
 function AdminInner() {
   const { user, logout, apiFetch } = useAuth();

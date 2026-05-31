@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useI18n } from "@/lib/i18n";
-import { useAuth, API_URL } from "@/lib/auth";
+import { useAuth } from "@/lib/auth";
+import { getApiBase } from "@/lib/apiBase";
 
 const REASONS = ["spam", "duplicate", "inaccurate", "offensive", "other"] as const;
 type Reason = typeof REASONS[number];
@@ -26,7 +27,7 @@ export default function FlagButton({ reportId }: { reportId: string }) {
     try {
       const headers: Record<string, string> = { "Content-Type": "application/json" };
       if (token) headers.Authorization = `Bearer ${token}`;
-      const res = await fetch(`${API_URL}/api/reports/${reportId}/flags`, {
+      const res = await fetch(`${getApiBase()}/api/reports/${reportId}/flags`, {
         method: "POST",
         headers,
         body: JSON.stringify({ reason, note: note.trim() || undefined })

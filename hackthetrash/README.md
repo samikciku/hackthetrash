@@ -33,9 +33,13 @@ Illegal trash dumps pollute our forests, rivers, and neighborhoods. **HackTheTra
 | Mobile app | React Native + Expo + Leaflet (WebView) |
 | Backend | Node.js + Express + TypeScript |
 | Database | PostgreSQL + PostGIS |
-| Storage | AWS S3 / Cloudinary |
+| Storage | Vercel Blob (production) / local disk (Docker dev) |
 | Auth | JWT |
-| Hosting | Vercel + Railway + EAS Build |
+| Hosting | Vercel (Next + Express serverless) — [docs/VERCEL.md](docs/VERCEL.md) · Expo EAS (mobile) |
+
+### Full-stack setup (backend, DB, Vercel dashboard)
+
+For a **complete walkthrough** — local Express + Postgres, migrations, env vars, and **what to click in Vercel** (Storage, Blob, Root Directory, redeploy) — see **[docs/FULL-STACK-IMPLEMENTATION.md](docs/FULL-STACK-IMPLEMENTATION.md)**.
 
 ## 📂 Project Structure
 

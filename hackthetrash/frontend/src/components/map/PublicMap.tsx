@@ -8,8 +8,7 @@ import { useSearchParams } from "next/navigation";
 import { useI18n } from "@/lib/i18n";
 import CommentThread from "@/components/reports/CommentThread";
 import FlagButton from "@/components/reports/FlagButton";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+import { getApiBase, fullPhotoUrl } from "@/lib/apiBase";
 
 const colorIcon = (color: string) =>
   L.divIcon({
@@ -42,9 +41,6 @@ type Report = {
   takenAt?: string;
   taken_at?: string;
 };
-
-// Helper: prepend API base to relative photo URLs
-const fullPhotoUrl = (u: string) => (u.startsWith("http") ? u : `${API_URL}${u}`);
 
 // Helper: pick photo URLs from either field name
 const getPhotos = (r: Report): string[] => r.photoUrls ?? r.photo_urls ?? [];
@@ -89,12 +85,12 @@ export default function PublicMap() {
   const { t } = useI18n();
 
   // /map?lat=...&lng=...&id=... will fly to that point (used after submission)
-  const flyLat = params.get("lat");
-  const flyLng = params.get("lng");
+  const flyLat = params?.get("lat");
+  const flyLng = params?.get("lng");
   const flyTarget: [number, number] | null =
     flyLat && flyLng ? [Number(flyLat), Number(flyLng)] : null;
-  const highlightId = params.get("id");
-  const justSubmitted = params.get("just") === "1";
+  const highlightId = params?.get("id");
+  const justSubmitted = params?.get("just") === "1";
 
   // Toast banner shown right after a successful submission. Auto-fades after
   // ~6s; the URL is left intact so a refresh re-shows it (cheap + obvious).
@@ -106,7 +102,7 @@ export default function PublicMap() {
   }, [justSubmitted]);
 
   const load = () => {
-    fetch(`${API_URL}/api/reports`)
+    fetch(`${getApiBase()}/api/reports`)
       .then((r) => r.json())
       .then((data) => setReports(data.reports ?? []))
       .catch(() => {

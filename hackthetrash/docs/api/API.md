@@ -1,6 +1,11 @@
 # 📡 HackTheTrash API Reference
 
-Base URL: `http://localhost:4000/api`
+**Base URL**
+
+- **Local (Express on port 4000):** `http://localhost:4000` — API routes are under `/api/...` (e.g. `http://localhost:4000/api/reports`).
+- **Production (Vercel, same host as the site):** `https://your-deployment.vercel.app` — use **`/api/...`** on that same origin (do not set `NEXT_PUBLIC_API_URL` so the web app uses relative URLs).
+
+This document uses path suffixes like `/reports`; the full path is **`/api/reports`** (Express mounts routers under `/api`).
 
 ## Reports
 

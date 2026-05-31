@@ -2,8 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { useRouter, usePathname } from "next/navigation";
-
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+import { getApiBase } from "./apiBase";
 const TOKEN_KEY = "htt-admin-token";
 const USER_KEY = "htt-admin-user";
 
@@ -58,8 +57,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const login: AuthCtx["login"] = async (email, password) => {
+    const base = getApiBase();
     try {
-      const res = await fetch(`${API_URL}/api/auth/login`, {
+      const res = await fetch(`${base}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password })
@@ -76,7 +76,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         msg.toLowerCase().includes("failed to fetch") ||
         msg.toLowerCase().includes("networkerror") ||
         msg.toLowerCase().includes("load failed")
-          ? `Cannot reach the backend at ${API_URL}. Is it running? (npm run dev in /backend)`
+          ? `Cannot reach the backend at ${base || "this origin"}. Is it running? (npm run dev in /backend or integrated Next API)`
           : msg;
       return { ok: false, error: friendly };
     }
@@ -90,7 +90,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       ...((init.headers as Record<string, string> | undefined) || {})
     };
     if (token) headers.Authorization = `Bearer ${token}`;
-    return fetch(`${API_URL}${path}`, { ...init, headers }).then(async (res) => {
+    return fetch(`${getApiBase()}${path}`, { ...init, headers }).then(async (res) => {
       if (res.status === 401) {
         // Token expired/invalid -> drop
         persist(null, null);

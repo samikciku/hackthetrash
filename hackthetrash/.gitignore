@@ -3,6 +3,7 @@ dist/
 .next/
 .env
 .env.local
+.env.vercel-prep.txt
 *.log
 *.tsbuildinfo
 .DS_Store

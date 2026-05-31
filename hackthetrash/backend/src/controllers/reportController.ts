@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import path from "path";
 import { ReportRepo } from "../models/ReportRepo";
 import { autoModerate } from "../ai/moderation";
 import { notifyStatusChange } from "../services/push";
@@ -7,6 +6,7 @@ import { evaluateCountBadges } from "../models/Badge";
 import { statsForUser } from "../services/profileStats";
 import { sendStatusEmail } from "../services/email";
 import { AuthRequest } from "../middleware/auth";
+import { persistReportPhotoUrls, tempPathsForModeration } from "../services/reportPhotoUpload";
 
 const USE_DB = !!process.env.DATABASE_URL;
 
@@ -56,13 +56,19 @@ export const createReport = async (req: AuthRequest, res: Response) => {
     const isAnonymous = anonymous === "true" || !req.auth;
     const userId = isAnonymous ? null : req.auth?.sub ?? null;
 
-    // Run AI moderation on uploaded images
-    const imagePaths = files.map((f) => path.join(__dirname, "../../uploads", f.filename));
-    const ai = await autoModerate(imagePaths);
-    console.log(`[AI] best=${ai.best.label} score=${ai.best.score} -> ${ai.recommendation}`);
+    const { paths: imagePaths, cleanup } = tempPathsForModeration(files);
+    let ai;
+    try {
+      ai = await autoModerate(imagePaths);
+      console.log(`[AI] best=${ai.best.label} score=${ai.best.score} -> ${ai.recommendation}`);
+    } finally {
+      cleanup();
+    }
 
     let createdId: string;
     let response: any;
+
+    const photoUrls = await persistReportPhotoUrls(files);
 
     if (USE_DB) {
       const created = await ReportRepo.create({
@@ -76,7 +82,6 @@ export const createReport = async (req: AuthRequest, res: Response) => {
         aiScore: ai.best.score,
         aiLabel: ai.best.label
       });
-      const photoUrls = files.map((f) => `/api/uploads/${f.filename}`);
       await ReportRepo.addPhotos(created.id, photoUrls);
 
       // Auto-status from AI
@@ -99,7 +104,7 @@ export const createReport = async (req: AuthRequest, res: Response) => {
               : ai.recommendation === "auto_reject" ? "rejected"
               : "reported",
         anonymous: isAnonymous,
-        photoUrls: files.map((f) => `/api/uploads/${f.filename}`),
+        photoUrls,
         createdAt: new Date().toISOString(),
         takenAt: typeof takenAt === "string" && !isNaN(Date.parse(takenAt)) ? takenAt : undefined,
         userId: userId ?? undefined

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import exifr from "exifr";
 import { useI18n } from "@/lib/i18n";
+import { getApiBase } from "@/lib/apiBase";
 
 const LocationPicker = dynamic(
   () => import("@/components/map/LocationPicker"),
@@ -133,7 +134,7 @@ export default function ReportPage() {
       if (takenAt) fd.append("takenAt", takenAt.toISOString());
 
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"}/api/reports`,
+        `${getApiBase()}/api/reports`,
         { method: "POST", body: fd }
       );
       if (!res.ok) throw new Error("Submission failed");

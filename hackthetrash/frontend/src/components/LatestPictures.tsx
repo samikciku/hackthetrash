@@ -3,8 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+import { getApiBase, fullPhotoUrl } from "@/lib/apiBase";
 
 const STATUS_COLORS: Record<string, string> = {
   reported: "#DC2626",
@@ -36,8 +35,6 @@ type Card = {
   createdAt?: string;
 };
 
-const fullPhotoUrl = (u: string) => (u.startsWith("http") ? u : `${API_URL}${u}`);
-
 interface Props {
   /** maximum number of photos to load into the carousel */
   limit?: number;
@@ -64,7 +61,7 @@ export default function LatestPictures({
     let alive = true;
     const load = async () => {
       try {
-        const res = await fetch(`${API_URL}/api/reports`);
+        const res = await fetch(`${getApiBase()}/api/reports`);
         if (!res.ok) throw new Error("api");
         const data = await res.json();
         const reports: Report[] = data.reports ?? [];

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useI18n } from "@/lib/i18n";
-import { API_URL } from "@/lib/auth";
+import { getApiBase } from "@/lib/apiBase";
 
 export default function EmailSubscribe() {
   const { t } = useI18n();
@@ -17,7 +17,7 @@ export default function EmailSubscribe() {
     setError(null);
     setBusy(true);
     try {
-      const res = await fetch(`${API_URL}/api/email-subscriptions`, {
+      const res = await fetch(`${getApiBase()}/api/email-subscriptions`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, region })

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n";
-import { API_URL } from "@/lib/auth";
+import { getApiBase } from "@/lib/apiBase";
 import Icon from "@/components/icons/Icon";
 
 type Badge = { code: string; awarded_at: string; title?: string; icon?: string };
@@ -47,7 +47,7 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch(`${API_URL}/api/profile/${params.id}`)
+    fetch(`${getApiBase()}/api/profile/${params.id}`)
       .then((r) => {
         if (!r.ok) throw new Error(`API ${r.status}`);
         return r.json();

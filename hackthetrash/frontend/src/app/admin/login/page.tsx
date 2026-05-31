@@ -2,7 +2,8 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useAuth, API_URL } from "@/lib/auth";
+import { useAuth } from "@/lib/auth";
+import { getApiBase } from "@/lib/apiBase";
 import { useI18n } from "@/lib/i18n";
 import Icon from "@/components/icons/Icon";
 
@@ -11,8 +12,8 @@ type BackendStatus = "checking" | "ok" | "down";
 function LoginInner() {
   const router = useRouter();
   const params = useSearchParams();
-  const next = params.get("next") || "/admin";
-  const errorParam = params.get("error");
+  const next = params?.get("next") || "/admin";
+  const errorParam = params?.get("error");
 
   const { login, user, loading: authLoading } = useAuth();
   const { t } = useI18n();
@@ -34,7 +35,7 @@ function LoginInner() {
       try {
         const ctl = new AbortController();
         const timer = setTimeout(() => ctl.abort(), 4000);
-        const res = await fetch(`${API_URL}/health`, { signal: ctl.signal });
+        const res = await fetch(`${getApiBase()}/api/health`, { signal: ctl.signal });
         clearTimeout(timer);
         if (alive) setBackend(res.ok ? "ok" : "down");
       } catch {
@@ -94,7 +95,7 @@ function LoginInner() {
 npm run dev`}
             </pre>
             <div className="mt-2 text-red-700/70 text-[11px]">
-              {t("admin.backendUrl")}: <span className="font-mono">{API_URL}</span>
+              {t("admin.backendUrl")}: <span className="font-mono">{getApiBase() || "(same origin)"}</span>
             </div>
           </div>
         )}

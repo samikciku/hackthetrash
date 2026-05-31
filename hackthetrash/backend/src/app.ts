@@ -15,6 +15,28 @@ export function createApp(): express.Express {
 
   app.set("trust proxy", 1);
 
+  // Next.js `pages/api/[[...slug]]` may forward `req.url` without the leading `/api`
+  // segment. Express routes are all mounted under `/api/...` — normalize so they match.
+  app.use((req, _res, next) => {
+    const raw = req.url || "/";
+    const q = raw.includes("?") ? raw.slice(raw.indexOf("?")) : "";
+    const pathOnly = raw.split("?")[0] || "/";
+    if (pathOnly === "/" || pathOnly === "") {
+      return next();
+    }
+    if (
+      pathOnly === "/api" ||
+      pathOnly.startsWith("/api/") ||
+      pathOnly.startsWith("/uploads")
+    ) {
+      return next();
+    }
+    if (pathOnly.startsWith("/")) {
+      req.url = `/api${pathOnly}${q}`;
+    }
+    next();
+  });
+
   const allowedOrigins = (process.env.CORS_ORIGINS || "*")
     .split(",")
     .map((s) => s.trim());
@@ -38,7 +60,15 @@ export function createApp(): express.Express {
   app.use("/uploads", express.static(uploadsDir));
 
   app.get("/", (_req, res) => res.json({ ok: true, service: "HackTheTrash API" }));
-  const healthPayload = () => ({ status: "healthy" as const });
+  const healthPayload = () => ({
+    status: "healthy" as const,
+    checks: {
+      databaseUrl: !!(process.env.DATABASE_URL && String(process.env.DATABASE_URL).trim()),
+      jwtSecret: !!process.env.JWT_SECRET,
+      blobToken: !!process.env.BLOB_READ_WRITE_TOKEN,
+      vercel: process.env.VERCEL === "1"
+    }
+  });
   app.get("/health", (_req, res) => res.json(healthPayload()));
   app.get("/api/health", (_req, res) => res.json(healthPayload()));
 
