@@ -1,1 +1,7 @@
-Pasted image.png
+# Repository root — minimal ignores (subfolders have their own .gitignore)
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.local
+.env.*.local
