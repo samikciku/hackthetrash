@@ -77,15 +77,15 @@ function buildHtml(reports: Report[], focus?: { lat: number; lng: number; id?: s
     maxZoom: 19
   }).addTo(map);
 
-  // Home control: tap to recentre on Pristina
+  // Home control: tap to recentre on Prishtina
   var HomeControl = L.Control.extend({
     options: { position: "topright" },
     onAdd: function () {
       var btn = L.DomUtil.create("a", "leaflet-bar");
       btn.href = "#";
-      btn.title = "Pristina";
+      btn.title = "Prishtina";
       btn.style.cssText = "display:flex;align-items:center;justify-content:center;width:auto;padding:0 10px;height:30px;background:#fff;color:#111;font:600 12px -apple-system,sans-serif;text-decoration:none";
-      btn.innerHTML = "&#127968; Pristina";
+      btn.innerHTML = "&#127968; Prishtina";
       L.DomEvent.on(btn, "click", function (e) {
         L.DomEvent.preventDefault(e);
         map.flyTo(PRISTINA, PRISTINA_ZOOM, { duration: 1 });
@@ -104,7 +104,7 @@ function buildHtml(reports: Report[], focus?: { lat: number; lng: number; id?: s
   }
 
   REPORTS.forEach(function(r) {
-    var color = STATUS_COLORS[r.status] || "#999";
+    var color = STATUS_COLORS[r.status] || STATUS_COLORS.reported;
     var marker = L.marker([r.lat, r.lng], { icon: pinIcon(color) }).addTo(map);
     var photosHtml = "";
     if (r.photos && r.photos.length) {
@@ -165,7 +165,7 @@ export default function MapScreen({ route }: Props) {
       // Fallback demo
       setReports([
         { id: "demo1", latitude: 42.6629, longitude: 21.1655, status: "reported", description: "Demo: plastic bottles near Skanderbeg Square" },
-        { id: "demo2", latitude: 42.6699, longitude: 21.1782, status: "cleaned", description: "Demo: cleaned debris in Sunny Hill" }
+        { id: "demo2", latitude: 42.6699, longitude: 21.1782, status: "reported", description: "Demo: debris in Sunny Hill" }
       ]);
     } finally {
       setLoading(false);

@@ -29,7 +29,7 @@ const memUsers: User[] = (() => {
       password_hash: bcrypt.hashSync(adminPlain, 10),
       name: "Admin",
       role: "admin",
-      region: "Pristina"
+      region: "Prishtina"
     }
   ];
 })();

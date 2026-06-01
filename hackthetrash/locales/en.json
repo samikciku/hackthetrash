@@ -1,7 +1,7 @@
 {
   "app": {
     "name": "HackTheTrash",
-    "tagline": "Together, let's clean up Pristina."
+    "tagline": "Together, let's clean up Prishtina."
   },
   "nav": {
     "home": "Home",
@@ -17,7 +17,7 @@
   "home": {
     "ctaReport": "Report Trash",
     "ctaMap": "View Map",
-    "subtitle": "Spot illegal trash in Pristina? Snap a photo, drop a pin, change your city.",
+    "subtitle": "Spot illegal trash in Prishtina? Snap a photo, drop a pin, change your city.",
     "howItWorks": "How it works",
     "step1": "Snap",
     "step1d": "Photograph the dumped trash",
@@ -30,7 +30,7 @@
       "cleaned": "{{count}} cleaned",
       "cities": "{{count}} neighbourhoods"
     },
-    "pristina": "A pilot project for the city of Pristina - help us map illegal dumps in your neighbourhood."
+    "pristina": "A pilot project for the city of Prishtina - help us map illegal dumps in your neighbourhood."
   },
   "report": {
     "title": "Report Illegal Trash",
@@ -210,7 +210,7 @@
   },
   "latestPictures": {
     "title": "Latest pictures of trash",
-    "subtitle": "Reports from the last {{days}} days in Pristina",
+    "subtitle": "Reports from the last {{days}} days in Prishtina",
     "noPhotos": "No reports with photos yet. Be the first to report!",
     "viewOnMap": "View on map",
     "viewAll": "View all on map",

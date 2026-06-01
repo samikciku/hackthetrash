@@ -7,7 +7,7 @@ import { getApiBase } from "@/lib/apiBase";
 export default function EmailSubscribe() {
   const { t } = useI18n();
   const [email, setEmail] = useState("");
-  const [region, setRegion] = useState("Pristina");
+  const [region, setRegion] = useState("Prishtina");
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);

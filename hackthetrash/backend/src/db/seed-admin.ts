@@ -9,7 +9,7 @@ async function run() {
   const email = (process.env.ADMIN_EMAIL || "admin@hackthetrash.org").toLowerCase();
   const password = process.env.ADMIN_PASSWORD || "ChangeMe!2026";
   const name = process.env.ADMIN_NAME || "Admin";
-  const region = process.env.ADMIN_REGION || "Pristina";
+  const region = process.env.ADMIN_REGION || "Prishtina";
 
   const hash = await bcrypt.hash(password, 12);
   await query(

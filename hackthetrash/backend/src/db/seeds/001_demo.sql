@@ -1,8 +1,8 @@
--- Demo seed data for Pristina, Kosovo
+-- Demo seed data for Prishtina, Kosovo
 INSERT INTO users (id, email, password_hash, name, role, region)
 VALUES
   ('11111111-1111-1111-1111-111111111111', 'admin@hackthetrash.org', 'replace_with_bcrypt', 'Admin', 'admin', 'global'),
-  ('22222222-2222-2222-2222-222222222222', 'pristina@city.gov',      'replace_with_bcrypt', 'Komuna e Prishtines', 'authority', 'Pristina')
+  ('22222222-2222-2222-2222-222222222222', 'pristina@city.gov',      'replace_with_bcrypt', 'Komuna e Prishtines', 'authority', 'Prishtina')
 ON CONFLICT (email) DO NOTHING;
 
 INSERT INTO reports (id, user_id, geom, latitude, longitude, description, severity, tags, status, anonymous)
@@ -18,5 +18,5 @@ VALUES
   ('aaaaaaa1-0000-0000-0000-000000000003',
    NULL,
    ST_SetSRID(ST_MakePoint(21.1565, 42.6651), 4326),
-   42.6651, 21.1565, 'E-waste pile near UCK Street', 'medium', ARRAY['E-waste'], 'verified', TRUE)
+   42.6651, 21.1565, 'E-waste pile near UCK Street', 'medium', ARRAY['E-waste'], 'reported', TRUE)
 ON CONFLICT (id) DO NOTHING;

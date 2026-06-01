@@ -8,12 +8,12 @@ import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
   title: "HackTheTrash",
-  description: "Crowdsourced reporting of illegal landfills in Pristina"
+  description: "Crowdsourced reporting of illegal landfills in Prishtina"
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="sq">
       <body>
         <I18nProvider>
           <AuthProvider>

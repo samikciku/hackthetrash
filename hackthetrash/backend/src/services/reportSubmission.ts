@@ -79,11 +79,8 @@ export async function createReportSubmission(args: {
     });
     await ReportRepo.addPhotos(created.id, photoUrls);
 
-    if (ai.recommendation === "auto_verify") {
-      await ReportRepo.updateStatus(created.id, "verified", "AI auto-verified");
-    } else if (ai.recommendation === "auto_reject") {
-      await ReportRepo.updateStatus(created.id, "rejected", "AI auto-rejected");
-    }
+    // Status stays `reported` until a human moderator acts (map = red). AI
+    // fields + `ai.recommendation` are hints for the admin panel only.
     response = { ...created, photo_urls: photoUrls, ai };
   } else {
     const report: Report = {
@@ -93,12 +90,7 @@ export async function createReportSubmission(args: {
       severity: severity || "medium",
       description: description || "",
       tags,
-      status:
-        ai.recommendation === "auto_verify"
-          ? "verified"
-          : ai.recommendation === "auto_reject"
-            ? "rejected"
-            : "reported",
+      status: "reported",
       anonymous: isAnonymous,
       photoUrls,
       createdAt: new Date().toISOString(),

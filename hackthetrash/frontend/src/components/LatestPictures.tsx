@@ -13,6 +13,9 @@ const STATUS_COLORS: Record<string, string> = {
   rejected: "#6B7280"
 };
 
+const cardAccentColor = (status: string | undefined) =>
+  STATUS_COLORS[status ?? ""] ?? STATUS_COLORS.reported;
+
 type Report = {
   id: string;
   latitude: number;
@@ -207,7 +210,7 @@ export default function LatestPictures({
                   <div className="flex items-center gap-2 mb-1">
                     <span
                       className="inline-block w-2.5 h-2.5 rounded-full ring-2 ring-white"
-                      style={{ background: STATUS_COLORS[c.status] ?? "#999" }}
+                      style={{ background: cardAccentColor(c.status) }}
                     />
                     <span className="text-white text-xs font-semibold capitalize">
                       {t(`status.${c.status}`)}

@@ -14,14 +14,14 @@ function Probe() {
 }
 
 describe("I18nProvider", () => {
-  it("returns the English tagline by default", () => {
+  it("returns the Albanian tagline by default", () => {
     render(
       <I18nProvider>
         <Probe />
       </I18nProvider>
     );
-    expect(screen.getByTestId("tagline").textContent).toMatch(/Pristina/);
-    expect(screen.getByTestId("map").textContent).toBe("Map");
+    expect(screen.getByTestId("tagline").textContent).toMatch(/Prishtin/i);
+    expect(screen.getByTestId("map").textContent).toBe("Harta");
   });
 
   it("falls back to the key for unknown lookups", () => {

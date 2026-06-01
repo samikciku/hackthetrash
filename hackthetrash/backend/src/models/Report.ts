@@ -37,7 +37,7 @@ export const reportsDB: Report[] = [
     severity: "large",
     description: "Construction debris in Sunny Hill",
     tags: ["Construction"],
-    status: "cleaned",
+    status: "reported",
     anonymous: true,
     photoUrls: [],
     createdAt: new Date().toISOString()

@@ -2,12 +2,9 @@ import { Router } from "express";
 import { requireAuth, requireRole, AuthRequest } from "../middleware/auth";
 import { ReportRepo } from "../models/ReportRepo";
 import { reportsDB } from "../models/Report";
-import { notifyStatusChange } from "../services/push";
 import { Flags } from "../models/Flag";
-import { sendStatusEmail } from "../services/email";
-import { evaluateCountBadges } from "../models/Badge";
-import { statsForUser } from "../services/profileStats";
 import adminUsersRouter from "./admin-users";
+import { applyAdminReportDecision } from "../services/adminReportDecision";
 
 const router = Router();
 const USE_DB = !!process.env.DATABASE_URL;
@@ -43,48 +40,16 @@ const applyDecision = async (
   res: any,
   status: "verified" | "rejected" | "cleaning" | "cleaned"
 ) => {
-  try {
-    const id = req.params.id;
-    const note = (req.body && req.body.note) || `Set to ${status} by ${req.auth?.email}`;
-
-    if (USE_DB) {
-      await ReportRepo.updateStatus(id, status, note, req.auth?.sub);
-      const r = await ReportRepo.findById(id);
-      if (!r) return res.status(404).json({ error: "Not found" });
-      notifyStatusChange({
-        id: r.id, status: r.status, latitude: r.latitude, longitude: r.longitude
-      }).catch(() => {});
-      sendStatusEmail({
-        id: r.id, status: r.status, latitude: r.latitude, longitude: r.longitude
-      }).catch(() => {});
-      if (r.user_id) {
-        const stats = await statsForUser(r.user_id);
-        evaluateCountBadges(r.user_id, stats.totalReports, {
-          hasVerified: stats.hasVerified, hasCleaned: stats.hasCleaned
-        }).catch(() => {});
-      }
-      return res.json(r);
-    }
-
-    const r = reportsDB.find((x) => x.id === id);
-    if (!r) return res.status(404).json({ error: "Not found" });
-    r.status = status;
-    notifyStatusChange({
-      id: r.id, status: r.status, latitude: r.latitude, longitude: r.longitude
-    }).catch(() => {});
-    sendStatusEmail({
-      id: r.id, status: r.status, latitude: r.latitude, longitude: r.longitude
-    }).catch(() => {});
-    if (r.userId) {
-      const stats = await statsForUser(r.userId);
-      evaluateCountBadges(r.userId, stats.totalReports, {
-        hasVerified: stats.hasVerified, hasCleaned: stats.hasCleaned
-      }).catch(() => {});
-    }
-    res.json(r);
-  } catch (e: any) {
-    res.status(500).json({ error: e.message });
-  }
+  const id = req.params.id;
+  const note = (req.body && req.body.note) || `Set to ${status} by ${req.auth?.email}`;
+  const out = await applyAdminReportDecision({
+    id,
+    status,
+    note,
+    updatedBy: req.auth?.sub
+  });
+  if (!out.ok) return res.status(out.status).json({ error: out.error });
+  return res.json(out.report);
 };
 
 router.patch("/reports/:id/approve",  (req, res) => applyDecision(req, res, "verified"));

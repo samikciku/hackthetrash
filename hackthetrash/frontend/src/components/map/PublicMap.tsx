@@ -25,6 +25,9 @@ const STATUS_COLORS: Record<string, string> = {
   rejected: "#6B7280"
 };
 
+const markerColor = (status: string | undefined) =>
+  STATUS_COLORS[status ?? ""] ?? STATUS_COLORS.reported;
+
 type Report = {
   id: string;
   latitude: number;
@@ -51,7 +54,7 @@ const getCreated = (r: Report): string | undefined => r.createdAt ?? r.created_a
 // Helper: pick takenAt (when the photo was taken, from EXIF) from either field name
 const getTaken = (r: Report): string | undefined => r.takenAt ?? r.taken_at;
 
-// Pristina city centre (used as the default starting view of the map)
+// Prishtina city centre (used as the default starting view of the map)
 const PRISTINA_CENTER: [number, number] = [42.6629, 21.1655];
 const PRISTINA_ZOOM = 13;
 
@@ -110,8 +113,8 @@ export default function PublicMap() {
         setReports([
           { id: "demo1", latitude: 42.6629, longitude: 21.1655, status: "reported",
             description: "Demo: plastic bottles near Skanderbeg Square", severity: "medium", tags: ["Plastic"] },
-          { id: "demo2", latitude: 42.6699, longitude: 21.1782, status: "cleaned",
-            description: "Demo: cleaned construction debris in Sunny Hill", severity: "large", tags: ["Construction"] }
+          { id: "demo2", latitude: 42.6699, longitude: 21.1782, status: "reported",
+            description: "Demo: construction debris in Sunny Hill", severity: "large", tags: ["Construction"] }
         ]);
       })
       .finally(() => setLoading(false));
@@ -180,7 +183,7 @@ export default function PublicMap() {
             <Marker
               key={r.id}
               position={[r.latitude, r.longitude]}
-              icon={colorIcon(STATUS_COLORS[r.status] ?? "#999")}
+              icon={colorIcon(markerColor(r.status))}
               ref={(m) => {
                 // Auto-open the popup on the freshly submitted report so the
                 // user immediately sees confirmation + details.
@@ -229,7 +232,7 @@ export default function PublicMap() {
                   <div style={{
                     fontSize: 11,
                     fontWeight: 700,
-                    color: STATUS_COLORS[r.status] ?? "#999",
+                    color: markerColor(r.status),
                     marginTop: 4,
                     textTransform: "capitalize"
                   }}>
@@ -265,7 +268,7 @@ export default function PublicMap() {
                     </div>
                   )}
 
-                  <div style={{ fontWeight: 700, color: STATUS_COLORS[r.status] ?? "#999" }}>
+                  <div style={{ fontWeight: 700, color: markerColor(r.status) }}>
                     ● {t(`status.${r.status}`)}{" "}
                     {isHighlight && <span style={{ fontSize: 11, color: "#16A34A" }}>{t("map.yourReport")}</span>}
                   </div>
@@ -310,9 +313,9 @@ export default function PublicMap() {
         <button
           onClick={goHome}
           className="bg-white shadow rounded-full px-3 py-2 text-sm font-medium border hover:bg-gray-50"
-          title="Pristina"
+          title="Prishtina"
         >
-          🏠 Pristina
+          🏠 Prishtina
         </button>
         <button
           onClick={load}

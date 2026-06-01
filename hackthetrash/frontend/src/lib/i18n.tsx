@@ -28,17 +28,12 @@ function interpolate(value: string, vars?: Record<string, string | number>): str
 }
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>("en");
+  const [locale, setLocaleState] = useState<Locale>("sq");
 
   useEffect(() => {
     const stored = (typeof window !== "undefined" && localStorage.getItem(STORAGE_KEY)) as Locale | null;
     if (stored && (SUPPORTED as readonly string[]).includes(stored)) {
       setLocaleState(stored);
-      return;
-    }
-    if (typeof navigator !== "undefined") {
-      const nav = navigator.language.slice(0, 2).toLowerCase();
-      if ((SUPPORTED as readonly string[]).includes(nav)) setLocaleState(nav as Locale);
     }
   }, []);
 

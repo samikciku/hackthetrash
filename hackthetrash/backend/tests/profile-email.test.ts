@@ -36,7 +36,7 @@ describe("profile + email subscription endpoints", () => {
   it("subscribes and unsubscribes via token", async () => {
     const sub = await request(app)
       .post("/api/email-subscriptions")
-      .send({ email: "citizen@example.com", region: "Pristina" });
+      .send({ email: "citizen@example.com", region: "Prishtina" });
     expect(sub.status).toBe(201);
     const url: string = sub.body.unsubscribe_url;
     expect(url).toContain("/api/email-subscriptions/unsubscribe/");

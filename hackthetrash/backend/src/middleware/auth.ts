@@ -31,20 +31,87 @@ export function verifyToken(token: string): AuthPayload | null {
   }
 }
 
+export type BearerAuthResult =
+  | { ok: true; auth: AuthPayload }
+  | { ok: false; status: number; error: string };
+
+/**
+ * JWT + DB user check for App Router and Express. Never throws; DB errors
+ * become 503 so callers don't hang (unhandled async middleware → gateway 504).
+ */
+export async function authenticateBearerFromHeader(
+  authorizationHeader: string | undefined
+): Promise<BearerAuthResult> {
+  try {
+    const header = authorizationHeader || "";
+    const token = header.startsWith("Bearer ") ? header.slice(7) : null;
+    if (!token) {
+      return { ok: false, status: 401, error: "Missing Authorization header" };
+    }
+    const payload = verifyToken(token);
+    if (!payload) {
+      return { ok: false, status: 401, error: "Invalid or expired token" };
+    }
+    const user = await Users.findById(payload.sub);
+    if (!user) {
+      return { ok: false, status: 401, error: "Account no longer exists" };
+    }
+    if (user.role !== payload.role) {
+      return { ok: false, status: 401, error: "Role changed, please re-login" };
+    }
+    return { ok: true, auth: payload };
+  } catch (e: unknown) {
+    console.error("[authenticateBearerFromHeader]", e);
+    return {
+      ok: false,
+      status: 503,
+      error: e instanceof Error ? e.message : "Database temporarily unavailable"
+    };
+  }
+}
+
+export function authHasAnyRole(auth: AuthPayload, ...allowed: Role[]): boolean {
+  return allowed.includes(auth.role);
+}
+
+/** Soft bearer parse for optional auth; never throws. */
+export async function tryOptionalBearerFromHeader(
+  authorizationHeader: string | undefined
+): Promise<AuthPayload | undefined> {
+  try {
+    const header = authorizationHeader || "";
+    const token = header.startsWith("Bearer ") ? header.slice(7) : null;
+    if (!token) return undefined;
+    const payload = verifyToken(token);
+    if (!payload) return undefined;
+    const user = await Users.findById(payload.sub);
+    if (user && user.role === payload.role) return payload;
+    return undefined;
+  } catch (e: unknown) {
+    console.error("[tryOptionalBearerFromHeader]", e);
+    return undefined;
+  }
+}
+
+function authorizationHeaderFromReq(req: Request): string {
+  const raw = req.headers.authorization;
+  return (Array.isArray(raw) ? raw[0] : raw) || "";
+}
+
 export const requireAuth = async (req: AuthRequest, res: Response, next: NextFunction) => {
-  const header = req.headers.authorization || "";
-  const token = header.startsWith("Bearer ") ? header.slice(7) : null;
-  if (!token) return res.status(401).json({ error: "Missing Authorization header" });
-  const payload = verifyToken(token);
-  if (!payload) return res.status(401).json({ error: "Invalid or expired token" });
-
-  // Verify user still exists and role hasn't been revoked
-  const user = await Users.findById(payload.sub);
-  if (!user) return res.status(401).json({ error: "Account no longer exists" });
-  if (user.role !== payload.role) return res.status(401).json({ error: "Role changed, please re-login" });
-
-  req.auth = payload;
-  next();
+  try {
+    const result = await authenticateBearerFromHeader(authorizationHeaderFromReq(req));
+    if (!result.ok) {
+      return res.status(result.status).json({ error: result.error });
+    }
+    req.auth = result.auth;
+    next();
+  } catch (e: unknown) {
+    console.error("[requireAuth]", e);
+    return res.status(503).json({
+      error: e instanceof Error ? e.message : "Authentication failed"
+    });
+  }
 };
 
 /**
@@ -54,13 +121,12 @@ export const requireAuth = async (req: AuthRequest, res: Response, next: NextFun
  * are still allowed.
  */
 export const optionalAuth = async (req: AuthRequest, _res: Response, next: NextFunction) => {
-  const header = req.headers.authorization || "";
-  const token = header.startsWith("Bearer ") ? header.slice(7) : null;
-  if (!token) return next();
-  const payload = verifyToken(token);
-  if (!payload) return next();
-  const user = await Users.findById(payload.sub);
-  if (user && user.role === payload.role) req.auth = payload;
+  try {
+    const auth = await tryOptionalBearerFromHeader(authorizationHeaderFromReq(req));
+    if (auth) req.auth = auth;
+  } catch (e: unknown) {
+    console.error("[optionalAuth]", e);
+  }
   next();
 };
 

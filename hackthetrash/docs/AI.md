@@ -26,11 +26,11 @@ HF_MODEL=google/vit-base-patch16-224
 1. User submits photos.
 2. `autoModerate()` runs every photo through the classifier.
 3. Each image gets a `{ label, score }` result.
-4. Best score across photos drives a recommendation:
+4. Best score across photos drives a recommendation (for moderators / UI only):
    - `auto_verify` (label=trash, score >= 0.85)
    - `auto_reject` (label=not_trash, score >= 0.85)
    - `queue_for_review` (else)
-5. Report is saved with `ai_score` + `ai_label`; status set automatically.
+5. Report is saved with `ai_score` + `ai_label`. **Workflow status always starts as `reported`** (red on the map) until an admin/moderator approves, rejects, or moves it to cleaning/cleaned.
 
 ## Replacing with a custom model
 

@@ -27,6 +27,7 @@ export async function autoModerate(imagePaths: string[]): Promise<{
   const best = perImage.reduce((a, b) => (b.score > a.score ? b : a),
     { label: "uncertain", score: 0 } as ClassificationResult);
 
+  // Advisory only — `reportSubmission` keeps new reports as `reported` until a moderator changes status.
   let recommendation: "auto_verify" | "queue_for_review" | "auto_reject";
   if (best.label === "trash" && best.score >= 0.85) recommendation = "auto_verify";
   else if (best.label === "not_trash" && best.score >= 0.85) recommendation = "auto_reject";
