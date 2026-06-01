@@ -62,7 +62,7 @@ Set these for **Production** (and Preview if you want previews to work).
 | Variable | Purpose |
 |----------|---------|
 | `NEXT_PUBLIC_API_URL` | Leave **unset** for same-origin `/api` (recommended on Vercel). Set only if the API is on another host (e.g. local dev: `http://localhost:4000`). |
-| `AI_PROVIDER` | `mock` (default) or `huggingface` with `HF_API_TOKEN` / `HF_MODEL`. |
+| `AI_PROVIDER` | `mock` (default) or `huggingface`. **Hugging Face calls only run if you also set `AI_USE_HUGGINGFACE=1`** plus `HF_API_TOKEN` / `HF_MODEL`. |
 | `SMTP_*` | Outgoing email; see `backend/.env.example`. |
 
 Vercel sets `VERCEL=1` automatically — the backend uses that to switch multer to **memory** storage and **Blob** for photo persistence.
@@ -83,6 +83,8 @@ Expo / React Native still needs a **reachable API base URL** (e.g. your `https:/
 
 ## 6. Limits and caveats
 
+- **POST / JSON / login**: On Vercel, Next’s `IncomingMessage` passed straight into `serverless-http` + Express could report `Content-Length` > 0 while the body stream was already empty (`request.size.invalid` / **504** on `/api/auth/login`). The gateway in `pages/api/[[...slug]].ts` **buffers** the body and replays it into a fresh `http.IncomingMessage` so `express.json()` and Multer see a consistent stream.
+- **Report submit timeouts**: If Hugging Face is enabled (`AI_PROVIDER=huggingface` **and** `AI_USE_HUGGINGFACE=1`), inference can still be slow on cold models. The backend uses **HTTP timeouts** on HF (`AI_HF_FETCH_TIMEOUT_MS`), **parallel** image moderation + Blob uploads, and a **per-image budget** (`AI_MODERATION_PER_IMAGE_BUDGET_MS`). `frontend/vercel.json` sets **`maxDuration`: 120** for the catch-all API route (requires a Vercel plan that allows >60s if you raise it further).
 - **Serverless timeouts**: long-running jobs or huge uploads may hit Vercel function limits; keep payloads reasonable.
 - **Cold starts**: first request after idle can be slower.
 - **Webhooks / long polling**: prefer external workers or Vercel Cron if you add them later.

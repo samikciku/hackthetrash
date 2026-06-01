@@ -34,7 +34,7 @@ export class MockClassifier implements IClassifier {
 
 /**
  * HuggingFace Inference API classifier (skeleton).
- * Set HF_API_TOKEN and HF_MODEL env vars.
+ * Set HF_API_TOKEN, HF_MODEL, AI_PROVIDER=huggingface, and AI_USE_HUGGINGFACE=1.
  */
 export class HuggingFaceClassifier implements IClassifier {
   constructor(
@@ -48,17 +48,30 @@ export class HuggingFaceClassifier implements IClassifier {
       return new MockClassifier().classify(imagePath);
     }
     const data = fs.readFileSync(imagePath);
-    const res = await fetch(
-      `https://api-inference.huggingface.co/models/${this.model}`,
-      {
+    const timeoutMs = Math.min(
+      60_000,
+      Math.max(3_000, Number(process.env.AI_HF_FETCH_TIMEOUT_MS || 12_000))
+    );
+    const ac = new AbortController();
+    const timer = setTimeout(() => ac.abort(), timeoutMs);
+    let res: Response;
+    try {
+      res = await fetch(`https://api-inference.huggingface.co/models/${this.model}`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${this.token}`,
           "Content-Type": "application/octet-stream"
         },
-        body: data
-      }
-    );
+        body: data,
+        signal: ac.signal
+      });
+    } catch (e: unknown) {
+      const aborted = e instanceof Error && e.name === "AbortError";
+      console.warn(`[AI] HF fetch ${aborted ? "timed out" : "failed"}, falling back to mock`, e);
+      return new MockClassifier().classify(imagePath);
+    } finally {
+      clearTimeout(timer);
+    }
     if (!res.ok) {
       console.warn(`[AI] HF returned ${res.status}, falling back to mock`);
       return new MockClassifier().classify(imagePath);
@@ -76,8 +89,17 @@ export class HuggingFaceClassifier implements IClassifier {
   }
 }
 
-// Factory: pick implementation based on env
+// Factory: mock by default. Hugging Face runs only with explicit opt-in (avoids accidental
+// slow/outbound calls on Vercel when AI_PROVIDER was set to huggingface without intent).
 export function makeClassifier(): IClassifier {
-  if (process.env.AI_PROVIDER === "huggingface") return new HuggingFaceClassifier();
+  const wantsHf = process.env.AI_PROVIDER === "huggingface";
+  const hfEnabled = process.env.AI_USE_HUGGINGFACE === "1";
+  if (wantsHf && !hfEnabled) {
+    console.warn(
+      "[AI] AI_PROVIDER=huggingface but AI_USE_HUGGINGFACE is not 1 — using mock classifier. " +
+        "Set AI_USE_HUGGINGFACE=1 (and HF_API_TOKEN) to enable Hugging Face."
+    );
+  }
+  if (wantsHf && hfEnabled) return new HuggingFaceClassifier();
   return new MockClassifier();
 }

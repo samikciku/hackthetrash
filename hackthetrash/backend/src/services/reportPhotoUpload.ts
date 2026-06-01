@@ -62,19 +62,19 @@ export async function persistReportPhotoUrls(files: Express.Multer.File[]): Prom
   if (useMemoryUploads()) {
     if (token) {
       const { put } = await import("@vercel/blob");
-      const urls: string[] = [];
-      for (const f of files) {
-        if (!f.buffer?.length) continue;
-        const ext = path.extname(f.originalname) || ".jpg";
-        const name = `reports/${uuid()}${ext}`;
-        const blob = await put(name, f.buffer, {
-          access: "public",
-          token,
-          contentType: f.mimetype || "image/jpeg"
+      const jobs = files
+        .filter((f) => f.buffer?.length)
+        .map(async (f) => {
+          const ext = path.extname(f.originalname) || ".jpg";
+          const name = `reports/${uuid()}${ext}`;
+          const blob = await put(name, f.buffer!, {
+            access: "public",
+            token,
+            contentType: f.mimetype || "image/jpeg"
+          });
+          return blob.url;
         });
-        urls.push(blob.url);
-      }
-      return urls;
+      return (await Promise.all(jobs)).filter(Boolean);
     }
     if (process.env.VERCEL === "1") {
       throw new Error(

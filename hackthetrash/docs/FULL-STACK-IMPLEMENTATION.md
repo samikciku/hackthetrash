@@ -316,7 +316,10 @@ Add each row; use **Production** at minimum. For PR previews, also enable **Prev
 | **`CORS_ORIGINS`** | `https://your-project.vercel.app` — after first deploy you’ll know the URL; update if you add a custom domain (comma-separated list) |
 | **`PUBLIC_URL`** | Same as public site URL, e.g. `https://your-project.vercel.app` (used in emails/links) |
 | **`JWT_EXPIRES`** | Optional; default in code is often `12h` — see `backend/.env.example` |
-| **`AI_PROVIDER`** | `mock` until you wire Hugging Face |
+| **`AI_PROVIDER`** | `mock` (recommended on Vercel). `huggingface` only does outbound calls if **`AI_USE_HUGGINGFACE=1`** is also set. |
+| **`AI_USE_HUGGINGFACE`** | Leave **unset** to keep HF off. Set to **`1`** only when you intentionally want Hugging Face + `HF_API_TOKEN`. |
+| **`AI_HF_FETCH_TIMEOUT_MS`** | Optional (default `12000`). Caps Hugging Face inference HTTP time so cold models cannot exhaust the function limit. |
+| **`AI_MODERATION_PER_IMAGE_BUDGET_MS`** | Optional (default `25000`). Per-image wall clock for classification; over budget → `uncertain` for that image. |
 | **`SMTP_*`** | Optional; `console` logs only if unset |
 
 **Do not set** `NEXT_PUBLIC_API_URL` for standard same-host deployment.

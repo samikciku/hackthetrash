@@ -1,6 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import serverless from "serverless-http";
 import { createApp } from "../../../../backend/src/app";
+import {
+  methodMayHaveBody,
+  readNextApiBody,
+  rebuildIncomingMessage
+} from "@/lib/rebuildNodeRequest";
 
 export const config = {
   api: {
@@ -19,5 +24,13 @@ function getHandler() {
 }
 
 export default async function apiGateway(req: NextApiRequest, res: NextApiResponse) {
-  return getHandler()(req, res);
+  // Vercel + Next can hand off a request whose body stream is empty while Content-Length
+  // still reflects the client payload — express.raw-body then blocks until timeout (504).
+  let upstream: NextApiRequest | ReturnType<typeof rebuildIncomingMessage> = req;
+  if (methodMayHaveBody(req.method)) {
+    const body = await readNextApiBody(req);
+    upstream = rebuildIncomingMessage(req, body);
+  }
+
+  return getHandler()(upstream as never, res as never);
 }

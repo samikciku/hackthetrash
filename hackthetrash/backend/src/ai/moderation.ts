@@ -2,15 +2,28 @@ import { makeClassifier, ClassificationResult } from "./classifier";
 
 const classifier = makeClassifier();
 
+const UNCERTAIN: ClassificationResult = { label: "uncertain", score: 0.5, details: { budget: 1 } };
+
+function moderationPerImageBudgetMs(): number {
+  return Math.min(90_000, Math.max(5_000, Number(process.env.AI_MODERATION_PER_IMAGE_BUDGET_MS || 25_000)));
+}
+
 export async function autoModerate(imagePaths: string[]): Promise<{
   best: ClassificationResult;
   perImage: ClassificationResult[];
   recommendation: "auto_verify" | "queue_for_review" | "auto_reject";
 }> {
-  const perImage: ClassificationResult[] = [];
-  for (const p of imagePaths) {
-    perImage.push(await classifier.classify(p));
-  }
+  const budget = moderationPerImageBudgetMs();
+  const classifyOne = (p: string) =>
+    Promise.race([
+      classifier.classify(p),
+      new Promise<ClassificationResult>((resolve) =>
+        setTimeout(() => resolve(UNCERTAIN), budget)
+      )
+    ]);
+
+  const perImage: ClassificationResult[] =
+    imagePaths.length === 0 ? [] : await Promise.all(imagePaths.map(classifyOne));
   const best = perImage.reduce((a, b) => (b.score > a.score ? b : a),
     { label: "uncertain", score: 0 } as ClassificationResult);
 

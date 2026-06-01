@@ -13,8 +13,11 @@ The backend includes a pluggable image classifier under `backend/src/ai/`.
 
 In `backend/.env`:
 ```
-AI_PROVIDER=huggingface          # or "mock" (default)
-HF_API_TOKEN=hf_xxx               # required for huggingface
+AI_PROVIDER=mock                 # or "huggingface" (still needs opt-in below)
+# Hugging Face — only active when BOTH are set:
+# AI_PROVIDER=huggingface
+# AI_USE_HUGGINGFACE=1
+HF_API_TOKEN=hf_xxx              # required for real HF calls
 HF_MODEL=google/vit-base-patch16-224
 ```
 
@@ -39,4 +42,4 @@ export interface IClassifier {
 }
 ```
 
-Then update `makeClassifier()` in `classifier.ts` to return your impl.
+Then update `makeClassifier()` in `classifier.ts` to return your impl (or set `AI_PROVIDER=huggingface` and `AI_USE_HUGGINGFACE=1` for the built-in HF path).
