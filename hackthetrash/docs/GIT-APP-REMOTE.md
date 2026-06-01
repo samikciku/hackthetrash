@@ -1,20 +1,50 @@
-# Git: monorepo (`hackthetrash`) vs app repo (`hackthetrash-2`)
+# Git: `origin` vs deploy mirror **`hackthetrash-2`**
 
-This workspace is a **monorepo**: the Next/Express app lives under **`hackthetrash/`**.  
-**[samikciku/hackthetrash-2](https://github.com/samikciku/hackthetrash-2)** is the **flat** copy used for Vercel (root = `frontend/`, not `hackthetrash/frontend`).
+This workspace is a **monorepo**: the Next/Express app lives under **`hackthetrash/`**.
 
-## Remotes (recommended)
+**[samikciku/hackthetrash-2](https://github.com/samikciku/hackthetrash-2)** is the **deploy mirror** for the app (Vercel, CI, etc.): it should track the **same `main` branch** as `origin`, i.e. the full tree (dossier, `hackthetrash/`, …).
 
-| Remote | URL | Use |
-|--------|-----|-----|
-| **`origin`** | `https://github.com/samikciku/hackthetrash.git` | Normal **`git push` / `git pull`** for the full repo (dossier, nested `hackthetrash/`, etc.). |
-| **`app`** | `https://github.com/samikciku/hackthetrash-2.git` | **Only** via subtree (see below). **Do not** `git push app main` from the monorepo root without subtree — you would overwrite the flat layout. |
+> **For agents / future work:** After you commit on `main`, push **both** `origin` and `app` unless the user says otherwise:
+> ```bash
+> git push origin main
+> git push app main
+> ```
+> Remote **`app`** points at `https://github.com/samikciku/hackthetrash-2.git`.
 
-Do **not** point `origin` at `hackthetrash-2` while your local tree still has the outer `hackthetrash/` folder; a plain push would publish the wrong directory layout.
+## Remotes
 
-## Push app changes to `hackthetrash-2`
+| Remote   | URL | Use |
+|----------|-----|-----|
+| **`origin`** | `https://github.com/samikciku/hackthetrash.git` | Day-to-day **`git push` / `git pull`**. |
+| **`app`**    | `https://github.com/samikciku/hackthetrash-2.git` | **Deploy mirror** — push the same `main` here so Vercel (or other hooks on `-2`) see updates. |
 
-From the **git repo root** (parent of the inner `hackthetrash/` folder):
+First-time setup of `app` (if missing):
+
+```bash
+git remote add app https://github.com/samikciku/hackthetrash-2.git
+```
+
+## Vercel (repo = `hackthetrash-2`)
+
+The GitHub root contains the **monorepo** layout, not a flattened copy of `hackthetrash/` only.
+
+Set **Root Directory** to **`hackthetrash/frontend`** (see [VERCEL.md](./VERCEL.md)).
+
+## If `git push app main` is rejected (non–fast-forward)
+
+Histories can diverge if someone pushed only one remote. To align **`hackthetrash-2`** with your local `main` (overwrites `main` on `-2`):
+
+```bash
+git push app main --force-with-lease
+```
+
+Use only when you intend `-2` to match this clone’s `main`.
+
+---
+
+## Optional: subtree push (flat repo root)
+
+Some setups keep `-2` as **only** the contents of `hackthetrash/` at the repo root (no outer dossier). That workflow uses **subtree**, not a plain `git push`:
 
 ```bash
 git subtree push --prefix=hackthetrash app main
@@ -26,12 +56,4 @@ Or on Windows:
 pwsh hackthetrash/scripts/push-app-remote.ps1
 ```
 
-First-time setup of the `app` remote (if missing):
-
-```bash
-git remote add app https://github.com/samikciku/hackthetrash-2.git
-```
-
-## Vercel
-
-For **hackthetrash-2**, set **Root Directory** to **`frontend`** (not `hackthetrash/frontend`). See [VERCEL.md](./VERCEL.md).
+Do **not** mix subtree and full-mirror pushes on the same branch without coordinating history; pick one model per repo.

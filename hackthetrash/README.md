@@ -157,6 +157,10 @@ Contributions welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md).
 https://hackthetrash.vercel.app
 https://trash-map.quarterly.systems/
 
+## Git & deploy (`hackthetrash-2`)
+
+Vercel / deploy hooks use **[github.com/samikciku/hackthetrash-2](https://github.com/samikciku/hackthetrash-2)** as a mirror of `main`. After committing, push **`origin`** and remote **`app`** (see [docs/GIT-APP-REMOTE.md](docs/GIT-APP-REMOTE.md)).
+
 ## 📜 License
 
 MIT © 2026 HackTheTrash Contributors
