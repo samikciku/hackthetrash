@@ -16,7 +16,14 @@ export default function HomePage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-16">
-      <section className="text-center">
+      <section className="relative overflow-hidden rounded-2xl text-center px-4 py-12 md:py-16">
+        {/* Prishtina logo: 80% transparent (20% opacity) so headline stays readable */}
+        <div
+          className="pointer-events-none absolute inset-0 bg-contain bg-center bg-no-repeat opacity-20"
+          style={{ backgroundImage: "url(/prishtina-logo.jpg)" }}
+          aria-hidden
+        />
+        <div className="relative z-10">
         <div className="inline-block bg-yellow-50 border border-yellow-200 text-yellow-900 text-sm px-3 py-1 rounded-full mb-6">
           {t("home.pristina")}
         </div>
@@ -42,6 +49,7 @@ export default function HomePage() {
               <p className="text-gray-600">{s.desc}</p>
             </div>
           ))}
+        </div>
         </div>
       </section>
 
