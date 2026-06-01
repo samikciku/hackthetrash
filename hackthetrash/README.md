@@ -154,8 +154,10 @@ See [docs/ROADMAP.md](docs/ROADMAP.md) for full details.
 Contributions welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Websites
-https://hackthetrash.vercel.app
-https://trash-map.quarterly.systems/
+
+- Production (Vercel default): [hackthetrash.vercel.app](https://hackthetrash.vercel.app)  
+- Custom domain (when configured): **`https://hackthetrash.flossk.org`** — see [docs/CUSTOM-DOMAIN.md](docs/CUSTOM-DOMAIN.md) for Cloudflare + Vercel steps.  
+- [trash-map.quarterly.systems](https://trash-map.quarterly.systems/)
 
 ## Git & deploy (`hackthetrash-2`)
 
