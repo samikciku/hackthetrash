@@ -43,8 +43,11 @@ Open `https://<your-project>.vercel.app/admin/login` and use the **same** `ADMIN
 ## 5. If login still fails
 
 - **`/api/health`** — `checks.databaseUrl` and `checks.jwtSecret` should be true.
+- **`/api/health?probe=db`** — should show `databaseReachable: true`. If `false`, fix `DATABASE_URL` / SSL (`?sslmode=require`) before re-testing passwords.
 - Browser **Network** tab on `POST /api/auth/login` — read status and JSON `error`.
 - Vercel **function logs** — DB connection errors, missing `JWT_SECRET`, or body parsing errors.
+
+Full checklist (reports + CORS + Blob): **[TROUBLESHOOTING-VERCEL.md](./TROUBLESHOOTING-VERCEL.md)**.
 
 ## Related files
 

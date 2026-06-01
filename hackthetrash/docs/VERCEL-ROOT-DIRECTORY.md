@@ -10,6 +10,8 @@ Vercel **Root Directory** must be exactly (forward slashes, no spaces):
 hackthetrash/frontend
 ```
 
+**Common typo:** the folder is **`hackthetrash`** (ends in **trash**), not `hackthethrash` or `hackthetrashh`. If Root Directory is wrong by one letter, the build fails or deploys the wrong tree.
+
 If Vercel still says that path does not exist, try in order:
 
 1. **Re-type the path**  
@@ -26,4 +28,4 @@ If Vercel still says that path does not exist, try in order:
 4. **New Vercel project (last resort)**  
    Add Project → Import **`samikciku/hackthetrash`** again → when asked for the app directory, choose or enter **`hackthetrash/frontend`**. Copy **Environment Variables** from the old project, then delete the old project or pause it.
 
-GitHub’s API shows `hackthetrash/frontend` exists on `main` at commit `36ac9cc`; a persistent “does not exist” error is almost always **wrong repo link**, **typo/spaces in Root Directory**, or **stale Git connection** on the Vercel side.
+A persistent “does not exist” error is almost always **wrong repo link**, **typo/spaces in Root Directory** (check **hackthetrash** spelling), or **stale Git connection** on the Vercel side.

@@ -35,19 +35,51 @@ export async function performJsonLogin(
     return { status: 400, body: { error: "Email and password are required" } };
   }
 
-  const user = await Users.findByEmail(String(email));
+  let user;
+  try {
+    user = await Users.findByEmail(String(email));
+  } catch (e: unknown) {
+    console.error("[login] database error", e);
+    return {
+      status: 503,
+      body: {
+        error:
+          "Cannot reach the database. On Vercel: set DATABASE_URL to your Postgres URL (include ?sslmode=require if the host requires SSL), run migrations, then redeploy."
+      }
+    };
+  }
+
   if (!user) {
     noteFailedLoginByIp(rateKey);
     return { status: 401, body: { error: "Invalid credentials" } };
   }
-  const ok = await Users.verify(String(password), user.password_hash);
+  let ok: boolean;
+  try {
+    ok = await Users.verify(String(password), user.password_hash);
+  } catch (e: unknown) {
+    console.error("[login] verify error", e);
+    return { status: 503, body: { error: "Login temporarily unavailable. Try again in a moment." } };
+  }
   if (!ok) {
     noteFailedLoginByIp(rateKey);
     return { status: 401, body: { error: "Invalid credentials" } };
   }
 
+  let token: string;
+  try {
+    token = signToken({ sub: user.id, role: user.role, email: user.email });
+  } catch (e: unknown) {
+    console.error("[login] jwt sign error", e);
+    return {
+      status: 503,
+      body: {
+        error:
+          "JWT signing failed. Set a valid JWT_SECRET in the Vercel project environment (e.g. openssl rand -hex 64) and redeploy."
+      }
+    };
+  }
+
   clearLoginAttemptsByIp(rateKey);
-  const token = signToken({ sub: user.id, role: user.role, email: user.email });
   return {
     status: 200,
     body: {
