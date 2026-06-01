@@ -18,7 +18,7 @@ This app is a **Next.js 14 frontend** plus an **Express API** and **PostgreSQL w
 | **Root Directory** | `hackthetrash/frontend` |
 | **Framework Preset** | Next.js (auto from `package.json`) |
 
-The repo root in GitHub is `flosskosova/trash`; the app lives under **`hackthetrash/frontend`**.
+The GitHub repo root is the **monorepo** (e.g. `samikciku/hackthetrash` or `samikciku/hackthetrash-2`); the deployable Next app always lives under **`hackthetrash/frontend`**. If Vercel says *Root Directory "frontend" does not exist*, change the setting from `frontend` → **`hackthetrash/frontend`**.
 
 `frontend/vercel.json` installs backend deps and compiles the backend (`tsc`) before `next build`, so Express + DB code type-checks and any backend-only assets resolve correctly.
 
