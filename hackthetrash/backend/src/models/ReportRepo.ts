@@ -19,6 +19,30 @@ export interface ReportRow {
 }
 
 export const ReportRepo = {
+  /**
+   * Admin / moderation list — optional `status` filters in SQL (avoids loading 500 rows
+   * then filtering in memory, which is slow on cold serverless + heavy photo aggregation).
+   */
+  async listForAdmin(opts: { status?: string; limit?: number } = {}): Promise<ReportRow[]> {
+    const limit = Math.min(500, Math.max(1, Number(opts.limit ?? 500)));
+    const status = opts.status?.trim() || null;
+    const { rows } = await query<ReportRow>(
+      `SELECT r.id, r.user_id, r.latitude, r.longitude, r.description, r.severity, r.tags,
+              r.status, r.anonymous, r.ai_score, r.ai_label, r.created_at, r.updated_at,
+              COALESCE(
+                (SELECT array_agg(p.url ORDER BY p.uploaded_at)
+                 FROM photos p WHERE p.report_id = r.id),
+                ARRAY[]::text[]
+              ) AS photo_urls
+       FROM reports r
+       WHERE ($1::text IS NULL OR r.status = $1)
+       ORDER BY r.created_at DESC
+       LIMIT $2`,
+      [status, limit]
+    );
+    return rows;
+  },
+
   async list(): Promise<ReportRow[]> {
     // Aggregate photo URLs per report so the public map can show them in popups.
     const { rows } = await query<ReportRow>(

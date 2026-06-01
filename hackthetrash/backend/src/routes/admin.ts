@@ -23,9 +23,9 @@ router.get("/reports", async (req, res) => {
   try {
     const status = (req.query.status as string | undefined) || undefined;
     if (USE_DB) {
-      const all = await ReportRepo.list();
-      const filtered = status ? all.filter((r) => r.status === status) : all;
-      return res.json({ reports: filtered });
+      const statusParam = status?.trim() || undefined;
+      const rows = await ReportRepo.listForAdmin({ status: statusParam });
+      return res.json({ reports: rows });
     }
     const filtered = status ? reportsDB.filter((r) => r.status === status) : reportsDB;
     res.json({ reports: filtered });
