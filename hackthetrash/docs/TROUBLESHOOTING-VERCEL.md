@@ -24,11 +24,12 @@ See **[ADMIN-LOGIN.md](./ADMIN-LOGIN.md)** for the full checklist.
 
 ### B. `Cannot reach the database` (503)
 
-`DATABASE_URL` is wrong, the DB blocks Vercel’s IPs, SSL is misconfigured, or the DB is down.
+`/api/health` can still show `databaseUrl: true` (the variable exists) while **login** returns this — the app failed to open a real Postgres session.
 
-- Use a URL that works from the internet (Neon / Supabase pooler, not `localhost`).
-- Append **`?sslmode=require`** (or your provider’s required SSL params) if connections fail without SSL.
-- Run **`npm run db:migrate`** against that database at least once.
+- **Supabase:** In **Project Settings → Database**, use the **Connection pooling** / **Transaction** URI (port **6543**) for Vercel’s `DATABASE_URL`, not the direct `5432` URL unless Supabase says otherwise. Paste the password into the URI; **URL-encode** special characters in the password (`@` → `%40`, `#` → `%23`, etc.).
+- Append **`?sslmode=require`** if it isn’t already on the string.
+- **Paused project:** Free Supabase projects pause after inactivity — resume in the dashboard.
+- Run **`npm run db:migrate`** (and **`db:seed-admin`**) from your laptop against **this same** URL (or direct URL) at least once.
 
 ### C. `Too many attempts` (429)
 

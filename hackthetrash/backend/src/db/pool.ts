@@ -12,11 +12,18 @@ function getPool(): Pool {
     throw new Error("DATABASE_URL is not set or is empty");
   }
   if (!_pool) {
+    const lower = conn.toLowerCase();
+    const isSupabase = lower.includes("supabase.co") || lower.includes("pooler.supabase.com");
+    // Serverless: one connection per instance is usually enough and avoids exhausting Supabase limits.
+    const maxDefault = process.env.VERCEL === "1" ? 1 : 10;
+    const max = Math.min(10, Math.max(1, Number(process.env.PG_POOL_MAX || maxDefault)));
     _pool = new Pool({
       connectionString: conn,
-      max: Math.min(10, Math.max(1, Number(process.env.PG_POOL_MAX || 10))),
+      max,
       idleTimeoutMillis: 20_000,
-      connectionTimeoutMillis: 15_000
+      connectionTimeoutMillis: 15_000,
+      // Supabase + Node pg: explicit TLS avoids some "self signed certificate" / chain issues on Vercel.
+      ...(isSupabase ? { ssl: { rejectUnauthorized: false } } : {})
     });
   }
   return _pool;
