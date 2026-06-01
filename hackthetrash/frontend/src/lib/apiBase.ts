@@ -18,9 +18,17 @@ export function getApiBase(): string {
   return "";
 }
 
-/** Absolute or same-origin path for a public photo URL. */
+/** Absolute or same-origin path for a report photo URL (supports Vercel private Blob via proxy). */
 export function fullPhotoUrl(u: string): string {
-  if (u.startsWith("http")) return u;
+  if (u.startsWith("http")) {
+    if (u.includes(".private.blob.vercel-storage.com")) {
+      const base = getApiBase();
+      const qs = `u=${encodeURIComponent(u)}`;
+      if (!base) return `/api/blob-image?${qs}`;
+      return `${base}/api/blob-image?${qs}`;
+    }
+    return u;
+  }
   const base = getApiBase();
   if (!base) return u.startsWith("/") ? u : `/${u}`;
   return `${base}${u.startsWith("/") ? u : `/${u}`}`;

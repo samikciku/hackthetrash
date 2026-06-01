@@ -28,7 +28,16 @@ export type Report = {
   created_at?: string;
 };
 
-export const fullPhotoUrl = (u: string) => (u.startsWith("http") ? u : `${API_URL}${u}`);
+export const fullPhotoUrl = (u: string) => {
+  if (u.startsWith("http")) {
+    if (u.includes(".private.blob.vercel-storage.com")) {
+      const base = API_URL.replace(/\/$/, "");
+      return `${base}/api/blob-image?u=${encodeURIComponent(u)}`;
+    }
+    return u;
+  }
+  return `${API_URL}${u}`;
+};
 
 export async function fetchReports(): Promise<Report[]> {
   const res = await fetch(`${API_URL}/api/reports`);

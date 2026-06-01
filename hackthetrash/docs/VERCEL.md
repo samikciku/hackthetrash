@@ -52,6 +52,8 @@ Set these for **Production** (and Preview if you want previews to work).
 | `JWT_SECRET` | Long random secret for JWT signing (e.g. `openssl rand -hex 64`). |
 | `BLOB_READ_WRITE_TOKEN` | **[Vercel Blob](https://vercel.com/docs/storage/vercel-blob)** — report photos are uploaded here on serverless (no durable local disk). Create a Blob store and add the read/write token. |
 
+**Private Blob stores:** This repo uses **`@vercel/blob` ≥ 2.3** so uploads can use `access: 'private'` (required if the store is **Private** in the dashboard). Older SDKs only allowed `public` and failed with *“Cannot use public access on a private store”*. Private object URLs are served through **`/api/blob-image`** (same `BLOB_READ_WRITE_TOKEN` on the Next.js function).
+
 ### Strongly recommended
 
 | Variable | Purpose |
@@ -67,6 +69,7 @@ Set these for **Production** (and Preview if you want previews to work).
 | `NEXT_PUBLIC_API_URL` | Leave **unset** for same-origin `/api` (recommended on Vercel). Set only if the API is on another host (e.g. local dev: `http://localhost:4000`). |
 | `AI_PROVIDER` | `mock` (default) or `huggingface`. **Hugging Face calls only run if you also set `AI_USE_HUGGINGFACE=1`** plus `HF_API_TOKEN` / `HF_MODEL`. |
 | `SMTP_*` | Outgoing email; see `backend/.env.example`. |
+| `BLOB_PUT_ACCESS` | Optional: `public` or `private` to force upload access (skips auto-retry). Use **`private`** if your Blob store is private-only. |
 
 Vercel sets `VERCEL=1` automatically — the backend uses that to switch multer to **memory** storage and **Blob** for photo persistence.
 

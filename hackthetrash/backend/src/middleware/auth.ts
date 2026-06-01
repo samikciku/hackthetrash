@@ -84,6 +84,10 @@ const MAX_ATTEMPTS = 5;
 const LOCK_MS = 15 * 60 * 1000;
 
 export function clientIpFromRequest(req: Request): string {
+  const v0 = req.headers["x-vercel-forwarded-for"];
+  const v0raw = Array.isArray(v0) ? v0[0] : v0;
+  const v0first = typeof v0raw === "string" ? v0raw.split(",")[0]?.trim() : "";
+  if (v0first) return v0first;
   const xf = req.headers["x-forwarded-for"];
   const raw = Array.isArray(xf) ? xf[0] : xf;
   const first = typeof raw === "string" ? raw.split(",")[0]?.trim() : "";
@@ -92,9 +96,15 @@ export function clientIpFromRequest(req: Request): string {
 
 /** First client IP from Fetch / Web `Headers` (App Router). */
 export function clientIpFromWebHeaders(h: Headers): string {
+  const v0 = h.get("x-vercel-forwarded-for") || h.get("X-Vercel-Forwarded-For");
+  const v0first = v0?.split(",")[0]?.trim();
+  if (v0first) return v0first;
   const xf = h.get("x-forwarded-for") || h.get("X-Forwarded-For");
-  const first = xf?.split(",")[0]?.trim() || h.get("x-real-ip") || h.get("X-Real-IP");
-  return (first || "unknown").trim() || "unknown";
+  const first = xf?.split(",")[0]?.trim();
+  if (first) return first;
+  const realIp = h.get("x-real-ip") || h.get("X-Real-IP");
+  if (realIp) return realIp.trim();
+  return "unknown";
 }
 
 export function rateLimitLoginByIp(ip: string): { ok: true } | { ok: false; waitSec: number } {

@@ -67,12 +67,25 @@ export async function persistReportPhotoUrls(files: Express.Multer.File[]): Prom
         .map(async (f) => {
           const ext = path.extname(f.originalname) || ".jpg";
           const name = `reports/${uuid()}${ext}`;
-          const blob = await put(name, f.buffer!, {
-            access: "public",
-            token,
-            contentType: f.mimetype || "image/jpeg"
-          });
-          return blob.url;
+          const contentType = f.mimetype || "image/jpeg";
+          const putOnce = (access: "public" | "private") =>
+            put(name, f.buffer!, { access, token, contentType });
+          const forced = (process.env.BLOB_PUT_ACCESS || "").toLowerCase();
+          if (forced === "private" || forced === "public") {
+            const blob = await putOnce(forced as "public" | "private");
+            return blob.url;
+          }
+          try {
+            const blob = await putOnce("public");
+            return blob.url;
+          } catch (e: unknown) {
+            const msg = String(e instanceof Error ? e.message : e);
+            if (/private store|private access|public access on a private store/i.test(msg)) {
+              const blob = await putOnce("private");
+              return blob.url;
+            }
+            throw e;
+          }
         });
       return (await Promise.all(jobs)).filter(Boolean);
     }

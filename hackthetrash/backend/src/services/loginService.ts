@@ -14,7 +14,15 @@ export async function performJsonLogin(
   password: unknown,
   clientIp: string
 ): Promise<{ status: number; body: Record<string, unknown> }> {
-  const lim = rateLimitLoginByIp(clientIp);
+  // When IP is missing (some proxies), rate-limit per email so all users don't share one "unknown" bucket.
+  const rateKey =
+    clientIp !== "unknown"
+      ? clientIp
+      : `email:${String(email ?? "")
+          .toLowerCase()
+          .slice(0, 256) || "anon"}`;
+
+  const lim = rateLimitLoginByIp(rateKey);
   if (!lim.ok) {
     return {
       status: 429,
@@ -23,22 +31,22 @@ export async function performJsonLogin(
   }
 
   if (!email || !password) {
-    noteFailedLoginByIp(clientIp);
+    noteFailedLoginByIp(rateKey);
     return { status: 400, body: { error: "Email and password are required" } };
   }
 
   const user = await Users.findByEmail(String(email));
   if (!user) {
-    noteFailedLoginByIp(clientIp);
+    noteFailedLoginByIp(rateKey);
     return { status: 401, body: { error: "Invalid credentials" } };
   }
   const ok = await Users.verify(String(password), user.password_hash);
   if (!ok) {
-    noteFailedLoginByIp(clientIp);
+    noteFailedLoginByIp(rateKey);
     return { status: 401, body: { error: "Invalid credentials" } };
   }
 
-  clearLoginAttemptsByIp(clientIp);
+  clearLoginAttemptsByIp(rateKey);
   const token = signToken({ sub: user.id, role: user.role, email: user.email });
   return {
     status: 200,
