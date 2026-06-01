@@ -350,6 +350,8 @@ npm run db:seed-admin
 
 Then log in at `https://your-site.vercel.app/admin/login`.
 
+**Credentials and troubleshooting:** see **[ADMIN-LOGIN.md](./ADMIN-LOGIN.md)**.
+
 ---
 
 ### 6.6 Custom domain (optional)

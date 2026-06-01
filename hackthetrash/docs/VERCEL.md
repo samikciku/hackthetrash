@@ -1,6 +1,7 @@
 # Deploy HackTheTrash on Vercel (full stack)
 
-**→ Step-by-step (local backend, DB, dashboard clicks): [FULL-STACK-IMPLEMENTATION.md](./FULL-STACK-IMPLEMENTATION.md)**
+**→ Step-by-step (local backend, DB, dashboard clicks): [FULL-STACK-IMPLEMENTATION.md](./FULL-STACK-IMPLEMENTATION.md)**  
+**→ Admin email/password on Vercel: [ADMIN-LOGIN.md](./ADMIN-LOGIN.md)**
 
 This page is a **short checklist**. The linked guide covers **Vercel UI in detail**, Neon/Postgres, Blob, migrations, and verification.
 

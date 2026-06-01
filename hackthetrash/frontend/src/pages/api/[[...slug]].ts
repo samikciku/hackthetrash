@@ -29,6 +29,14 @@ export default async function apiGateway(req: NextApiRequest, res: NextApiRespon
   let upstream: NextApiRequest | ReturnType<typeof rebuildIncomingMessage> = req;
   if (methodMayHaveBody(req.method)) {
     const body = await readNextApiBody(req);
+    const cl = Number(req.headers["content-length"]);
+    if (body.length === 0 && Number.isFinite(cl) && cl > 0) {
+      console.error(
+        "[api-gateway] Request body was empty after read but Content-Length was",
+        cl,
+        "— check Vercel/Next body handling; login and multipart may fail."
+      );
+    }
     upstream = rebuildIncomingMessage(req, body);
   }
 
