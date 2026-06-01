@@ -8,15 +8,16 @@ import { getApiBase, fullPhotoUrl } from "@/lib/apiBase";
 
 type Report = {
   id: string;
-  latitude: number;
-  longitude: number;
+  latitude: number | string;
+  longitude: number | string;
   status: string;
   description?: string;
   severity?: string;
   tags?: string[];
   photoUrls?: string[];
   photo_urls?: string[];
-  ai_score?: number | null;
+  /** API may send numbers or strings (Postgres `numeric` JSON). */
+  ai_score?: number | string | null;
   ai_label?: string | null;
   createdAt?: string;
   created_at?: string;
@@ -169,8 +170,18 @@ function AdminInner() {
           {reports.map((r) => {
             const photos = (r.photoUrls ?? r.photo_urls ?? []).map(fullPhotoUrl);
             const created = r.createdAt ?? r.created_at;
-            const aiOk = r.ai_label === "trash" && (r.ai_score ?? 0) >= 0.7;
-            const aiBad = r.ai_label === "not_trash" && (r.ai_score ?? 0) >= 0.7;
+            const aiScoreNum =
+              r.ai_score != null && r.ai_score !== "" ? Number(r.ai_score) : NaN;
+            const hasAiScore = Number.isFinite(aiScoreNum);
+            const aiOk = r.ai_label === "trash" && hasAiScore && aiScoreNum >= 0.7;
+            const aiBad = r.ai_label === "not_trash" && hasAiScore && aiScoreNum >= 0.7;
+            const lat = Number(r.latitude);
+            const lng = Number(r.longitude);
+            const coordLabel =
+              Number.isFinite(lat) && Number.isFinite(lng)
+                ? `${lat.toFixed(5)}, ${lng.toFixed(5)}`
+                : `${String(r.latitude)}, ${String(r.longitude)}`;
+            const tagsList = Array.isArray(r.tags) ? r.tags : [];
             return (
               <div key={r.id} className="bg-white border rounded-lg shadow-sm overflow-hidden flex flex-col">
                 {/* Photo strip */}
@@ -199,14 +210,14 @@ function AdminInner() {
                         {t(`report.${r.severity}`)}
                       </span>
                     )}
-                    {r.ai_score != null && (
+                    {hasAiScore && (
                       <span
                         className={`ml-auto text-xs font-mono ${
                           aiOk ? "text-green-700" : aiBad ? "text-red-600" : "text-gray-500"
                         }`}
                         title={`AI label: ${r.ai_label}`}
                       >
-                        AI {r.ai_score.toFixed(2)}
+                        AI {aiScoreNum.toFixed(2)}
                       </span>
                     )}
                   </div>
@@ -215,9 +226,9 @@ function AdminInner() {
                     <p className="text-sm text-gray-800 mb-2">{r.description}</p>
                   )}
 
-                  {r.tags && r.tags.length > 0 && (
+                  {tagsList.length > 0 && (
                     <div className="flex flex-wrap gap-1 mb-2">
-                      {r.tags.map((tg) => (
+                      {tagsList.map((tg) => (
                         <span key={tg} className="text-xs bg-gray-100 px-2 py-0.5 rounded-full">{t(`tags.${tg}`)}</span>
                       ))}
                     </div>
@@ -225,7 +236,7 @@ function AdminInner() {
 
                   <div className="text-xs text-gray-500 mt-auto pt-2 border-t flex items-center gap-1">
                     <Icon name="home" size={12} />
-                    <span className="font-mono">{r.latitude.toFixed(5)}, {r.longitude.toFixed(5)}</span>
+                    <span className="font-mono">{coordLabel}</span>
                     {created && <span>· {new Date(created).toLocaleString()}</span>}
                   </div>
 
@@ -266,7 +277,7 @@ function AdminInner() {
                   </div>
 
                   <a
-                    href={`/map?lat=${r.latitude}&lng=${r.longitude}&id=${r.id}`}
+                    href={`/map?lat=${encodeURIComponent(String(r.latitude))}&lng=${encodeURIComponent(String(r.longitude))}&id=${r.id}`}
                     target="_blank"
                     rel="noreferrer"
                     className="mt-2 text-center text-xs text-primary hover:underline"
