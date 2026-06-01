@@ -9,6 +9,8 @@ This page is a **short checklist**. The linked guide covers **Vercel UI in detai
 
 This app is a **Next.js 14 frontend** plus an **Express API** and **PostgreSQL with PostGIS**. On Vercel the API runs as a **single serverless function** via [`serverless-http`](https://github.com/dougmoscrop/serverless-http), mounted at `pages/api/[[...slug]].ts`, so the browser can call **`/api/*` on the same origin** as the site.
 
+**Important:** **`POST /api/auth/login`** and **`GET`/`POST /api/reports`** are implemented as **App Router** routes (`src/app/api/.../route.ts`) so the body is read with the Web **`Request`** API (reliable on Vercel). Other `/api/*` paths still go through Express on the Pages catch-all.
+
 ## 1. Vercel project settings
 
 | Setting | Value |
@@ -84,7 +86,7 @@ Expo / React Native still needs a **reachable API base URL** (e.g. your `https:/
 
 ## 6. Limits and caveats
 
-- **POST / JSON / login**: On Vercel, Next’s `IncomingMessage` passed straight into `serverless-http` + Express could report `Content-Length` > 0 while the body stream was already empty (`request.size.invalid` / **504** on `/api/auth/login`). The gateway in `pages/api/[[...slug]].ts` **buffers** the body and replays it into a fresh `http.IncomingMessage` so `express.json()` and Multer see a consistent stream.
+- **POST / JSON / login & multipart reports**: **`/api/auth/login`** and **`/api/reports`** (GET list + POST create) are handled by **App Router** `route.ts` files so bodies use the Web **`Request`** API (avoids `request.size.invalid` / **504** from `serverless-http` + drained Node streams). Other `/api/*` traffic still uses `pages/api/[[...slug]].ts` + Express; that gateway still buffers/replays bodies as a fallback.
 - **Report submit timeouts**: If Hugging Face is enabled (`AI_PROVIDER=huggingface` **and** `AI_USE_HUGGINGFACE=1`), inference can still be slow on cold models. The backend uses **HTTP timeouts** on HF (`AI_HF_FETCH_TIMEOUT_MS`), **parallel** image moderation + Blob uploads, and a **per-image budget** (`AI_MODERATION_PER_IMAGE_BUDGET_MS`). `frontend/vercel.json` sets **`maxDuration`: 120** for the catch-all API route (requires a Vercel plan that allows >60s if you raise it further).
 - **Serverless timeouts**: long-running jobs or huge uploads may hit Vercel function limits; keep payloads reasonable.
 - **Cold starts**: first request after idle can be slower.

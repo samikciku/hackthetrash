@@ -1,18 +1,14 @@
 import { Request, Response } from "express";
 import { ReportRepo } from "../models/ReportRepo";
-import { autoModerate } from "../ai/moderation";
 import { notifyStatusChange } from "../services/push";
 import { evaluateCountBadges } from "../models/Badge";
 import { statsForUser } from "../services/profileStats";
 import { sendStatusEmail } from "../services/email";
 import { AuthRequest } from "../middleware/auth";
-import { persistReportPhotoUrls, tempPathsForModeration } from "../services/reportPhotoUpload";
+import { createReportSubmission } from "../services/reportSubmission";
+import { reportsDB, Report } from "../models/Report";
 
 const USE_DB = !!process.env.DATABASE_URL;
-
-// In-memory fallback (used when DATABASE_URL not set, e.g. quick local demo).
-import { reportsDB, Report } from "../models/Report";
-import { v4 as uuid } from "uuid";
 
 export const listReports = async (_req: Request, res: Response) => {
   try {
@@ -45,97 +41,19 @@ export const getReport = async (req: Request, res: Response) => {
 export const createReport = async (req: AuthRequest, res: Response) => {
   try {
     const files = (req.files as Express.Multer.File[]) || [];
-    if (files.length === 0) {
-      return res.status(400).json({
-        error:
-          "No image files were received. Add at least one photo (JPG, PNG, HEIC, etc.) or check that the form field name is \"photos\"."
-      });
-    }
     const { latitude, longitude, severity, description, anonymous, takenAt } = req.body;
-    let tags: string[] = [];
-    try { tags = JSON.parse(req.body.tags || "[]"); } catch {}
-
-    if (!latitude || !longitude) {
-      return res.status(400).json({ error: "latitude & longitude required" });
-    }
-
-    const isAnonymous = anonymous === "true" || !req.auth;
-    const userId = isAnonymous ? null : req.auth?.sub ?? null;
-
-    const { paths: imagePaths, cleanup } = tempPathsForModeration(files);
-    let ai;
-    try {
-      ai = await autoModerate(imagePaths);
-      console.log(`[AI] best=${ai.best.label} score=${ai.best.score} -> ${ai.recommendation}`);
-    } finally {
-      cleanup();
-    }
-
-    let createdId: string;
-    let response: any;
-
-    const photoUrls = await persistReportPhotoUrls(files);
-
-    if (USE_DB) {
-      const created = await ReportRepo.create({
-        userId,
-        latitude: Number(latitude),
-        longitude: Number(longitude),
-        description,
-        severity,
-        tags,
-        anonymous: isAnonymous,
-        aiScore: ai.best.score,
-        aiLabel: ai.best.label
-      });
-      await ReportRepo.addPhotos(created.id, photoUrls);
-
-      // Auto-status from AI
-      if (ai.recommendation === "auto_verify") {
-        await ReportRepo.updateStatus(created.id, "verified", "AI auto-verified");
-      } else if (ai.recommendation === "auto_reject") {
-        await ReportRepo.updateStatus(created.id, "rejected", "AI auto-rejected");
-      }
-      createdId = created.id;
-      response = { ...created, photo_urls: photoUrls, ai };
-    } else {
-      const report: Report = {
-        id: uuid(),
-        latitude: Number(latitude),
-        longitude: Number(longitude),
-        severity: severity || "medium",
-        description: description || "",
-        tags,
-        status: ai.recommendation === "auto_verify" ? "verified"
-              : ai.recommendation === "auto_reject" ? "rejected"
-              : "reported",
-        anonymous: isAnonymous,
-        photoUrls,
-        createdAt: new Date().toISOString(),
-        takenAt: typeof takenAt === "string" && !isNaN(Date.parse(takenAt)) ? takenAt : undefined,
-        userId: userId ?? undefined
-      };
-      reportsDB.unshift(report);
-      createdId = report.id;
-      response = { ...report, ai };
-    }
-
-    // Phase 2: award count + state badges to attributed (non-anonymous) reports
-    let newlyAwarded: string[] = [];
-    if (userId) {
-      try {
-        const stats = await statsForUser(userId);
-        newlyAwarded = await evaluateCountBadges(userId, stats.totalReports, {
-          hasVerified: stats.hasVerified,
-          hasCleaned: stats.hasCleaned
-        });
-      } catch (e) {
-        console.warn("[badges] failed to evaluate", e);
-      }
-    }
-    response.badges_awarded = newlyAwarded;
-
-    return res.status(201).json(response);
+    const result = await createReportSubmission({
+      files,
+      latitude,
+      longitude,
+      severity,
+      description,
+      anonymous,
+      tagsJson: req.body.tags,
+      takenAt,
+      auth: req.auth
+    });
+    return res.status(result.status).json(result.body);
   } catch (e: any) {
     console.error(e);
     res.status(500).json({ error: e.message });

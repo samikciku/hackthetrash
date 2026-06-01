@@ -83,23 +83,43 @@ const WINDOW_MS = 15 * 60 * 1000;
 const MAX_ATTEMPTS = 5;
 const LOCK_MS = 15 * 60 * 1000;
 
-export function rateLimitLogin(req: Request, res: Response, next: NextFunction) {
-  const ip = (req.ip || req.headers["x-forwarded-for"] || "unknown").toString();
+export function clientIpFromRequest(req: Request): string {
+  const xf = req.headers["x-forwarded-for"];
+  const raw = Array.isArray(xf) ? xf[0] : xf;
+  const first = typeof raw === "string" ? raw.split(",")[0]?.trim() : "";
+  return (first || (req.ip as string | undefined) || "unknown").toString();
+}
+
+/** First client IP from Fetch / Web `Headers` (App Router). */
+export function clientIpFromWebHeaders(h: Headers): string {
+  const xf = h.get("x-forwarded-for") || h.get("X-Forwarded-For");
+  const first = xf?.split(",")[0]?.trim() || h.get("x-real-ip") || h.get("X-Real-IP");
+  return (first || "unknown").trim() || "unknown";
+}
+
+export function rateLimitLoginByIp(ip: string): { ok: true } | { ok: false; waitSec: number } {
   const now = Date.now();
   const rec = ATTEMPTS.get(ip);
 
   if (rec?.lockedUntil && rec.lockedUntil > now) {
-    const wait = Math.ceil((rec.lockedUntil - now) / 1000);
-    return res.status(429).json({ error: `Too many attempts. Try again in ${wait}s.` });
+    return { ok: false, waitSec: Math.ceil((rec.lockedUntil - now) / 1000) };
   }
   if (!rec || now - rec.firstAt > WINDOW_MS) {
     ATTEMPTS.set(ip, { count: 0, firstAt: now });
   }
+  return { ok: true };
+}
+
+export function rateLimitLogin(req: Request, res: Response, next: NextFunction) {
+  const ip = clientIpFromRequest(req);
+  const lim = rateLimitLoginByIp(ip);
+  if (!lim.ok) {
+    return res.status(429).json({ error: `Too many attempts. Try again in ${lim.waitSec}s.` });
+  }
   next();
 }
 
-export function noteFailedLogin(req: Request) {
-  const ip = (req.ip || req.headers["x-forwarded-for"] || "unknown").toString();
+export function noteFailedLoginByIp(ip: string) {
   const now = Date.now();
   const rec = ATTEMPTS.get(ip) ?? { count: 0, firstAt: now };
   rec.count += 1;
@@ -111,7 +131,14 @@ export function noteFailedLogin(req: Request) {
   ATTEMPTS.set(ip, rec);
 }
 
-export function clearLoginAttempts(req: Request) {
-  const ip = (req.ip || req.headers["x-forwarded-for"] || "unknown").toString();
+export function noteFailedLogin(req: Request) {
+  noteFailedLoginByIp(clientIpFromRequest(req));
+}
+
+export function clearLoginAttemptsByIp(ip: string) {
   ATTEMPTS.delete(ip);
+}
+
+export function clearLoginAttempts(req: Request) {
+  clearLoginAttemptsByIp(clientIpFromRequest(req));
 }

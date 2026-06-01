@@ -1,13 +1,12 @@
 import { Router } from "express";
 import { Users } from "../services/users";
 import {
-  signToken,
   rateLimitLogin,
-  noteFailedLogin,
-  clearLoginAttempts,
   requireAuth,
-  AuthRequest
+  AuthRequest,
+  clientIpFromRequest
 } from "../middleware/auth";
+import { performJsonLogin } from "../services/loginService";
 
 const router = Router();
 
@@ -15,27 +14,8 @@ const router = Router();
 router.post("/login", rateLimitLogin, async (req, res) => {
   try {
     const { email, password } = req.body || {};
-    if (!email || !password) {
-      noteFailedLogin(req);
-      return res.status(400).json({ error: "Email and password are required" });
-    }
-    const user = await Users.findByEmail(String(email));
-    if (!user) {
-      noteFailedLogin(req);
-      return res.status(401).json({ error: "Invalid credentials" });
-    }
-    const ok = await Users.verify(String(password), user.password_hash);
-    if (!ok) {
-      noteFailedLogin(req);
-      return res.status(401).json({ error: "Invalid credentials" });
-    }
-
-    clearLoginAttempts(req);
-    const token = signToken({ sub: user.id, role: user.role, email: user.email });
-    res.json({
-      token,
-      user: { id: user.id, email: user.email, name: user.name, role: user.role, region: user.region }
-    });
+    const out = await performJsonLogin(email, password, clientIpFromRequest(req));
+    return res.status(out.status).json(out.body);
   } catch (e: any) {
     console.error("[auth.login]", e);
     res.status(500).json({ error: e.message || "login failed" });
