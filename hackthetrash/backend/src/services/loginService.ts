@@ -40,11 +40,41 @@ export async function performJsonLogin(
     user = await Users.findByEmail(String(email));
   } catch (e: unknown) {
     console.error("[login] database error", e);
+    const msg = e instanceof Error ? e.message : String(e);
+    const code = typeof e === "object" && e !== null && "code" in e ? String((e as { code: unknown }).code) : "";
+    // Postgres: 28P01 = invalid_password. Same generic "connection" failure for wrong URI user/pass.
+    if (code === "28P01" || /password authentication failed/i.test(msg)) {
+      return {
+        status: 503,
+        body: {
+          error:
+            "Database rejected the login (wrong DATABASE_URL user or password). Re-copy the URI from Supabase → Connect → Direct → Transaction pooler, replace only the password placeholder (no [brackets]), URL-encode special characters in the password, add ?sslmode=require, save in Vercel, then Redeploy."
+        }
+      };
+    }
+    if (/getaddrinfo ENOTFOUND|ENOTFOUND/i.test(msg)) {
+      return {
+        status: 503,
+        body: {
+          error:
+            "Database host not found (DATABASE_URL hostname typo or wrong region). Re-copy the connection string from Supabase and redeploy."
+        }
+      };
+    }
+    if (/ECONNREFUSED|ETIMEDOUT|connect ETIMEDOUT/i.test(msg)) {
+      return {
+        status: 503,
+        body: {
+          error:
+            "Could not open a TCP connection to the database (firewall, paused Supabase project, or wrong port). Use Supabase transaction pooler :6543 for Vercel; resume project in Supabase if paused; redeploy."
+        }
+      };
+    }
     return {
       status: 503,
       body: {
         error:
-          "Cannot reach the database. On Vercel: set DATABASE_URL to your Postgres URL (include ?sslmode=require if the host requires SSL), run migrations, then redeploy."
+          "Cannot reach the database. On Vercel: set DATABASE_URL to your Postgres URL (include ?sslmode=require if the host requires SSL), run migrations, then redeploy. Open /api/health?probe=db after deploy — databaseReachable should be true."
       }
     };
   }
