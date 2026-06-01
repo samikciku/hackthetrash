@@ -18,9 +18,9 @@ export default function HomePage() {
     <div className="max-w-5xl mx-auto px-4 py-16">
       <section className="text-center">
         <div className="inline-block bg-yellow-50 border border-yellow-200 text-yellow-900 text-sm px-3 py-1 rounded-full mb-6">
-          🇦🇱 {t("home.pristina")}
+          {t("home.pristina")}
         </div>
-        <h1 className="text-5xl font-extrabold mb-4">{t("app.tagline")} 🌍</h1>
+        <h1 className="text-5xl font-extrabold mb-4">{t("app.tagline")}</h1>
         <p className="text-lg text-gray-600 mb-8">{t("home.subtitle")}</p>
 
         <div className="flex gap-4 justify-center flex-wrap">
