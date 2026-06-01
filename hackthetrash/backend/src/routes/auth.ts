@@ -4,7 +4,8 @@ import {
   rateLimitLogin,
   requireAuth,
   AuthRequest,
-  clientIpFromRequest
+  clientIpFromRequest,
+  buildClearAuthCookieHeader
 } from "../middleware/auth";
 import { performJsonLogin } from "../services/loginService";
 import { changePasswordForUser } from "../services/passwordChange";
@@ -16,6 +17,7 @@ router.post("/login", rateLimitLogin, async (req, res) => {
   try {
     const { email, password } = req.body || {};
     const out = await performJsonLogin(email, password, clientIpFromRequest(req));
+    if (out.setCookie) res.setHeader("Set-Cookie", out.setCookie);
     return res.status(out.status).json(out.body);
   } catch (e: any) {
     console.error("[auth.login]", e);
@@ -36,8 +38,9 @@ router.get("/me", requireAuth, async (req: AuthRequest, res) => {
   }
 });
 
-// POST /api/auth/logout (no-op for stateless JWT, kept for symmetry)
+// POST /api/auth/logout — clears HttpOnly session cookie
 router.post("/logout", (_req, res) => {
+  res.setHeader("Set-Cookie", buildClearAuthCookieHeader());
   res.json({ ok: true });
 });
 

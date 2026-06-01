@@ -3,8 +3,10 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { getApiBase } from "./apiBase";
-const TOKEN_KEY = "htt-admin-token";
-const USER_KEY = "htt-admin-user";
+
+/** Legacy key — token is no longer stored client-side (HttpOnly cookie from login). */
+const LEGACY_TOKEN_KEY = "htt-admin-token";
+const LEGACY_USER_KEY = "htt-admin-user";
 
 export type Role = "citizen" | "moderator" | "authority" | "admin";
 
@@ -18,10 +20,11 @@ export interface AuthUser {
 
 interface AuthCtx {
   user: AuthUser | null;
+  /** @deprecated Always null — session is HttpOnly cookie. Kept for gradual refactors. */
   token: string | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<{ ok: true } | { ok: false; error: string }>;
-  logout: () => void;
+  logout: () => Promise<void>;
   apiFetch: (path: string, init?: RequestInit) => Promise<Response>;
 }
 
@@ -29,49 +32,63 @@ const Ctx = createContext<AuthCtx | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
-  const [token, setToken] = useState<string | null>(null);
+  const [token] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Restore from localStorage on mount
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const t = localStorage.getItem(TOKEN_KEY);
-    const u = localStorage.getItem(USER_KEY);
-    if (t && u) {
-      try { setUser(JSON.parse(u)); setToken(t); } catch {}
+    try {
+      localStorage.removeItem(LEGACY_TOKEN_KEY);
+      localStorage.removeItem(LEGACY_USER_KEY);
+    } catch {
+      /* ignore */
     }
-    setLoading(false);
-  }, []);
 
-  const persist = (t: string | null, u: AuthUser | null) => {
-    setToken(t);
-    setUser(u);
-    if (typeof window === "undefined") return;
-    if (t && u) {
-      localStorage.setItem(TOKEN_KEY, t);
-      localStorage.setItem(USER_KEY, JSON.stringify(u));
-    } else {
-      localStorage.removeItem(TOKEN_KEY);
-      localStorage.removeItem(USER_KEY);
-    }
-  };
+    let cancelled = false;
+    (async () => {
+      try {
+        const base = getApiBase();
+        const r = await fetch(`${base}/api/auth/me`, { credentials: "include" });
+        if (cancelled) return;
+        if (r.ok) {
+          const u = (await r.json()) as AuthUser;
+          setUser(u);
+        } else {
+          setUser(null);
+        }
+      } catch {
+        if (!cancelled) setUser(null);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const login: AuthCtx["login"] = async (email, password) => {
     const base = getApiBase();
     try {
       const res = await fetch(`${base}/api/auth/login`, {
         method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password })
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) return { ok: false, error: data.error || `Login failed (${res.status})` };
-      persist(data.token, data.user);
+      if (data.user) setUser(data.user as AuthUser);
+      try {
+        const me = await fetch(`${base}/api/auth/me`, { credentials: "include" });
+        if (me.ok) setUser((await me.json()) as AuthUser);
+      } catch {
+        /* keep login body user */
+      }
       return { ok: true };
-    } catch (e: any) {
-      // Network-level failure (server unreachable, CORS blocked,
-      // mixed content, offline, etc). Be explicit so the user can act.
-      const msg = e?.message || String(e);
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
       const friendly =
         msg.toLowerCase().includes("failed to fetch") ||
         msg.toLowerCase().includes("networkerror") ||
@@ -82,24 +99,35 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const logout = () => persist(null, null);
+  const logout: AuthCtx["logout"] = async () => {
+    setUser(null);
+    try {
+      await fetch(`${getApiBase()}/api/auth/logout`, { method: "POST", credentials: "include" });
+    } catch {
+      /* ignore */
+    }
+  };
 
   const apiFetch: AuthCtx["apiFetch"] = (path, init = {}) => {
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
       ...((init.headers as Record<string, string> | undefined) || {})
     };
-    if (token) headers.Authorization = `Bearer ${token}`;
-    return fetch(`${getApiBase()}${path}`, { ...init, headers }).then(async (res) => {
+    return fetch(`${getApiBase()}${path}`, {
+      credentials: "include",
+      ...init,
+      headers
+    }).then(async (res) => {
       if (res.status === 401) {
-        // Token expired/invalid -> drop
-        persist(null, null);
+        setUser(null);
       }
       return res;
     });
   };
 
-  return <Ctx.Provider value={{ user, token, loading, login, logout, apiFetch }}>{children}</Ctx.Provider>;
+  return (
+    <Ctx.Provider value={{ user, token, loading, login, logout, apiFetch }}>{children}</Ctx.Provider>
+  );
 }
 
 export function useAuth() {

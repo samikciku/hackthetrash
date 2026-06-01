@@ -10,7 +10,10 @@ const VALID_ROLES: Role[] = ["citizen", "moderator", "authority", "admin"];
 
 // GET /api/admin/users
 export async function GET(request: NextRequest) {
-  const auth = await authenticateBearerFromHeader(request.headers.get("authorization") ?? undefined);
+  const auth = await authenticateBearerFromHeader(
+    request.headers.get("authorization") ?? undefined,
+    request.headers.get("cookie")
+  );
   if (!auth.ok) {
     return NextResponse.json({ error: auth.error }, { status: auth.status });
   }
@@ -37,7 +40,10 @@ export async function GET(request: NextRequest) {
 
 // POST /api/admin/users
 export async function POST(request: NextRequest) {
-  const auth = await authenticateBearerFromHeader(request.headers.get("authorization") ?? undefined);
+  const auth = await authenticateBearerFromHeader(
+    request.headers.get("authorization") ?? undefined,
+    request.headers.get("cookie")
+  );
   if (!auth.ok) {
     return NextResponse.json({ error: auth.error }, { status: auth.status });
   }

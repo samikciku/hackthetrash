@@ -24,13 +24,19 @@ export const memFlags: Flag[] = [];
 export const Flags = {
   async listAll(opts?: { resolved?: boolean }): Promise<Flag[]> {
     if (USE_DB) {
-      const where = opts?.resolved === undefined
-        ? ""
-        : `WHERE resolved = ${opts.resolved ? "TRUE" : "FALSE"}`;
+      if (opts?.resolved === undefined) {
+        const { rows } = await query<Flag>(
+          `SELECT id, report_id, user_id, reason, note, resolved, created_at
+           FROM flags
+           ORDER BY created_at DESC`
+        );
+        return rows;
+      }
       const { rows } = await query<Flag>(
         `SELECT id, report_id, user_id, reason, note, resolved, created_at
-         FROM flags ${where}
-         ORDER BY created_at DESC`
+         FROM flags WHERE resolved = $1
+         ORDER BY created_at DESC`,
+        [opts.resolved]
       );
       return rows;
     }

@@ -15,7 +15,7 @@ type Comment = {
 
 export default function CommentThread({ reportId }: { reportId: string }) {
   const { t } = useI18n();
-  const { user, token } = useAuth();
+  const { user } = useAuth();
   const [comments, setComments] = useState<Comment[]>([]);
   const [text, setText] = useState("");
   const [authorName, setAuthorName] = useState("");
@@ -37,11 +37,10 @@ export default function CommentThread({ reportId }: { reportId: string }) {
     if (!text.trim()) return;
     setSubmitting(true);
     try {
-      const headers: Record<string, string> = { "Content-Type": "application/json" };
-      if (token) headers.Authorization = `Bearer ${token}`;
       const res = await fetch(`${getApiBase()}/api/reports/${reportId}/comments`, {
         method: "POST",
-        headers,
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           text: text.trim(),
           anonymous: !user,

@@ -43,6 +43,6 @@ describe("profile + email subscription endpoints", () => {
 
     const unsub = await request(app).get(url);
     expect(unsub.status).toBe(200);
-    expect(unsub.text).toContain("Unsubscribed");
+      expect(unsub.text.toLowerCase()).toContain("unsubscribed");
   });
 });

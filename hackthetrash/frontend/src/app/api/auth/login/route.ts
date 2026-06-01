@@ -14,7 +14,9 @@ export async function POST(request: Request) {
     const body = (await request.json()) as { email?: string; password?: string };
     const ip = clientIpFromWebHeaders(request.headers);
     const out = await performJsonLogin(body.email, body.password, ip);
-    return NextResponse.json(out.body, { status: out.status });
+    const response = NextResponse.json(out.body, { status: out.status });
+    if (out.setCookie) response.headers.set("Set-Cookie", out.setCookie);
+    return response;
   } catch (e: unknown) {
     console.error("[app/api/auth/login]", e);
     const msg = e instanceof Error ? e.message : "login failed";

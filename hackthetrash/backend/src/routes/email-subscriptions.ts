@@ -36,7 +36,7 @@ router.get("/unsubscribe/:token", async (req, res) => {
     const sub = await EmailSubs.findByToken(req.params.token);
     if (!sub) return res.status(404).type("text/plain").send("Subscription not found.");
     await EmailSubs.remove(sub.id);
-    res.type("text/plain").send(`Unsubscribed ${sub.email}.`);
+    res.type("text/plain").send("You have been unsubscribed.");
   } catch (e: any) {
     res.status(500).json({ error: e.message });
   }

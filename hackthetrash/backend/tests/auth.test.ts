@@ -27,7 +27,7 @@ describe("/api/auth", () => {
     expect(res.body.user.role).toBe("admin");
   });
 
-  it("rejects /me without an Authorization header", async () => {
+  it("rejects /me without session", async () => {
     const res = await request(app).get("/api/auth/me");
     expect(res.status).toBe(401);
   });

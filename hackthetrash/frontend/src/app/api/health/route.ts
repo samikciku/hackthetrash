@@ -3,23 +3,26 @@ import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 
 /**
- * Lightweight health endpoint on the App Router so `/api/health` works even if
- * the Pages `api/[[...slug]]` + Express bridge misbehaves for this path.
- * Keep checks in sync with `backend/src/app.ts` healthPayload.
- *
- * Optional: `GET /api/health?probe=db` runs `SELECT 1` (5s max) so you can tell
- * env-present vs actually reachable Postgres (login + reports need this).
+ * Public health: no environment or dependency disclosure.
+ * DB reachability: GET /api/health?probe=db&secret=<HEALTH_PROBE_SECRET>
+ * (set HEALTH_PROBE_SECRET in the deployment environment).
  */
 export async function GET(request: Request) {
-  const checks = {
-    databaseUrl: !!(process.env.DATABASE_URL && String(process.env.DATABASE_URL).trim()),
-    jwtSecret: !!process.env.JWT_SECRET,
-    blobToken: !!process.env.BLOB_READ_WRITE_TOKEN,
-    vercel: process.env.VERCEL === "1"
-  };
+  const url = new URL(request.url);
+  const probe = url.searchParams.get("probe");
+  const secret = url.searchParams.get("secret") || "";
+  const expected = process.env.HEALTH_PROBE_SECRET?.trim();
 
-  const probe = new URL(request.url).searchParams.get("probe");
-  if (probe === "db" && checks.databaseUrl) {
+  if (probe === "db") {
+    if (!expected || secret !== expected) {
+      return NextResponse.json({ error: "Not found" }, { status: 404 });
+    }
+    if (!process.env.DATABASE_URL?.trim()) {
+      return NextResponse.json(
+        { status: "degraded", databaseReachable: false, detail: "DATABASE_URL not set" },
+        { status: 503 }
+      );
+    }
     try {
       const { query } = await import("../../../../../backend/src/db/pool");
       await Promise.race([
@@ -30,23 +33,20 @@ export async function GET(request: Request) {
       ]);
       return NextResponse.json({
         status: "healthy" as const,
-        checks: { ...checks, databaseReachable: true as const }
+        databaseReachable: true as const
       });
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : String(e);
-      return NextResponse.json({
-        status: "degraded" as const,
-        checks: {
-          ...checks,
+      return NextResponse.json(
+        {
+          status: "degraded" as const,
           databaseReachable: false as const,
           databaseError: msg.slice(0, 240)
-        }
-      });
+        },
+        { status: 503 }
+      );
     }
   }
 
-  return NextResponse.json({
-    status: "healthy" as const,
-    checks
-  });
+  return NextResponse.json({ status: "healthy" as const });
 }

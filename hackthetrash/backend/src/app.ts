@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import path from "path";
+import { assertStartupSecurity } from "./config/envSecurity";
 import reportsRouter from "./routes/reports";
 import authRouter from "./routes/auth";
 import devicesRouter from "./routes/devices";
@@ -11,6 +12,8 @@ import profileRouter from "./routes/profile";
 import emailSubsRouter from "./routes/email-subscriptions";
 
 export function createApp(): express.Express {
+  assertStartupSecurity();
+
   const app = express();
 
   app.set("trust proxy", 1);
@@ -39,17 +42,25 @@ export function createApp(): express.Express {
 
   const allowedOrigins = (process.env.CORS_ORIGINS || "*")
     .split(",")
-    .map((s) => s.trim());
-  app.use(cors({
-    origin: allowedOrigins.includes("*") ? true : allowedOrigins,
-    credentials: true
-  }));
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const useWildcard =
+    allowedOrigins.length === 0 || (allowedOrigins.length === 1 && allowedOrigins[0] === "*");
+  app.use(
+    cors({
+      origin: useWildcard ? true : allowedOrigins,
+      credentials: true
+    })
+  );
 
   app.use((_req, res, next) => {
     res.setHeader("X-Content-Type-Options", "nosniff");
     res.setHeader("X-Frame-Options", "DENY");
     res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
     res.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation=(self)");
+    if (process.env.VERCEL === "1" || process.env.NODE_ENV === "production") {
+      res.setHeader("Strict-Transport-Security", "max-age=15552000; includeSubDomains");
+    }
     next();
   });
 
@@ -60,15 +71,7 @@ export function createApp(): express.Express {
   app.use("/uploads", express.static(uploadsDir));
 
   app.get("/", (_req, res) => res.json({ ok: true, service: "HackTheTrash API" }));
-  const healthPayload = () => ({
-    status: "healthy" as const,
-    checks: {
-      databaseUrl: !!(process.env.DATABASE_URL && String(process.env.DATABASE_URL).trim()),
-      jwtSecret: !!process.env.JWT_SECRET,
-      blobToken: !!process.env.BLOB_READ_WRITE_TOKEN,
-      vercel: process.env.VERCEL === "1"
-    }
-  });
+  const healthPayload = () => ({ status: "healthy" as const });
   app.get("/health", (_req, res) => res.json(healthPayload()));
   app.get("/api/health", (_req, res) => res.json(healthPayload()));
 

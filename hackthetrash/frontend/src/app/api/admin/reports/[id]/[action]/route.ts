@@ -20,7 +20,10 @@ export async function PATCH(
   request: NextRequest,
   ctx: { params: { id: string; action: string } }
 ) {
-  const auth = await authenticateBearerFromHeader(request.headers.get("authorization") ?? undefined);
+  const auth = await authenticateBearerFromHeader(
+    request.headers.get("authorization") ?? undefined,
+    request.headers.get("cookie")
+  );
   if (!auth.ok) {
     return NextResponse.json({ error: auth.error }, { status: auth.status });
   }

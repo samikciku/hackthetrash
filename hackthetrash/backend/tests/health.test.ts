@@ -15,8 +15,7 @@ describe("health endpoints", () => {
     const res = await request(app).get("/health");
     expect(res.status).toBe(200);
     expect(res.body.status).toBe("healthy");
-    expect(res.body.checks).toBeDefined();
-    expect(typeof res.body.checks.databaseUrl).toBe("boolean");
+    expect(res.body.checks).toBeUndefined();
   });
 
   it("sets hardening headers", async () => {

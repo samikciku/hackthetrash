@@ -4,6 +4,14 @@ import path from "path";
 import { v4 as uuid } from "uuid";
 import type { Express } from "express";
 
+const ALLOWED_UPLOAD_EXT = new Set([".jpg", ".jpeg", ".png", ".gif", ".webp", ".heic", ".heif"]);
+
+function safeImageExtension(originalName: string): string {
+  const ext = path.extname(originalName || "").toLowerCase();
+  if (ALLOWED_UPLOAD_EXT.has(ext)) return ext;
+  return ".jpg";
+}
+
 /**
  * When true, multer uses memory storage and photos must be persisted via Blob or similar
  * (Vercel serverless has no durable local disk). Set HACKTHETRASH_INTEGRATED_API=1 when
@@ -34,7 +42,7 @@ export function tempPathsForModeration(files: Express.Multer.File[]): TempImageP
       continue;
     }
     if (f.buffer?.length) {
-      const ext = path.extname(f.originalname) || ".jpg";
+      const ext = safeImageExtension(f.originalname);
       const tmp = path.join(os.tmpdir(), `htt-${uuid()}${ext}`);
       fs.writeFileSync(tmp, f.buffer);
       paths.push(tmp);
@@ -65,7 +73,7 @@ export async function persistReportPhotoUrls(files: Express.Multer.File[]): Prom
       const jobs = files
         .filter((f) => f.buffer?.length)
         .map(async (f) => {
-          const ext = path.extname(f.originalname) || ".jpg";
+          const ext = safeImageExtension(f.originalname);
           const name = `reports/${uuid()}${ext}`;
           const contentType = f.mimetype || "image/jpeg";
           const putOnce = (access: "public" | "private") =>
@@ -103,7 +111,7 @@ export async function persistReportPhotoUrls(files: Express.Multer.File[]): Prom
     const urls: string[] = [];
     for (const f of files) {
       if (!f.buffer?.length) continue;
-      const ext = path.extname(f.originalname) || ".jpg";
+      const ext = safeImageExtension(f.originalname);
       const fn = `${uuid()}${ext}`;
       fs.writeFileSync(path.join(uploadRoot, fn), f.buffer);
       urls.push(`/api/uploads/${fn}`);

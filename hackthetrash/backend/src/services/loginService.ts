@@ -3,7 +3,8 @@ import {
   signToken,
   rateLimitLoginByIp,
   noteFailedLoginByIp,
-  clearLoginAttemptsByIp
+  clearLoginAttemptsByIp,
+  buildAuthSetCookieHeader
 } from "../middleware/auth";
 
 /**
@@ -13,7 +14,7 @@ export async function performJsonLogin(
   email: unknown,
   password: unknown,
   clientIp: string
-): Promise<{ status: number; body: Record<string, unknown> }> {
+): Promise<{ status: number; body: Record<string, unknown>; setCookie?: string }> {
   // When IP is missing (some proxies), rate-limit per email so all users don't share one "unknown" bucket.
   const rateKey =
     clientIp !== "unknown"
@@ -22,7 +23,7 @@ export async function performJsonLogin(
           .toLowerCase()
           .slice(0, 256) || "anon"}`;
 
-  const lim = rateLimitLoginByIp(rateKey);
+  const lim = await rateLimitLoginByIp(rateKey);
   if (!lim.ok) {
     return {
       status: 429,
@@ -74,7 +75,7 @@ export async function performJsonLogin(
       status: 503,
       body: {
         error:
-          "Cannot reach the database. On Vercel: set DATABASE_URL to your Postgres URL (include ?sslmode=require if the host requires SSL), run migrations, then redeploy. Open /api/health?probe=db after deploy — databaseReachable should be true."
+            "Cannot reach the database. On Vercel: set DATABASE_URL to your Postgres URL (include ?sslmode=require if the host requires SSL), run migrations, then redeploy. After deploy, run GET /api/health?probe=db with a valid HEALTH_PROBE_SECRET to confirm the DB is reachable."
       }
     };
   }
@@ -112,6 +113,7 @@ export async function performJsonLogin(
   clearLoginAttemptsByIp(rateKey);
   return {
     status: 200,
+    setCookie: buildAuthSetCookieHeader(token),
     body: {
       token,
       user: { id: user.id, email: user.email, name: user.name, role: user.role, region: user.region }
