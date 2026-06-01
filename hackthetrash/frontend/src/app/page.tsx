@@ -16,18 +16,23 @@ export default function HomePage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-16">
-      <section className="relative overflow-hidden rounded-2xl text-center px-4 py-12 md:py-16">
-        {/* Prishtina logo: 80% transparent (20% opacity) so headline stays readable */}
-        <div
-          className="pointer-events-none absolute inset-0 bg-contain bg-center bg-no-repeat opacity-20"
-          style={{ backgroundImage: "url(/prishtina-logo.jpg)" }}
-          aria-hidden
-        />
-        <div className="relative z-10">
+      <section className="text-center">
         <div className="inline-block bg-yellow-50 border border-yellow-200 text-yellow-900 text-sm px-3 py-1 rounded-full mb-6">
           {t("home.pristina")}
         </div>
-        <h1 className="text-5xl font-extrabold mb-4">{t("app.tagline")}</h1>
+        <h1 className="text-5xl font-extrabold mb-4 flex flex-wrap items-center justify-center gap-x-1 gap-y-1">
+          <span>{t("home.heroTaglineLead")}</span>
+          <span className="inline-flex items-center gap-2">
+            {t("home.heroTaglineCity")}
+            <img
+              src="/prishtina-logo.jpg"
+              alt=""
+              className="h-[0.9em] w-auto shrink-0 object-contain"
+              aria-hidden
+            />
+          </span>
+          <span>{t("home.heroTaglineTail")}</span>
+        </h1>
         <p className="text-lg text-gray-600 mb-8">{t("home.subtitle")}</p>
 
         <div className="flex gap-4 justify-center flex-wrap">
@@ -49,7 +54,6 @@ export default function HomePage() {
               <p className="text-gray-600">{s.desc}</p>
             </div>
           ))}
-        </div>
         </div>
       </section>
 

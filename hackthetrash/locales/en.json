@@ -30,7 +30,10 @@
       "cleaned": "{{count}} cleaned",
       "cities": "{{count}} neighbourhoods"
     },
-    "pristina": "A pilot project for the city of Prishtina - help us map illegal dumps in your neighbourhood."
+    "pristina": "A pilot project for the city of Prishtina - help us map illegal dumps in your neighbourhood.",
+    "heroTaglineLead": "Together, let's clean up ",
+    "heroTaglineCity": "Prishtina",
+    "heroTaglineTail": "."
   },
   "report": {
     "title": "Report Illegal Trash",

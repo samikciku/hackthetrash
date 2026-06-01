@@ -30,7 +30,10 @@
       "cleaned": "{{count}} të pastruara",
       "cities": "{{count}} lagje"
     },
-    "pristina": "Projekt pilot për qytetin e Prishtinës - na ndihmoni të hartografojmë mbeturinat ilegale në lagjen tuaj."
+    "pristina": "Projekt pilot për qytetin e Prishtinës - na ndihmoni të hartografojmë mbeturinat ilegale në lagjen tuaj.",
+    "heroTaglineLead": "Së bashku të pastrojmë ",
+    "heroTaglineCity": "Prishtinën",
+    "heroTaglineTail": "."
   },
   "report": {
     "title": "Raporto Mbeturina të Paligjshme",
